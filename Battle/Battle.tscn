@@ -13,3 +13,6 @@ position = Vector2( 655.451, 364.715 )
 scale = Vector2( 2, 2 )
 
 [connection signal="player_attack" from="Knight Sprite Sheet" to="Glutmon" method="_on_Knight_Sprite_Sheet_player_attack"]
+[connection signal="enemy_attack" from="Glutmon" to="Knight Sprite Sheet" method="_on_Glutmon_enemy_attack"]
+
+[editable path="Knight Sprite Sheet"]

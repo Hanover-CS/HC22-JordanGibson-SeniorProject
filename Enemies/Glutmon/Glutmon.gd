@@ -5,6 +5,8 @@ onready var SecondFormAnimation = $SecondForm/SecondFormAnimation
 onready var ThirdFormAnimation = $ThirdForm/ThirdFormAnimation
 
 var current_form = "FirstForm"
+signal died()
+signal enemy_attack(damage)
 
 func _ready():
 	$FirstForm.visible = true
@@ -17,13 +19,19 @@ func _physics_process(delta):
 		match current_form:
 			"FirstForm":
 				FirstFormAnimation.play("Attack")
+				emit_signal("enemy_attack", damage)
 				FirstFormAnimation.queue("Idle")
 			"SecondForm":
 				SecondFormAnimation.play("Attack")
+				emit_signal("enemy_attack", damage)
 				SecondFormAnimation.queue("Idle")
 			"ThirdForm":
 				ThirdFormAnimation.play("Attack")
+				emit_signal("enemy_attack", damage)
 				ThirdFormAnimation.queue("Idle")
+	
+	if health <= 0:
+		die()
 	
 	if health <= 3 and current_form == "FirstForm":
 		transform()
@@ -51,10 +59,31 @@ func transform_giant():
 
 
 func _on_Knight_Sprite_Sheet_player_attack(damage):
-	take_damage(damage) # Replace with function body.
+	take_damage(damage)
+	print(health)
 
 func take_damage(damage):
 	health -= damage
 	match current_form:
 		"FirstForm":
-			FirstFormAnimation.play("")
+			FirstFormAnimation.play("Hurt")
+			FirstFormAnimation.queue("Idle")
+		"SecondForm":
+			SecondFormAnimation.play("Hurt")
+			SecondFormAnimation.queue("Idle")
+		"ThirdForm":
+			ThirdFormAnimation.play("Hurt")
+			ThirdFormAnimation.queue("Idle")
+
+func die():
+	match current_form:
+		"FirstForm":
+			FirstFormAnimation.play("Dying")
+		"SecondForm":
+			SecondFormAnimation.play("Dying")
+		"ThirdForm":
+			ThirdFormAnimation.play("Dying")
+
+
+func _on_Glutmon_died():
+	queue_free()

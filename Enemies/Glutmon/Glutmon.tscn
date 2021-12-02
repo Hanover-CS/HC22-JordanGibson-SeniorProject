@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://Enemies/Enemy.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Enemy Animations/Glutmon Form One Sprite Sheet.png" type="Texture" id=2]
@@ -117,6 +117,22 @@ tracks/0/keys = {
 "values": [ 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64 ]
 }
 
+[sub_resource type="Animation" id=14]
+resource_name = "Hurt"
+length = 0.7
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 65, 66, 67, 68 ]
+}
+
 [sub_resource type="Animation" id=7]
 length = 0.7
 loop = true
@@ -162,6 +178,38 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 66, 67, 68, 69, 70, 71 ]
+}
+
+[sub_resource type="Animation" id=16]
+resource_name = "Dying"
+length = 1.14
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 88, 89, 90, 91, 92, 93 ]
+}
+
+[sub_resource type="Animation" id=15]
+resource_name = "Hurt"
+length = 0.73
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 77, 78, 79, 80 ]
 }
 
 [sub_resource type="Animation" id=10]
@@ -224,7 +272,7 @@ texture = ExtResource( 2 )
 flip_h = true
 hframes = 8
 vframes = 5
-frame = 27
+frame = 35
 
 [node name="FirstFormAnimation" type="AnimationPlayer" parent="FirstForm" index="0"]
 anims/Attack = SubResource( 1 )
@@ -240,12 +288,13 @@ texture = ExtResource( 3 )
 flip_h = true
 hframes = 13
 vframes = 7
-frame = 13
+frame = 78
 
 [node name="SecondFormAnimation" type="AnimationPlayer" parent="SecondForm" index="0"]
 anims/Attack = SubResource( 4 )
 anims/Dying = SubResource( 5 )
 anims/Eat = SubResource( 6 )
+anims/Hurt = SubResource( 14 )
 anims/Idle = SubResource( 7 )
 anims/Transform = SubResource( 8 )
 
@@ -257,10 +306,14 @@ texture = ExtResource( 4 )
 flip_h = true
 hframes = 11
 vframes = 9
-frame = 11
+frame = 93
 
 [node name="ThirdFormAnimation" type="AnimationPlayer" parent="ThirdForm" index="0"]
 anims/Attack = SubResource( 9 )
+anims/Dying = SubResource( 16 )
+anims/Hurt = SubResource( 15 )
 anims/Idle = SubResource( 10 )
 anims/Inhale = SubResource( 11 )
 anims/Transform = SubResource( 12 )
+
+[connection signal="died" from="." to="." method="_on_Glutmon_died"]
