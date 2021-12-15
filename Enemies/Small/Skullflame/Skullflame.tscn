@@ -1,7 +1,22 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Enemies/Enemy.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Enemies/Small/Skullflame/Skullflame.gd" type="Script" id=2]
+[ext_resource path="res://Enemy Animations/Small Enemies/Infernal/Skullflame/Skullflame Sprite Sheet.png" type="Texture" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 7.05467, 11.3994 )
 
 [node name="Skullflame" instance=ExtResource( 1 )]
+position = Vector2( 346.403, 245.408 )
+scale = Vector2( 4, 4 )
 script = ExtResource( 2 )
+
+[node name="Sprite" parent="." index="0"]
+texture = ExtResource( 3 )
+hframes = 8
+vframes = 7
+
+[node name="CollisionShape2D" parent="." index="1"]
+position = Vector2( -0.628906, -1.8867 )
+shape = SubResource( 1 )
