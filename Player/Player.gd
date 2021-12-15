@@ -17,8 +17,6 @@ func _physics_process(delta):
 		player_animation.play("Slash")
 		player_animation.queue("Idle")
 
-
-
 func _on_Glutmon_enemy_attack(damage):
 	hp -= damage
 	if hp <= 0:

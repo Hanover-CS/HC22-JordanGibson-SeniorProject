@@ -35,7 +35,7 @@ tracks/0/keys = {
 "values": [ 56, 57, 58, 59, 60, 61, 62 ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=3]
 resource_name = "Hurt"
 length = 0.6
 tracks/0/type = "value"
@@ -51,7 +51,7 @@ tracks/0/keys = {
 "values": [ 1, 2, 3, 48, 49, 50 ]
 }
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=4]
 length = 0.7
 loop = true
 tracks/0/type = "value"
@@ -67,8 +67,7 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 1 ]
 }
 
-[sub_resource type="Animation" id=4]
-resource_name = "Slash"
+[sub_resource type="Animation" id=5]
 length = 0.6
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:frame")
@@ -95,6 +94,6 @@ script = ExtResource( 2 )
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Block = SubResource( 1 )
 anims/Dying = SubResource( 2 )
-anims/Hurt = SubResource( 5 )
-anims/Idle = SubResource( 3 )
-anims/Slash = SubResource( 4 )
+anims/Hurt = SubResource( 3 )
+anims/Idle = SubResource( 4 )
+anims/Slash = SubResource( 5 )
