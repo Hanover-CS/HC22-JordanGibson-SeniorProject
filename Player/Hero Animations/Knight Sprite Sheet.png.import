@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Knight Shield Bash.png-5e0605306dac869a2c2b30f1d35c1482.stex"
+path="res://.import/Knight Sprite Sheet.png-7bcbc2601c5d2b9a5659df017284830a.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Hero Animations/Knight Shield Bash.png"
-dest_files=[ "res://.import/Knight Shield Bash.png-5e0605306dac869a2c2b30f1d35c1482.stex" ]
+source_file="res://Player/Hero Animations/Knight Sprite Sheet.png"
+dest_files=[ "res://.import/Knight Sprite Sheet.png-7bcbc2601c5d2b9a5659df017284830a.stex" ]
 
 [params]
 
