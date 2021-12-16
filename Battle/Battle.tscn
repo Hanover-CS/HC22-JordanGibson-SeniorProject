@@ -1,15 +1,28 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Enemies/Bosses/Glutmon/Glutmon.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Battle/Battle.gd" type="Script" id=3]
 
 [node name="Battle" type="Node2D"]
+script = ExtResource( 3 )
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
 position = Vector2( 243.127, 369.052 )
 
 [node name="Glutmon" parent="." instance=ExtResource( 1 )]
 position = Vector2( 655.451, 364.715 )
+scale = Vector2( 2, 2 )
+health = 5
+
+[node name="FirstForm" parent="Glutmon" index="0"]
+scale = Vector2( 2, 2 )
+
+[node name="SecondForm" parent="Glutmon" index="1"]
+scale = Vector2( 2, 2 )
+
+[node name="ThirdForm" parent="Glutmon" index="2"]
+position = Vector2( 0.720612, -28.0747 )
 scale = Vector2( 2, 2 )
 
 [connection signal="player_attack" from="Player" to="Glutmon" method="_on_Knight_Sprite_Sheet_player_attack"]

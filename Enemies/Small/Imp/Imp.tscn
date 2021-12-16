@@ -4,7 +4,7 @@
 [ext_resource path="res://Enemies/Small/Imp/Imp.gd" type="Script" id=2]
 [ext_resource path="res://Enemy Animations/Small Enemies/Infernal/Imp/Imp Sprite Sheet.png" type="Texture" id=3]
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=1]
 resource_name = "Attack"
 length = 0.6
 loop = true
@@ -21,7 +21,7 @@ tracks/0/keys = {
 "values": [ 16, 17, 18, 19, 20, 21 ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=2]
 resource_name = "Dying"
 length = 0.6
 tracks/0/type = "value"
@@ -37,7 +37,7 @@ tracks/0/keys = {
 "values": [ 32, 33, 34, 35, 36, 37 ]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=3]
 resource_name = "Fire Attack"
 length = 0.7
 tracks/0/type = "value"
@@ -65,8 +65,7 @@ tracks/1/keys = {
 "values": [ 40, 41, 42, 43, 44, 45, 47 ]
 }
 
-[sub_resource type="Animation" id=2]
-resource_name = "Idle"
+[sub_resource type="Animation" id=4]
 length = 0.7
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:frame")
@@ -81,13 +80,14 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3, 4, 5, 6 ]
 }
 
-[sub_resource type="RectangleShape2D" id=1]
+[sub_resource type="RectangleShape2D" id=5]
 extents = Vector2( 9.14148, 9.23802 )
 
 [node name="Imp" instance=ExtResource( 1 )]
 position = Vector2( 473.428, 272.195 )
 scale = Vector2( 4, 4 )
 script = ExtResource( 2 )
+speed = 3
 
 [node name="Sprite" parent="." index="0"]
 position = Vector2( 0.25, 0 )
@@ -97,10 +97,10 @@ vframes = 12
 frame = 32
 
 [node name="AnimationPlayer" parent="Sprite" index="0"]
-anims/Attack = SubResource( 3 )
-anims/Dying = SubResource( 5 )
-"anims/Fire Attack" = SubResource( 4 )
-anims/Idle = SubResource( 2 )
+anims/Attack = SubResource( 1 )
+anims/Dying = SubResource( 2 )
+"anims/Fire Attack" = SubResource( 3 )
+anims/Idle = SubResource( 4 )
 
 [node name="Fireball" type="Sprite" parent="Sprite" index="1"]
 visible = false
@@ -112,4 +112,4 @@ frame = 40
 [node name="CollisionShape2D" parent="." index="1"]
 visible = false
 position = Vector2( -1.16701, 9.91962 )
-shape = SubResource( 1 )
+shape = SubResource( 5 )

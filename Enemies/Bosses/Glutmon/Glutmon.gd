@@ -45,7 +45,7 @@ func transform():
 	$SecondForm.visible = true
 	SecondFormAnimation.play("Transform")
 	SecondFormAnimation.queue("Idle")
-	health = 8
+	health = 5
 	damage = 2
 
 func transform_giant():
@@ -54,7 +54,7 @@ func transform_giant():
 	$ThirdForm.visible = true
 	ThirdFormAnimation.play("Transform")
 	ThirdFormAnimation.queue("Idle")
-	health = 10
+	health = 6
 	damage = 3
 
 

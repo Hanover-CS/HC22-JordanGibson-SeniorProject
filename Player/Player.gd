@@ -3,6 +3,7 @@ extends Sprite
 export (int) var hp = 10
 export (int) var damage = 1
 export (int) var defense = .05
+export (int) var speed = 1
 
 signal player_attack(damage)
 
