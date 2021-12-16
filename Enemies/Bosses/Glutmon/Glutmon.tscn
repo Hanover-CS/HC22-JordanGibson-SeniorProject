@@ -259,10 +259,11 @@ extents = Vector2( 64.5599, 47.1109 )
 [node name="Glutmon" type="Area2D"]
 position = Vector2( 501.029, 287.963 )
 script = ExtResource( 5 )
+health = 5
 
 [node name="FirstForm" type="Sprite" parent="."]
 position = Vector2( -0.656677, 0.374146 )
-scale = Vector2( 9.95246, 8.49574 )
+scale = Vector2( 4, 4 )
 texture = ExtResource( 2 )
 flip_h = true
 hframes = 8
@@ -278,7 +279,7 @@ anims/Idle = SubResource( 4 )
 [node name="SecondForm" type="Sprite" parent="."]
 visible = false
 position = Vector2( 1.97455, 1.18088 )
-scale = Vector2( 9.95246, 8.49574 )
+scale = Vector2( 4, 4 )
 texture = ExtResource( 3 )
 flip_h = true
 hframes = 13
@@ -295,8 +296,8 @@ anims/Transform = SubResource( 10 )
 
 [node name="ThirdForm" type="Sprite" parent="."]
 visible = false
-position = Vector2( 1.66449, 1.18549 )
-scale = Vector2( 9.95246, 8.49574 )
+position = Vector2( 6.82977, -54.3409 )
+scale = Vector2( 4, 4 )
 texture = ExtResource( 4 )
 flip_h = true
 hframes = 11

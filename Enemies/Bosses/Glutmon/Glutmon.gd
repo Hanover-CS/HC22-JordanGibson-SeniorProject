@@ -58,7 +58,7 @@ func transform_giant():
 	damage = 3
 
 
-func _on_Knight_Sprite_Sheet_player_attack(damage):
+func _on_player_attack(damage):
 	take_damage(damage)
 	print(health)
 
