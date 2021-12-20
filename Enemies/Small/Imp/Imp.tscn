@@ -67,6 +67,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id=4]
 length = 0.7
+loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
@@ -92,9 +93,10 @@ speed = 3
 [node name="Sprite" parent="." index="0"]
 position = Vector2( 0.25, 0 )
 texture = ExtResource( 3 )
+flip_h = true
 hframes = 8
 vframes = 12
-frame = 32
+frame = 6
 
 [node name="AnimationPlayer" parent="Sprite" index="0"]
 anims/Attack = SubResource( 1 )
@@ -107,7 +109,7 @@ visible = false
 texture = ExtResource( 3 )
 hframes = 8
 vframes = 12
-frame = 40
+frame = 47
 
 [node name="CollisionShape2D" parent="." index="1"]
 visible = false

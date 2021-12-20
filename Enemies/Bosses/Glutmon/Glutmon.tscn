@@ -260,6 +260,7 @@ extents = Vector2( 64.5599, 47.1109 )
 position = Vector2( 501.029, 287.963 )
 script = ExtResource( 5 )
 health = 5
+speed = 3
 
 [node name="FirstForm" type="Sprite" parent="."]
 position = Vector2( -0.656677, 0.374146 )

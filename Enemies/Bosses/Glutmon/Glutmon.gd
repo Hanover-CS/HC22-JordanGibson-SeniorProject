@@ -47,6 +47,7 @@ func transform():
 	SecondFormAnimation.queue("Idle")
 	health = 5
 	damage = 2
+	speed = 2
 
 func transform_giant():
 	current_form = "ThirdForm"
@@ -56,11 +57,12 @@ func transform_giant():
 	ThirdFormAnimation.queue("Idle")
 	health = 6
 	damage = 3
+	speed = 1
 
 
-func _on_player_attack(damage):
-	take_damage(damage)
-	print(health)
+#func _on_player_attack(damage):
+#	take_damage(damage)
+#	print(health)
 
 func take_damage(damage):
 	health -= damage

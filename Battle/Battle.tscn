@@ -6,7 +6,9 @@
 script = ExtResource( 3 )
 
 [node name="PlayerSpawnPoint" type="Position2D" parent="."]
-position = Vector2( 222.755, 353.954 )
+position = Vector2( 222.755, 363.393 )
 
 [node name="EnemySpawnPoint" type="Position2D" parent="."]
 position = Vector2( 717.346, 361.505 )
+
+[node name="Characters" type="Node2D" parent="."]

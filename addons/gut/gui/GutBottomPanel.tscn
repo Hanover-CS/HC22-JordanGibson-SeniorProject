@@ -5,6 +5,7 @@
 
 [sub_resource type="InputEventKey" id=1]
 control = true
+command = true
 scancode = 50
 
 [sub_resource type="ShortCut" id=2]
@@ -12,6 +13,7 @@ shortcut = SubResource( 1 )
 
 [sub_resource type="InputEventKey" id=3]
 control = true
+command = true
 scancode = 52
 
 [sub_resource type="ShortCut" id=4]
@@ -21,6 +23,7 @@ shortcut = SubResource( 3 )
 
 [sub_resource type="InputEventKey" id=6]
 control = true
+command = true
 scancode = 51
 
 [sub_resource type="ShortCut" id=7]
@@ -28,6 +31,7 @@ shortcut = SubResource( 6 )
 
 [sub_resource type="InputEventKey" id=8]
 control = true
+command = true
 scancode = 49
 
 [sub_resource type="ShortCut" id=9]

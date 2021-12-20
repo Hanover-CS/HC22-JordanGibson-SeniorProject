@@ -1,15 +1,29 @@
 extends Node2D
 
-onready var player_scene = preload("res://Player/Player.tscn")
-onready var player_spawn = $PlayerSpawnPoint.position
+#onready var player_scene = preload("res://Player/Player.tscn")
+#onready var player_spawn = $PlayerSpawnPoint.position
 
-onready var enemy_scene = preload("res://Enemies/Bosses/Glutmon/Glutmon.tscn")
-onready var enemy_spawn = $EnemySpawnPoint.position
+#onready var enemy_scene = preload("res://Enemies/Bosses/Glutmon/Glutmon.tscn")
+#onready var enemy_spawn = $EnemySpawnPoint.position
+
+var active_char
 
 func _ready():
-	var player = player_scene.instance()
-	var enemy = enemy_scene.instance()
-	add_child(player)
-	add_child(enemy)
-	enemy.position = enemy_spawn
-	player.position = player_spawn
+	pass
+
+func create_turn_order():
+	var char_parent = get_node("Characters")
+	var chars = char_parent.get_children()
+	chars.sort_custom(self, 'sort_chars')
+	for character in chars:
+		character.raise()
+	active_char = char_parent.get_child(0)
+
+func sort_chars(char1, char2) -> bool:
+	return char1.speed > char2.speed
+
+func play_turn(target, action):
+	var char_parent = get_node("Characters")
+	yield(active_char.play_turn(), 'completed')
+	var next_index = (active_char.get_index() + 1) % char_parent.get_child_count()
+	active_char = char_parent.get_child(next_index)
