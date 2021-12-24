@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Player/Hero Animations/Knight Sprite Sheet.png" type="Texture" id=1]
 [ext_resource path="res://Player/Player.gd" type="Script" id=2]
@@ -82,7 +82,13 @@ tracks/0/keys = {
 "values": [ 16, 17, 18, 19, 20, 0 ]
 }
 
-[node name="Knight" type="Sprite"]
+[sub_resource type="CapsuleShape2D" id=6]
+radius = 33.1297
+height = 39.5899
+
+[node name="Knight" type="KinematicBody2D"]
+
+[node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 355.127, 264.052 )
 scale = Vector2( 4, 4 )
 texture = ExtResource( 1 )
@@ -91,9 +97,13 @@ vframes = 9
 frame = 48
 script = ExtResource( 2 )
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite"]
 anims/Block = SubResource( 1 )
 anims/Dying = SubResource( 2 )
 anims/Hurt = SubResource( 3 )
 anims/Idle = SubResource( 4 )
 anims/Slash = SubResource( 5 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 356.762, 286.599 )
+shape = SubResource( 6 )

@@ -25,3 +25,7 @@ func _on_Glutmon_enemy_attack(damage):
 	else:
 		player_animation.play("Hurt")
 		player_animation.queue("Idle")
+
+func play_turn():
+	emit_signal("player_attack", damage)
+	player_animation.play("Slash")
