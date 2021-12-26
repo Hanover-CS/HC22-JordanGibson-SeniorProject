@@ -19,7 +19,7 @@ class TestTurnQueue:
 	
 	func before_each():
 		var curr_child
-		for i in range(0, char_parent.get_child_count(), -1):
+		for i in range(char_parent.get_child_count(), -1,-1):
 			curr_child = char_parent.get_child(i)
 			char_parent.remove_child(curr_child)
 	

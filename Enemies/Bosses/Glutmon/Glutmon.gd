@@ -6,7 +6,6 @@ onready var ThirdFormAnimation = $ThirdForm/ThirdFormAnimation
 
 var current_form = "FirstForm"
 signal died()
-signal enemy_attack(damage)
 
 func _ready():
 	$FirstForm.visible = true

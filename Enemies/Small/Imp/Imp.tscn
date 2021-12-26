@@ -96,7 +96,7 @@ texture = ExtResource( 3 )
 flip_h = true
 hframes = 8
 vframes = 12
-frame = 6
+frame = 16
 
 [node name="AnimationPlayer" parent="Sprite" index="0"]
 anims/Attack = SubResource( 1 )

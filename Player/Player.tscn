@@ -87,6 +87,7 @@ radius = 33.1297
 height = 39.5899
 
 [node name="Knight" type="KinematicBody2D"]
+script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 355.127, 264.052 )
@@ -94,8 +95,6 @@ scale = Vector2( 4, 4 )
 texture = ExtResource( 1 )
 hframes = 8
 vframes = 9
-frame = 48
-script = ExtResource( 2 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite"]
 anims/Block = SubResource( 1 )
