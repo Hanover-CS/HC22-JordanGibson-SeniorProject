@@ -1,18 +1,24 @@
 extends Node2D
 
-onready var player_scene = preload("res://Player/Player.tscn")
-onready var player_spawn = $PlayerSpawnPoint.position
-#
-onready var enemy_scene = preload("res://Enemies/Small/Imp/Imp.tscn")
-onready var enemy_spawn = $EnemySpawnPoint.position
+onready var player_spawn : Vector2
+
+onready var enemy_spawn : Vector2
 
 var active_char
 
 func _ready():
-	add_child(player_scene.instance())
-	add_child(enemy_scene.instance())
+	player_spawn = $PlayerSpawnPoint.position
+	enemy_spawn = $EnemySpawnPoint.position
 
-func create_turn_order():
+func spawn_chars(player, enemy):
+	$Characters.add_child(player)
+	$Characters.get_node(player.name).set_global_position(player_spawn)
+	$Characters.get_node(player.name).movement_speed = 0
+	$Characters.add_child(enemy)
+	$Characters.get_node(enemy.name).global_position = enemy_spawn
+
+func create_turn_order(player, enemy):
+	spawn_chars(player, enemy)
 	var char_parent = get_node("Characters")
 	var chars = char_parent.get_children()
 	chars.sort_custom(self, 'sort_chars')

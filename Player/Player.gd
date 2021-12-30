@@ -10,11 +10,14 @@ var direction : Vector2
 var screen_size = 1024
 
 signal player_attack(damage)
+signal battle_start(player, enemy)
 signal player_death()
 
 onready var player_animation = $Sprite/AnimationPlayer
 
 func _ready():
+	if (get_parent().name == "World"):
+		connect("battle_start", get_parent(), "_on_Player_battle_start")
 	player_animation.play("Idle")
 
 func _physics_process(delta):
@@ -48,3 +51,9 @@ func play_turn():
 
 func _on_player_attack(damage):
 	pass # Replace with function body.
+
+func _on_Knight_area_entered(area):
+#	if area.is_in_group("enemy"):
+#		emit_signal("battle_start", self, area)
+	if (get_parent().name == "World" and area.is_in_group("enemy")):
+		get_parent().start_battle(self, area)

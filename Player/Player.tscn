@@ -103,7 +103,7 @@ tracks/0/keys = {
 radius = 33.1297
 height = 39.5899
 
-[node name="Knight" type="KinematicBody2D"]
+[node name="Player" type="Area2D"]
 position = Vector2( 288.977, 198.598 )
 script = ExtResource( 2 )
 
@@ -113,7 +113,7 @@ scale = Vector2( 4, 4 )
 texture = ExtResource( 1 )
 hframes = 8
 vframes = 9
-frame = 11
+frame = 14
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite"]
 anims/Block = SubResource( 1 )
@@ -126,3 +126,5 @@ anims/Walk = SubResource( 7 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( -2.37872, 20.2164 )
 shape = SubResource( 6 )
+
+[connection signal="area_entered" from="." to="." method="_on_Knight_area_entered" flags=6]
