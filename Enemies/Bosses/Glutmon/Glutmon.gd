@@ -1,4 +1,4 @@
-extends "res://Enemies/Enemy.gd"
+extends "res://Enemies/Multiphase_Enemy.gd"
 
 onready var FirstFormAnimation = $FirstForm/FirstFormAnimation
 onready var SecondFormAnimation = $SecondForm/SecondFormAnimation

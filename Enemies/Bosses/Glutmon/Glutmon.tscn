@@ -256,7 +256,9 @@ tracks/0/keys = {
 [sub_resource type="RectangleShape2D" id=17]
 extents = Vector2( 64.5599, 47.1109 )
 
-[node name="Glutmon" type="Area2D"]
+[node name="Glutmon" type="Area2D" groups=[
+"enemy",
+]]
 position = Vector2( 501.029, 287.963 )
 script = ExtResource( 5 )
 health = 5
@@ -285,7 +287,6 @@ texture = ExtResource( 3 )
 flip_h = true
 hframes = 13
 vframes = 7
-frame = 39
 
 [node name="SecondFormAnimation" type="AnimationPlayer" parent="SecondForm"]
 anims/Attack = SubResource( 5 )

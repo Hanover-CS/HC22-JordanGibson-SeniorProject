@@ -82,7 +82,7 @@ tracks/0/keys = {
 "values": [ 16, 17, 18, 19, 20, 0 ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=6]
 resource_name = "Walk"
 length = 0.8
 loop = true
@@ -99,7 +99,7 @@ tracks/0/keys = {
 "values": [ 8, 9, 10, 11, 12, 13, 14, 15 ]
 }
 
-[sub_resource type="CapsuleShape2D" id=6]
+[sub_resource type="CapsuleShape2D" id=7]
 radius = 33.1297
 height = 39.5899
 
@@ -121,10 +121,10 @@ anims/Dying = SubResource( 2 )
 anims/Hurt = SubResource( 3 )
 anims/Idle = SubResource( 4 )
 anims/Slash = SubResource( 5 )
-anims/Walk = SubResource( 7 )
+anims/Walk = SubResource( 6 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( -2.37872, 20.2164 )
-shape = SubResource( 6 )
+shape = SubResource( 7 )
 
 [connection signal="area_entered" from="." to="." method="_on_Knight_area_entered" flags=6]
