@@ -1,6 +1,6 @@
 extends Node2D
 
-export (int) var hp = 10
+export (int) var health = 10
 export (int) var damage = 1
 export (int) var defense = .05
 export (int) var speed = 1
@@ -10,17 +10,19 @@ var direction : Vector2
 var screen_size = 1024
 
 signal player_attack(damage)
-signal battle_start(player, enemy)
 signal player_death()
+signal turn_completed()
 
 onready var player_animation = $Sprite/AnimationPlayer
 
 func _ready():
 	if (get_parent().name == "World"):
 		connect("battle_start", get_parent(), "_on_Player_battle_start")
-	player_animation.play("Idle")
+		player_animation.play("Idle")
+	else:
+		player_animation.play("Idle")
 
-func _physics_process(delta):
+func _process(delta):
 	direction.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
 	direction.y = Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")
 	
@@ -36,24 +38,27 @@ func _physics_process(delta):
 	else:
 		player_animation.play("Idle")
 
-func _on_enemy_attack(damage):
-	hp -= damage
-	if hp <= 0:
+func _on_Knight_area_entered(area):
+	if (get_parent().name == "World" and area.is_in_group("enemy")):
+		get_parent().start_battle(self, area)
+
+func play_turn():
+	attack()
+	return self
+
+func attack():
+	player_animation.play("Slash")
+	yield(get_tree().create_timer(.55), "timeout")
+	print(2)
+	emit_signal("player_attack", damage)
+
+func _on_enemy_attack(enemy_damage):
+	print("Player damage took: ", enemy_damage)
+	health -= enemy_damage
+	if health <= 0:
 		player_animation.play("Dying")
 		emit_signal("player_death")
 	else:
 		player_animation.play("Hurt")
-		player_animation.queue("Idle")
-
-func play_turn():
-	emit_signal("player_attack", damage)
-	player_animation.play("Slash")
-
-func _on_player_attack(damage):
-	pass # Replace with function body.
-
-func _on_Knight_area_entered(area):
-#	if area.is_in_group("enemy"):
-#		emit_signal("battle_start", self, area)
-	if (get_parent().name == "World" and area.is_in_group("enemy")):
-		get_parent().start_battle(self, area)
+		yield(get_tree().create_timer(.55), "timeout")
+		player_animation.play("Idle")
