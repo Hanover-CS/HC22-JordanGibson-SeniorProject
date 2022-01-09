@@ -17,5 +17,4 @@ func start_battle(player, enemy):
 	add_child(battle_scene.instance())
 	remove_child(player)
 	remove_child(enemy)
-	$Battle.create_turn_order(temp_player, temp_enemy)
-	$Battle.play_turn()
+	$Battle.instance(temp_player, temp_enemy)

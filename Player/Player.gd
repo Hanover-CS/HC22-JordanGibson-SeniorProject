@@ -38,8 +38,15 @@ func _process(delta):
 	else:
 		player_animation.play("Idle")
 
+func get_speed():
+	return(speed)
+
+func get_health():
+	return(health)
+
 func _on_Knight_area_entered(area):
 	if (get_parent().name == "World" and area.is_in_group("enemy")):
+		player_animation.stop()
 		get_parent().start_battle(self, area)
 
 func play_turn():
@@ -60,5 +67,5 @@ func _on_enemy_attack(enemy_damage):
 		emit_signal("player_death")
 	else:
 		player_animation.play("Hurt")
-		yield(get_tree().create_timer(.55), "timeout")
+		yield(get_tree().create_timer(.15), "timeout")
 		player_animation.play("Idle")

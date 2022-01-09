@@ -16,6 +16,12 @@ signal turn_completed()
 func _ready():
 	animation.play("Idle")
 
+func get_speed():
+	return(speed)
+
+func get_health():
+	return(health)
+
 func play_turn():
 	attack()
 	print(1)

@@ -15,7 +15,7 @@ class TestBattle:
 		var player = player_scene.instance()
 		world.add_child(player)
 		world.add_child(imp)
-		world.start_battle(player, world.get_node("Imp"))
+		world.start_battle(player, imp)
 		var battle_chars = world.get_node("Battle").get_node("Characters")
 		assert_eq(world.get_child_count(), 1)
 
