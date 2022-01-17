@@ -34,13 +34,25 @@ func spawn_chars(player : Area2D, enemy : Area2D):
 func spawn_player(player : Area2D):
 	player.set_process(false)
 	char_parent.add_child(player)
+	setup_player(player)
+
+func setup_player(player):
 	player.set_global_position(player_spawn)
 	player.get_node("Sprite").get_node("AnimationPlayer").play("Idle")
+	face_right(player)
+	player.scale = Vector2(.75,.75)
 	player.movement_speed = 0
+
+func face_right(player : Area2D):
+	if player.get_node("Sprite").flip_h == true:
+		player.get_node("Sprite").flip_h = false
+	else:
+		pass
 
 func spawn_enemy(enemy : Area2D):
 	char_parent.add_child(enemy)
 	enemy.set_global_position(enemy_spawn)
+	enemy.scale = Vector2(3,3)
 
 func connect_signals(player, enemy):
 	enemy.connect('enemy_attack', player, '_on_enemy_attack')

@@ -114,7 +114,7 @@ tracks/0/keys = {
 extents = Vector2( 9.14148, 9.23802 )
 
 [node name="Imp" instance=ExtResource( 1 )]
-position = Vector2( 473.428, 272.195 )
+position = Vector2( 424.264, 185.572 )
 scale = Vector2( 4, 4 )
 script = ExtResource( 2 )
 health = 6
@@ -126,7 +126,7 @@ texture = ExtResource( 3 )
 flip_h = true
 hframes = 8
 vframes = 12
-frame = 24
+frame = 16
 
 [node name="AnimationPlayer" parent="Sprite" index="0"]
 anims/Attack = SubResource( 1 )
@@ -144,5 +144,5 @@ frame = 40
 
 [node name="CollisionShape2D" parent="." index="1"]
 visible = false
-position = Vector2( -1.16701, 9.91962 )
+position = Vector2( 0.881505, 8.45639 )
 shape = SubResource( 6 )

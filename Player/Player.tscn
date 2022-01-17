@@ -107,7 +107,7 @@ position = Vector2( 288.977, 198.598 )
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( -1.63525, 2.42633 )
+position = Vector2( -2.82446, -22.547 )
 scale = Vector2( 4, 4 )
 texture = ExtResource( 1 )
 hframes = 8
@@ -123,6 +123,7 @@ anims/Slash = SubResource( 5 )
 anims/Walk = SubResource( 6 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2( -2.37872, 20.2164 )
 shape = SubResource( 7 )
 
