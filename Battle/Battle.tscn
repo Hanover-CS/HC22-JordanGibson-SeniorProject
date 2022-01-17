@@ -12,3 +12,29 @@ position = Vector2( 222.755, 363.393 )
 position = Vector2( 717.346, 361.505 )
 
 [node name="Characters" type="Node2D" parent="."]
+
+[node name="BattleScreen" type="Node2D" parent="."]
+
+[node name="Forest" type="Node2D" parent="BattleScreen"]
+
+[node name="Background" type="TileMap" parent="BattleScreen/Forest"]
+format = 1
+
+[node name="Foreground" type="TileMap" parent="BattleScreen/Forest"]
+format = 1
+
+[node name="Ruins" type="Node2D" parent="BattleScreen"]
+
+[node name="Background" type="TileMap" parent="BattleScreen/Ruins"]
+format = 1
+
+[node name="Foreground" type="TileMap" parent="BattleScreen/Ruins"]
+format = 1
+
+[node name="Dungeon" type="Node2D" parent="BattleScreen"]
+
+[node name="Background" type="TileMap" parent="BattleScreen/Dungeon"]
+format = 1
+
+[node name="Foreground" type="TileMap" parent="BattleScreen/Dungeon"]
+format = 1

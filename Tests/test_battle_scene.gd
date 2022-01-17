@@ -8,7 +8,11 @@ class TestBattle:
 	onready var player_scene = preload("res://Player/Player.tscn")
 	onready var world_scene = preload("res://World.tscn")
 
-	onready var world = world_scene.instance()
+	onready var world
+	
+	func _ready():
+		world = world_scene.instance()
+		add_child(world)
 
 	func test_battle_start():
 		var imp = imp_scene.instance()

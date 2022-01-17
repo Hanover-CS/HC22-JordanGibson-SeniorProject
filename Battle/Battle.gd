@@ -1,10 +1,14 @@
 extends Node2D
 
-onready var player_spawn : Vector2 = $PlayerSpawnPoint.position
-onready var enemy_spawn : Vector2 = $EnemySpawnPoint.position
+onready var player_spawn : Vector2
+onready var enemy_spawn : Vector2
 
 onready var active_char : Object
 onready var char_parent : Node2D
+
+func _ready():
+	player_spawn = $PlayerSpawnPoint.position
+	enemy_spawn = $EnemySpawnPoint.position
 
 func _process(delta):
 	if (Input.is_action_just_pressed("ui_accept")):

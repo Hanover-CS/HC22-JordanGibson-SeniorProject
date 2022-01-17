@@ -11,11 +11,20 @@ config_version=4
 [application]
 
 config/name="SeniorProjectRPG"
+run/main_scene="res://World.tscn"
 config/icon="res://icon.png"
+
+[display]
+
+window/size/height=620
 
 [editor_plugins]
 
 enabled=PoolStringArray( "res://addons/gut/plugin.cfg" )
+
+[global]
+
+screen=false
 
 [physics]
 
