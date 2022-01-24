@@ -1,8 +1,8 @@
 [gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Enemies/Enemy.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Enemies/Small/Imp/Imp.gd" type="Script" id=2]
-[ext_resource path="res://Enemy Animations/Small Enemies/Infernal/Imp/Imp Sprite Sheet.png" type="Texture" id=3]
+[ext_resource path="res://Enemy Animations/Small Enemies/Infernal/Imp/Imp Sprite Sheet.png" type="Texture" id=2]
+[ext_resource path="res://Enemies/Small/Ruins/Imp/Imp.gd" type="Script" id=3]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Attack"
@@ -116,13 +116,13 @@ extents = Vector2( 9.14148, 9.23802 )
 [node name="Imp" instance=ExtResource( 1 )]
 position = Vector2( 424.264, 185.572 )
 scale = Vector2( 4, 4 )
-script = ExtResource( 2 )
+script = ExtResource( 3 )
 health = 6
 speed = 3
 
 [node name="Sprite" parent="." index="0"]
 position = Vector2( 0.25, 0 )
-texture = ExtResource( 3 )
+texture = ExtResource( 2 )
 flip_h = true
 hframes = 8
 vframes = 12
@@ -137,7 +137,7 @@ anims/Idle = SubResource( 5 )
 
 [node name="Fireball" type="Sprite" parent="Sprite" index="1"]
 visible = false
-texture = ExtResource( 3 )
+texture = ExtResource( 2 )
 hframes = 8
 vframes = 12
 frame = 40

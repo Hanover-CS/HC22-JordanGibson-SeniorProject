@@ -1,8 +1,9 @@
 extends Node2D
 var battle_scene = preload("res://Battle/Battle.tscn")
-var enemy_scene = preload("res://Enemies/Small/Imp/Imp.tscn")
+var enemy_scene = preload("res://Enemies/Small/Ruins/Imp/Imp.tscn")
 var player_scene = preload("res://Player/Player.tscn")
 onready var spawn_points : Array = []
+onready var enemy_types : Array = ["res://Enemies/Small/Ruins/Imp/Imp.tscn", "res://Enemies/Small/Ruins/Skullflame/Skullflame.tscn"]
 
 func _ready():
 	self.initialize("Forest")
@@ -14,7 +15,7 @@ func initialize(Map):
 			$Map/Dungeon.visible = false
 			$Map/Ruins.visible = false
 			get_spawnpoints("Forest")
-			spawn_enemies("Imp", 7)
+			spawn_enemies(enemy_scene, 6)
 			spawn_player("Forest")
 		"Ruins":
 			$Map/Forest.visible = true
@@ -39,20 +40,28 @@ func start_battle(player, enemy):
 
 func get_spawnpoints(Map):
 	spawn_points.clear()
-	for i in range(1,11):
-		spawn_points.append(get_node("SpawnPoints").get_node(Map).get_node("Normal").get_node("Spawn" + str(i)))
+	for i in range(10):
+		spawn_points.append(get_node("SpawnPoints").get_node(Map).get_node("Normal").get_child(i))
 
-func spawn_enemies(Enemy, NumEnemies):
+func spawn_enemies(EnemyScene, NumEnemies):
+	var Spawns = choose_spawns(NumEnemies)
+	for spawn in Spawns:
+		randomize()
+		var type = enemy_types[randi()%2]
+		var enemy = load(type).instance()
+		add_child(enemy)
+		enemy.scale = Vector2(1.5,1.5)
+		enemy.set_global_position(spawn_points[spawn].position)
+
+func choose_spawns(NumEnemies):
 	var NumsPicked = []
 	for i in range(NumEnemies):
+		randomize()
 		var spawn_point = randi()%9+1
 		while NumsPicked.count(spawn_point) == 1:
 			spawn_point = randi()%9+1
 		NumsPicked.append(spawn_point)
-		var enemy = enemy_scene.instance()
-		add_child(enemy)
-		enemy.scale = Vector2(1.5,1.5)
-		enemy.set_global_position(spawn_points[spawn_point].position)
+	return NumsPicked
 
 func spawn_player(Map):
 	var player = player_scene.instance()
