@@ -106,10 +106,10 @@ script = ExtResource( 4 )
 
 [node name="Sprite" parent="." index="0"]
 texture = ExtResource( 3 )
+flip_h = true
 hframes = 8
 vframes = 7
 frame = 55
-speed = 3
 
 [node name="AnimationPlayer" parent="Sprite" index="0"]
 anims/Attack = SubResource( 1 )

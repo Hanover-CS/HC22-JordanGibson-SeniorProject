@@ -2,11 +2,8 @@ extends Node2D
 var battle_scene = preload("res://Battle/Battle.tscn")
 var enemy_scene = preload("res://Enemies/Small/Ruins/Imp/Imp.tscn")
 var player_scene = preload("res://Player/Player.tscn")
-onready var spawn_points : Array = []
-onready var enemy_types : Array = ["res://Enemies/Small/Ruins/Imp/Imp.tscn", "res://Enemies/Small/Ruins/Skullflame/Skullflame.tscn"]
-
-func _ready():
-	self.initialize("Forest")
+var spawn_points : Array = []
+var enemy_types : Array = ["res://Enemies/Small/Ruins/Imp/Imp.tscn", "res://Enemies/Small/Ruins/Skullflame/Skullflame.tscn"]
 
 func initialize(Map):
 	match Map:
@@ -34,12 +31,12 @@ func start_battle(player, enemy):
 	var temp_enemy = enemy
 	add_child(battle_scene.instance())
 	remove_child(player)
-	remove_child(enemy)
+	get_node("Enemies").remove_child(enemy)
 	$Map.visible = false
 	$Battle.instance(temp_player, temp_enemy)
 
 func get_spawnpoints(Map):
-	spawn_points.clear()
+#	spawn_points.clear()
 	for i in range(10):
 		spawn_points.append(get_node("SpawnPoints").get_node(Map).get_node("Normal").get_child(i))
 
@@ -49,7 +46,7 @@ func spawn_enemies(EnemyScene, NumEnemies):
 		randomize()
 		var type = enemy_types[randi()%2]
 		var enemy = load(type).instance()
-		add_child(enemy)
+		get_node("Enemies").add_child(enemy)
 		enemy.scale = Vector2(1.5,1.5)
 		enemy.set_global_position(spawn_points[spawn].position)
 
