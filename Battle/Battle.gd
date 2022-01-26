@@ -1,5 +1,7 @@
 extends Node2D
 
+onready var enemy_class = preload("res://Enemies/Enemy.gd")
+
 onready var player_spawn : Vector2
 onready var enemy_spawn : Vector2
 
@@ -14,7 +16,7 @@ func _process(delta):
 	if (Input.is_action_just_pressed("ui_accept")):
 		play_turn()
 
-func instance(player, enemy):
+func instance(player : Area2D, enemy : Area2D):
 	create_turn_order(player, enemy)
 	yield(get_tree().create_timer(1.0), "timeout")
 	play_turn()
@@ -43,14 +45,21 @@ func setup_player(player):
 	player.scale = Vector2(.75,.75)
 	player.movement_speed = 0
 
-func face_right(player : Area2D):
-	if player.get_node("Sprite").flip_h == true:
-		player.get_node("Sprite").flip_h = false
+func face_right(character : Area2D):
+	if character.get_node("Sprite").flip_h == true:
+		character.get_node("Sprite").flip_h = false
 	else:
 		pass
 
-func spawn_enemy(enemy : Area2D):
+func face_left(character : Area2D):
+	if character.get_node("Sprite").flip_h == false:
+		character.get_node("Sprite").flip_h = true
+	else:
+		pass
+
+func spawn_enemy(enemy: Area2D):
 	char_parent.add_child(enemy)
+	face_left(enemy)
 	enemy.set_global_position(enemy_spawn)
 	enemy.scale = Vector2(3,3)
 

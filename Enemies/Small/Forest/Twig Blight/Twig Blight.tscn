@@ -1,0 +1,55 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Enemies/Enemy.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Enemy Animations/Small Enemies/Beasts/Twig Blight/Twig Blight Sprite Sheet.png" type="Texture" id=2]
+
+[sub_resource type="Animation" id=2]
+resource_name = "Attack"
+length = 1.12
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 16, 17, 18, 19, 20, 21 ]
+}
+
+[sub_resource type="Animation" id=1]
+resource_name = "Idle"
+length = 0.9
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3, 0.5, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3 ]
+}
+
+[node name="Enemy" instance=ExtResource( 1 )]
+position = Vector2( 539.898, 272.78 )
+
+[node name="Sprite" parent="." index="0"]
+texture = ExtResource( 2 )
+hframes = 8
+vframes = 5
+frame = 17
+
+[node name="AnimationPlayer" parent="Sprite" index="0"]
+anims/Attack = SubResource( 2 )
+anims/Idle = SubResource( 1 )
+
+[node name="Twig Blight Sprite Sheet" type="Sprite" parent="CollisionShape2D" index="0"]
+position = Vector2( -141.328, 0.675148 )
+texture = ExtResource( 2 )

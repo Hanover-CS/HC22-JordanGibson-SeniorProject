@@ -57,9 +57,8 @@ extents = Vector2( 7.7419, 7.48283 )
 
 [node name="Wisp" instance=ExtResource( 1 )]
 position = Vector2( 368.112, 252.015 )
-scale = Vector2( 4, 4 )
 script = ExtResource( 3 )
-speed = 3
+health = 4
 
 [node name="Sprite" parent="." index="0"]
 texture = ExtResource( 2 )

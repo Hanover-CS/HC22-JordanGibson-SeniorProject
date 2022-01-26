@@ -101,15 +101,13 @@ extents = Vector2( 7.05467, 11.3994 )
 
 [node name="Skullflame" instance=ExtResource( 1 )]
 position = Vector2( 346.403, 245.408 )
-scale = Vector2( 4, 4 )
 script = ExtResource( 4 )
 
 [node name="Sprite" parent="." index="0"]
 texture = ExtResource( 3 )
-flip_h = true
 hframes = 8
 vframes = 7
-frame = 55
+frame = 48
 
 [node name="AnimationPlayer" parent="Sprite" index="0"]
 anims/Attack = SubResource( 1 )

@@ -3,6 +3,7 @@ export(ButtonGroup) var group
 onready var world_scene = load("res://World.tscn")
 var world
 
+
 func _ready():
 	for button in group.get_buttons():
 		button.connect("pressed", self, "button_pressed")
