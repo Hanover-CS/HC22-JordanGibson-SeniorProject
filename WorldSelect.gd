@@ -19,6 +19,9 @@ func button_pressed():
 			world.initialize("Forest")
 		"Ruins":
 			print(active_button.name)
+			self.visible = false
+			get_tree().get_root().add_child(world)
+			world.initialize("Ruins")
 		"Dungeon":
 			print(active_button.name)
 		"Store":

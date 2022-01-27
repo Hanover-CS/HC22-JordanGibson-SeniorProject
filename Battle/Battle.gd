@@ -16,7 +16,20 @@ func _process(delta):
 	if (Input.is_action_just_pressed("ui_accept")):
 		play_turn()
 
-func instance(player : Area2D, enemy : Area2D):
+func instance(player : Area2D, enemy : Area2D, Map : String):
+	match Map:
+		"Forest":
+			$BattleScreen/Forest.visible = true
+			$BattleScreen/Ruins.visible = false
+			$BattleScreen/Dungeon.visible = false
+		"Ruins":
+			$BattleScreen/Forest.visible = false
+			$BattleScreen/Ruins.visible = true
+			$BattleScreen/Dungeon.visible = false
+		"Dungeon":
+			$BattleScreen/Forest.visible = false
+			$BattleScreen/Ruins.visible = false
+			$BattleScreen/Dungeon.visible = true
 	create_turn_order(player, enemy)
 	yield(get_tree().create_timer(1.0), "timeout")
 	play_turn()

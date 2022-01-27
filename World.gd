@@ -4,6 +4,7 @@ var enemy_scene = preload("res://Enemies/Small/Ruins/Imp/Imp.tscn")
 var player_scene = preload("res://Player/Player.tscn")
 var spawn_points : Array = []
 var enemy_types : Array = ["res://Enemies/Small/Forest/Small Mushroom/Small Mushroom.tscn","res://Enemies/Small/Forest/Twig Blight/Twig Blight.tscn","res://Enemies/Small/Ruins/Imp/Imp.tscn", "res://Enemies/Small/Ruins/Skullflame/Skullflame.tscn"]
+var active_floor
 
 func initialize(Map):
 	match Map:
@@ -14,10 +15,15 @@ func initialize(Map):
 			get_spawnpoints("Forest")
 			spawn_enemies(enemy_scene, 4, 9)
 			spawn_player("Forest")
+			active_floor = "Forest"
 		"Ruins":
-			$Map/Forest.visible = true
+			$Map/Forest.visible = false
 			$Map/Dungeon.visible = false
-			$Map/Ruins.visible = false
+			$Map/Ruins.visible = true
+			get_spawnpoints("Ruins")
+			spawn_enemies(enemy_scene, 4, 9)
+			spawn_player("Ruins")
+			active_floor = "Ruins"
 		"Dungeon":
 			$Map/Forest.visible = true
 			$Map/Dungeon.visible = false
@@ -33,7 +39,7 @@ func start_battle(player, enemy):
 	remove_child(player)
 	get_node("Enemies").remove_child(enemy)
 	$Map.visible = false
-	$Battle.instance(temp_player, temp_enemy)
+	$Battle.instance(temp_player, temp_enemy, active_floor)
 
 func get_spawnpoints(Map):
 #	spawn_points.clear()
@@ -62,6 +68,7 @@ func choose_spawns(NumEnemies):
 
 func spawn_player(Map):
 	var player = player_scene.instance()
+	var player_spawn = get_node("SpawnPoints/" + Map + "/Player/PlayerSpawn")
 	add_child(player)
-	player.set_global_position($SpawnPoints/Forest/Player/PlayerSpawn.position)
+	player.set_global_position(player_spawn.position)
 	player.scale = Vector2(.4,.4)
