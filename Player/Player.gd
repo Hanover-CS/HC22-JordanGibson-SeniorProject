@@ -6,6 +6,7 @@ export (int) var defense = .05
 export (int) var speed = 1
 export (int) var movement_speed = 100
 
+var wait_time = 1.0
 var direction : Vector2
 var screen_size = 1024
 
@@ -55,7 +56,7 @@ func play_turn():
 
 func attack():
 	player_animation.play("Slash")
-	yield(get_tree().create_timer(.55), "timeout")
+	yield(get_tree().create_timer(wait_time), "timeout")
 	print(2)
 	emit_signal("player_attack", damage)
 
@@ -67,5 +68,5 @@ func _on_enemy_attack(enemy_damage):
 		emit_signal("player_death")
 	else:
 		player_animation.play("Hurt")
-		yield(get_tree().create_timer(.15), "timeout")
+		yield(get_tree().create_timer(wait_time), "timeout")
 		player_animation.play("Idle")

@@ -63,7 +63,7 @@ func spawn_enemy(enemy: Area2D):
 	enemy.set_global_position(enemy_spawn)
 	enemy.scale = Vector2(3,3)
 
-func connect_signals(player, enemy):
+func connect_signals(player : Area2D, enemy : Area2D):
 	enemy.connect('enemy_attack', player, '_on_enemy_attack')
 	player.connect('player_attack', enemy, '_on_player_attack')
 
