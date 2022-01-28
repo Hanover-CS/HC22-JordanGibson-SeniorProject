@@ -111,14 +111,14 @@ tracks/0/keys = {
 }
 
 [sub_resource type="RectangleShape2D" id=6]
-extents = Vector2( 9.14148, 9.23802 )
+extents = Vector2( 6.67167, 6.79415 )
 
 [node name="Imp" instance=ExtResource( 1 )]
 position = Vector2( 424.264, 185.572 )
 script = ExtResource( 3 )
 
 [node name="Sprite" parent="." index="0"]
-position = Vector2( 0.25, 0 )
+position = Vector2( 0.25, -14.0379 )
 texture = ExtResource( 2 )
 hframes = 8
 vframes = 12
@@ -139,6 +139,5 @@ vframes = 12
 frame = 40
 
 [node name="CollisionShape2D" parent="." index="1"]
-visible = false
-position = Vector2( 0.881505, 8.45639 )
+position = Vector2( 0.351765, -4.78689 )
 shape = SubResource( 6 )

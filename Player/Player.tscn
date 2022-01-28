@@ -103,11 +103,11 @@ radius = 33.1297
 height = 39.5899
 
 [node name="Player" type="Area2D"]
-position = Vector2( 288.977, 198.598 )
+position = Vector2( 304.394, 217.87 )
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( -2.82446, -22.547 )
+position = Vector2( -1.86084, -57.2359 )
 scale = Vector2( 4, 4 )
 texture = ExtResource( 1 )
 hframes = 8

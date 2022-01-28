@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Enemies/Enemy.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Enemy Animations/Small Enemies/Infernal/Skullflame/Projectile/Skullflame Fireball Sprite Sheet.png" type="Texture" id=2]
@@ -53,6 +53,22 @@ tracks/0/keys = {
 "values": [ 8, 9, 10, 11, 12, 13, 14, 15 ]
 }
 
+[sub_resource type="Animation" id=7]
+resource_name = "Hurt"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.3, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 48, 49, 50, 51 ]
+}
+
 [sub_resource type="Animation" id=4]
 length = 0.8
 loop = true
@@ -97,22 +113,24 @@ tracks/1/keys = {
 }
 
 [sub_resource type="RectangleShape2D" id=6]
-extents = Vector2( 7.05467, 11.3994 )
+extents = Vector2( 5.22316, 6.05999 )
 
 [node name="Skullflame" instance=ExtResource( 1 )]
 position = Vector2( 346.403, 245.408 )
 script = ExtResource( 4 )
 
 [node name="Sprite" parent="." index="0"]
+position = Vector2( 0.943878, -4.71938 )
 texture = ExtResource( 3 )
 hframes = 8
 vframes = 7
-frame = 48
+frame = 51
 
 [node name="AnimationPlayer" parent="Sprite" index="0"]
 anims/Attack = SubResource( 1 )
 anims/Dying = SubResource( 2 )
 anims/Fire = SubResource( 3 )
+anims/Hurt = SubResource( 7 )
 anims/Idle = SubResource( 4 )
 anims/Shoot = SubResource( 5 )
 
@@ -125,5 +143,5 @@ vframes = 3
 frame = 8
 
 [node name="CollisionShape2D" parent="." index="1"]
-position = Vector2( -0.628922, -1.57224 )
+position = Vector2( 0.0789642, -3.69598 )
 shape = SubResource( 6 )

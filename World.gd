@@ -3,7 +3,7 @@ var battle_scene = preload("res://Battle/Battle.tscn")
 var enemy_scene = preload("res://Enemies/Small/Ruins/Imp/Imp.tscn")
 var player_scene = preload("res://Player/Player.tscn")
 var spawn_points : Array = []
-var enemy_types : Array = ["res://Enemies/Small/Forest/Small Mushroom/Small Mushroom.tscn","res://Enemies/Small/Forest/Twig Blight/Twig Blight.tscn","res://Enemies/Small/Ruins/Imp/Imp.tscn", "res://Enemies/Small/Ruins/Skullflame/Skullflame.tscn"]
+var enemy_types : Array = []
 var active_floor
 
 func initialize(Map):
@@ -13,7 +13,10 @@ func initialize(Map):
 			$Map/Dungeon.visible = false
 			$Map/Ruins.visible = false
 			get_spawnpoints("Forest")
-			spawn_enemies(enemy_scene, 4, 9)
+			enemy_types = ["res://Enemies/Small/Forest/Small Mushroom/Small Mushroom.tscn", 
+			"res://Enemies/Small/Forest/Twig Blight/Twig Blight.tscn", "res://Enemies/Small/Ruins/Wisp/Whisp.tscn",
+			"res://Enemies/Medium/Forest/Wolf/Wolf.tscn"]
+			spawn_enemies(enemy_scene, enemy_types.size(), 9)
 			spawn_player("Forest")
 			active_floor = "Forest"
 		"Ruins":
@@ -21,7 +24,10 @@ func initialize(Map):
 			$Map/Dungeon.visible = false
 			$Map/Ruins.visible = true
 			get_spawnpoints("Ruins")
-			spawn_enemies(enemy_scene, 4, 9)
+			enemy_types = ["res://Enemies/Small/Ruins/Imp/Imp.tscn", "res://Enemies/Small/Ruins/Skullflame/Skullflame.tscn", 
+			"res://Enemies/Small/Ruins/Wisp/Whisp.tscn","res://Enemies/Small/Ruins/Child Spirit/Child Spirit.tscn",
+			"res://Enemies/Small/Ruins/Hell Critter/Hell Critter.tscn"]
+			spawn_enemies(enemy_scene, enemy_types.size(), 9)
 			spawn_player("Ruins")
 			active_floor = "Ruins"
 		"Dungeon":
@@ -50,7 +56,7 @@ func spawn_enemies(EnemyScene, NumTypes, NumEnemies):
 	var Spawns = choose_spawns(NumEnemies)
 	for spawn in Spawns:
 		randomize()
-		var type = enemy_types[randi()%NumTypes-1]
+		var type = enemy_types[randi()%NumTypes]
 		var enemy = load(type).instance()
 		get_node("Enemies").add_child(enemy)
 		enemy.scale = Vector2(1.5,1.5)
