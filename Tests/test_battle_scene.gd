@@ -3,7 +3,7 @@ extends "res://addons/gut/test.gd"
 class TestBattle:
 	extends "res://addons/gut/test.gd"
 
-	onready var imp_scene = preload("res://Enemies/Small/Imp/Imp.tscn")
+	onready var imp_scene = preload("res://Enemies/Small/Ruins/Imp/Imp.tscn")
 
 	onready var player_scene = preload("res://Player/Player.tscn")
 	onready var world_scene = preload("res://World.tscn")

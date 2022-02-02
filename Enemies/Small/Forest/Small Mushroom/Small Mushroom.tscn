@@ -71,11 +71,11 @@ tracks/0/keys = {
 extents = Vector2( 6.65276, 7.15143 )
 
 [node name="Small Mushroom" instance=ExtResource( 2 )]
-position = Vector2( 414.859, 215.462 )
+position = Vector2( 426.632, 216.303 )
 script = ExtResource( 3 )
 
 [node name="Sprite" parent="." index="0"]
-position = Vector2( 9.03961, -15.5566 )
+position = Vector2( -0.630693, -15.1362 )
 texture = ExtResource( 1 )
 hframes = 6
 vframes = 12
@@ -88,5 +88,5 @@ anims/Hurt = SubResource( 3 )
 anims/Idle = SubResource( 4 )
 
 [node name="CollisionShape2D" parent="." index="1"]
-position = Vector2( 6.02511, -6.6851 )
+position = Vector2( -4.06561, -6.26466 )
 shape = SubResource( 5 )

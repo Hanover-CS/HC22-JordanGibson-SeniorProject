@@ -31,9 +31,16 @@ func initialize(Map):
 			spawn_player("Ruins")
 			active_floor = "Ruins"
 		"Dungeon":
-			$Map/Forest.visible = true
-			$Map/Dungeon.visible = false
+			$Map/Forest.visible = false
+			$Map/Dungeon.visible = true
 			$Map/Ruins.visible = false
+			get_spawnpoints("Dungeon")
+			enemy_types = ["res://Enemies/Small/Ruins/Imp/Imp.tscn", "res://Enemies/Small/Ruins/Skullflame/Skullflame.tscn", 
+			"res://Enemies/Small/Ruins/Wisp/Whisp.tscn","res://Enemies/Small/Ruins/Child Spirit/Child Spirit.tscn",
+			"res://Enemies/Small/Ruins/Hell Critter/Hell Critter.tscn"]
+			spawn_enemies(enemy_scene, enemy_types.size(), 9)
+			spawn_player("Dungeon")
+			active_floor = "Dungeon"
 
 func _on_Player_battle_start(player, enemy):
 	start_battle(player, enemy)
@@ -45,6 +52,7 @@ func start_battle(player, enemy):
 	remove_child(player)
 	get_node("Enemies").remove_child(enemy)
 	$Map.visible = false
+	$Enemies.visible = false
 	$Battle.instance(temp_player, temp_enemy, active_floor)
 
 func get_spawnpoints(Map):
