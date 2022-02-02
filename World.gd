@@ -37,7 +37,7 @@ func initialize(Map):
 			get_spawnpoints("Dungeon")
 			enemy_types = ["res://Enemies/Small/Ruins/Imp/Imp.tscn", "res://Enemies/Small/Ruins/Skullflame/Skullflame.tscn", 
 			"res://Enemies/Small/Ruins/Wisp/Whisp.tscn","res://Enemies/Small/Ruins/Child Spirit/Child Spirit.tscn",
-			"res://Enemies/Small/Ruins/Hell Critter/Hell Critter.tscn"]
+			"res://Enemies/Small/Dungeon/Mimic/Mimic.tscn"]
 			spawn_enemies(enemy_scene, enemy_types.size(), 9)
 			spawn_player("Dungeon")
 			active_floor = "Dungeon"
@@ -62,23 +62,34 @@ func get_spawnpoints(Map):
 
 func spawn_enemies(EnemyScene, NumTypes, NumEnemies):
 	var Spawns = choose_spawns(NumEnemies)
+	var enemies_spawned : Dictionary = make_enemy_type_dict()
 	for spawn in Spawns:
 		randomize()
 		var type = enemy_types[randi()%NumTypes]
+		while enemies_spawned[type] >= 3:
+			type = enemy_types[randi()%NumTypes]
+		var curr_type_val = enemies_spawned[type]
+		enemies_spawned[type] = curr_type_val + 1
 		var enemy = load(type).instance()
 		get_node("Enemies").add_child(enemy)
 		enemy.scale = Vector2(1.5,1.5)
 		enemy.set_global_position(spawn_points[spawn].position)
 
+func make_enemy_type_dict():
+	var enemies = {}
+	for type in enemy_types:
+		enemies[type] = 0
+	return enemies
+
 func choose_spawns(NumEnemies):
-	var NumsPicked = []
+	var SpawnsPicked = []
 	for i in range(NumEnemies):
 		randomize()
 		var spawn_point = randi()%9+1
-		while NumsPicked.count(spawn_point) == 1:
+		while SpawnsPicked.count(spawn_point) == 1:
 			spawn_point = randi()%9+1
-		NumsPicked.append(spawn_point)
-	return NumsPicked
+		SpawnsPicked.append(spawn_point)
+	return SpawnsPicked
 
 func spawn_player(Map):
 	var player = player_scene.instance()
