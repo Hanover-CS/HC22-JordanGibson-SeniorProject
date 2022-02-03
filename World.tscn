@@ -247,7 +247,7 @@ texture = ExtResource( 5 )
 centered = false
 hframes = 26
 vframes = 15
-frame = 93
+frame = 91
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Store/StoreKeeper"]
 anims/Idle = SubResource( 1 )

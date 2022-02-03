@@ -18,8 +18,8 @@ func initialize(Map):
 			enemy_types = ["res://Enemies/Small/Forest/Small Mushroom/Small Mushroom.tscn", 
 			"res://Enemies/Small/Forest/Twig Blight/Twig Blight.tscn", "res://Enemies/Small/Ruins/Wisp/Whisp.tscn",
 			"res://Enemies/Medium/Forest/Wolf/Wolf.tscn"]
-			spawn_enemies(enemy_scene, enemy_types.size(), 9)
 			spawn_player("Forest")
+			spawn_enemies(enemy_scene, enemy_types.size(), 9)
 			active_floor = "Forest"
 		"Ruins":
 			$Map/Forest.visible = false
@@ -30,8 +30,8 @@ func initialize(Map):
 			enemy_types = ["res://Enemies/Small/Ruins/Imp/Imp.tscn", "res://Enemies/Small/Ruins/Skullflame/Skullflame.tscn", 
 			"res://Enemies/Small/Ruins/Wisp/Whisp.tscn","res://Enemies/Small/Ruins/Child Spirit/Child Spirit.tscn",
 			"res://Enemies/Small/Ruins/Hell Critter/Hell Critter.tscn"]
-			spawn_enemies(enemy_scene, enemy_types.size(), 9)
 			spawn_player("Ruins")
+			spawn_enemies(enemy_scene, enemy_types.size(), 9)
 			active_floor = "Ruins"
 		"Dungeon":
 			$Map/Forest.visible = false
@@ -42,8 +42,8 @@ func initialize(Map):
 			enemy_types = ["res://Enemies/Small/Ruins/Imp/Imp.tscn", "res://Enemies/Small/Ruins/Skullflame/Skullflame.tscn", 
 			"res://Enemies/Small/Ruins/Wisp/Whisp.tscn","res://Enemies/Small/Ruins/Child Spirit/Child Spirit.tscn",
 			"res://Enemies/Small/Dungeon/Mimic/Mimic.tscn"]
-			spawn_enemies(enemy_scene, enemy_types.size(), 9)
 			spawn_player("Dungeon")
+			spawn_enemies(enemy_scene, enemy_types.size(), 9)
 			active_floor = "Dungeon"
 		"Store":
 			for button in group.get_buttons():
@@ -83,6 +83,7 @@ func spawn_enemies(EnemyScene, NumTypes, NumEnemies):
 		enemies_spawned[type] = curr_type_val + 1
 		var enemy = load(type).instance()
 		get_node("Enemies").add_child(enemy)
+		enemy.level_up(get_node("Player").get_level())
 		enemy.scale = Vector2(1.5,1.5)
 		enemy.set_global_position(spawn_points[spawn].position)
 
