@@ -1,10 +1,13 @@
 extends Node2D
 
+var level : int = 1
 export (int) var health = 10
 export (int) var damage = 1
 export (int) var defense = .05
 export (int) var speed = 1
 export (int) var movement_speed = 100
+
+var Inventory : Dictionary = {"Attack Potion" : 0, "Health Potion" : 0}
 
 var wait_time = 1.0
 var direction : Vector2
@@ -59,6 +62,19 @@ func attack():
 	yield(get_tree().create_timer(wait_time), "timeout")
 	print(2)
 	emit_signal("player_attack", damage)
+
+func give_item(Item):
+	if (Item == "Attack Potion"):
+		var curr_amount = Inventory.get(Item)
+		Inventory[Item] = curr_amount + 1
+		print(Inventory)
+	elif (Item == "Health Potion"):
+		var curr_amount = Inventory.get(Item)
+		Inventory[Item] = curr_amount + 1
+		print(Inventory)
+
+func get_level():
+	return
 
 func _on_enemy_attack(enemy_damage):
 	print("Player damage took: ", enemy_damage)

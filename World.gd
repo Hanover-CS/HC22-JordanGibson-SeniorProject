@@ -5,6 +5,7 @@ var player_scene = preload("res://Player/Player.tscn")
 var spawn_points : Array = []
 var enemy_types : Array = []
 var active_floor
+export (ButtonGroup) var group
 
 func initialize(Map):
 	match Map:
@@ -12,6 +13,7 @@ func initialize(Map):
 			$Map/Forest.visible = true
 			$Map/Dungeon.visible = false
 			$Map/Ruins.visible = false
+			$Store.visible = false
 			get_spawnpoints("Forest")
 			enemy_types = ["res://Enemies/Small/Forest/Small Mushroom/Small Mushroom.tscn", 
 			"res://Enemies/Small/Forest/Twig Blight/Twig Blight.tscn", "res://Enemies/Small/Ruins/Wisp/Whisp.tscn",
@@ -23,6 +25,7 @@ func initialize(Map):
 			$Map/Forest.visible = false
 			$Map/Dungeon.visible = false
 			$Map/Ruins.visible = true
+			$Store.visible = false
 			get_spawnpoints("Ruins")
 			enemy_types = ["res://Enemies/Small/Ruins/Imp/Imp.tscn", "res://Enemies/Small/Ruins/Skullflame/Skullflame.tscn", 
 			"res://Enemies/Small/Ruins/Wisp/Whisp.tscn","res://Enemies/Small/Ruins/Child Spirit/Child Spirit.tscn",
@@ -34,6 +37,7 @@ func initialize(Map):
 			$Map/Forest.visible = false
 			$Map/Dungeon.visible = true
 			$Map/Ruins.visible = false
+			$Store.visible = false
 			get_spawnpoints("Dungeon")
 			enemy_types = ["res://Enemies/Small/Ruins/Imp/Imp.tscn", "res://Enemies/Small/Ruins/Skullflame/Skullflame.tscn", 
 			"res://Enemies/Small/Ruins/Wisp/Whisp.tscn","res://Enemies/Small/Ruins/Child Spirit/Child Spirit.tscn",
@@ -41,6 +45,13 @@ func initialize(Map):
 			spawn_enemies(enemy_scene, enemy_types.size(), 9)
 			spawn_player("Dungeon")
 			active_floor = "Dungeon"
+		"Store":
+			for button in group.get_buttons():
+				button.connect("pressed", self, "button_pressed")
+			$Map.visible = false
+			$Store.visible = true
+			$Store/StoreKeeper/AnimationPlayer.play("Idle")
+			spawn_player("Store")
 
 func _on_Player_battle_start(player, enemy):
 	start_battle(player, enemy)
@@ -93,7 +104,19 @@ func choose_spawns(NumEnemies):
 
 func spawn_player(Map):
 	var player = player_scene.instance()
-	var player_spawn = get_node("SpawnPoints/" + Map + "/Player/PlayerSpawn")
+	var player_spawn
+	if (Map != "Store"):
+		player_spawn = get_node("SpawnPoints/" + Map + "/Player/PlayerSpawn")
+	else:
+		player_spawn = get_node("Store/PlayerSpawn")
 	add_child(player)
 	player.set_global_position(player_spawn.position)
 	player.scale = Vector2(.4,.4)
+
+func button_pressed():
+	var active_button = group.get_pressed_button()
+	match active_button.name:
+		"Attack Potion":
+			get_node("Player").give_item("Attack Potion")
+		"Health Potion":
+			get_node("Player").give_item("Health Potion")
