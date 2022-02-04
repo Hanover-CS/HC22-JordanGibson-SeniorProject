@@ -7,9 +7,9 @@ var world
 func _ready():
 	for button in group.get_buttons():
 		button.connect("pressed", self, "button_pressed")
-	world = world_scene.instance()
 
 func button_pressed():
+	world = world_scene.instance()
 	var active_button = group.get_pressed_button()
 	match active_button.name:
 		"Forest":

@@ -2,12 +2,18 @@ extends Node2D
 var battle_scene = preload("res://Battle/Battle.tscn")
 var enemy_scene = preload("res://Enemies/Small/Ruins/Imp/Imp.tscn")
 var player_scene = preload("res://Player/Player.tscn")
+var world_scene = load("res://World.tscn")
 var spawn_points : Array = []
 var enemy_types : Array = []
 var active_floor
 export (ButtonGroup) var group
+export (ButtonGroup) var group2
 
 func initialize(Map):
+	for button in group.get_buttons():
+		button.connect("pressed", self, "button_pressed")
+	for button in group2.get_buttons():
+				button.connect("pressed", self, "back_button_pressed")
 	match Map:
 		"Forest":
 			$Map/Forest.visible = true
@@ -46,8 +52,6 @@ func initialize(Map):
 			spawn_enemies(enemy_scene, enemy_types.size(), 9)
 			active_floor = "Dungeon"
 		"Store":
-			for button in group.get_buttons():
-				button.connect("pressed", self, "button_pressed")
 			$Map.visible = false
 			$Store.visible = true
 			$Store/StoreKeeper/AnimationPlayer.play("Idle")
@@ -118,6 +122,13 @@ func button_pressed():
 	var active_button = group.get_pressed_button()
 	match active_button.name:
 		"Attack Potion":
+			print("Attack Potion")
 			get_node("Player").give_item("Attack Potion")
 		"Health Potion":
+			print("Health Potion")
 			get_node("Player").give_item("Health Potion")
+
+func back_button_pressed():
+	var active_button = group2.get_pressed_button()
+	get_node("Map").get_parent().queue_free()
+	get_parent().get_node("WorldSelect").visible = true
