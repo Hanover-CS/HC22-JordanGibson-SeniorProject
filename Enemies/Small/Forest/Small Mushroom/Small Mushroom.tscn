@@ -68,7 +68,7 @@ tracks/0/keys = {
 }
 
 [sub_resource type="RectangleShape2D" id=5]
-extents = Vector2( 6.65276, 7.15143 )
+extents = Vector2( 6.44192, 7.15143 )
 
 [node name="Small Mushroom" instance=ExtResource( 2 )]
 position = Vector2( 426.632, 216.303 )

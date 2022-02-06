@@ -27,7 +27,6 @@ tracks/0/keys = {
 }
 
 [node name="World" type="Node2D"]
-position = Vector2( 18.4078, 6.90292 )
 script = ExtResource( 3 )
 group = ExtResource( 7 )
 group2 = ExtResource( 8 )
@@ -185,7 +184,6 @@ position = Vector2( 514.386, 434.182 )
 
 [node name="Forest" type="Node2D" parent="Map"]
 visible = false
-position = Vector2( 5.22284, -19.3994 )
 
 [node name="Background" type="TileMap" parent="Map/Forest"]
 tile_set = ExtResource( 1 )

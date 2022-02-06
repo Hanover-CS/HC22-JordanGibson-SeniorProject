@@ -1,13 +1,14 @@
 extends Node2D
 
 var level : int = 7
+var max_health = 10
 export (int) var health = 10
 export (int) var damage = 1
 export (int) var defense = .05
 export (int) var speed = 1
 export (int) var movement_speed = 100
 
-var Inventory : Dictionary = {"Attack Potion" : 0, "Health Potion" : 0}
+var Inventory : Dictionary = {"Attack Potion" : 0, "Health Potion" : 0, "Gold": 8}
 
 var wait_time = 1.0
 var direction : Vector2
@@ -26,7 +27,7 @@ func _ready():
 	else:
 		player_animation.play("Idle")
 
-func _process(delta):
+func _physics_process(delta):
 	direction.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
 	direction.y = Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")
 	
@@ -41,6 +42,7 @@ func _process(delta):
 		player_animation.play("Walk")
 	else:
 		player_animation.play("Idle")
+
 
 func get_speed():
 	return(speed)
@@ -66,15 +68,42 @@ func attack():
 	print(2)
 	emit_signal("player_attack", damage)
 
-func give_item(Item):
-	if (Item == "Attack Potion"):
-		var curr_amount = Inventory.get(Item)
-		Inventory[Item] = curr_amount + 1
-		print(Inventory)
-	elif (Item == "Health Potion"):
-		var curr_amount = Inventory.get(Item)
-		Inventory[Item] = curr_amount + 1
-		print(Inventory)
+func use_potion(PotionType):
+	if (PotionType == "Attack Potion" or PotionType == "Health Potion"):
+		if (Inventory.get(PotionType) > 0):
+			if (PotionType == "Attack Potion"):
+				damage += 1
+			elif (PotionType == "Health Potion"):
+				health += randi()%3
+				if health > max_health:
+					health = max_health
+			var curr_amount = Inventory.get(PotionType)
+			Inventory[PotionType] = curr_amount - 1
+			print(Inventory)
+		else:
+			print("You do not have enough " + str(PotionType) + " potions!")
+	else:
+		print("Not valid potion type")	
+
+func buy_item(Item):
+	if (Inventory.get("Gold") < 2):
+		print("Not enough Gold!")
+	else:
+		if (Item == "Attack Potion" or Item == "Health Potion"):
+			var curr_amount = Inventory.get(Item)
+			deduct_gold(2)
+			Inventory[Item] = curr_amount + 1
+			print(Inventory)
+		else:
+			print("Not valid item type")
+
+func give_gold(Gold):
+	var curr_amount = Inventory.get("Gold")
+	Inventory["Gold"] = curr_amount + Gold
+
+func deduct_gold(Gold):
+	var curr_amount = Inventory.get("Gold")
+	Inventory["Gold"] = curr_amount - Gold
 
 func _on_enemy_attack(enemy_damage):
 	print("Player damage took: ", enemy_damage)

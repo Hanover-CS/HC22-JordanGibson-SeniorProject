@@ -11,7 +11,7 @@ export (ButtonGroup) var group2
 
 func initialize(Map):
 	for button in group.get_buttons():
-		button.connect("pressed", self, "button_pressed")
+		button.connect("pressed", self, "shop_button_pressed")
 	for button in group2.get_buttons():
 				button.connect("pressed", self, "back_button_pressed")
 	match Map:
@@ -118,15 +118,15 @@ func spawn_player(Map):
 	player.set_global_position(player_spawn.position)
 	player.scale = Vector2(.4,.4)
 
-func button_pressed():
+func shop_button_pressed():
 	var active_button = group.get_pressed_button()
 	match active_button.name:
 		"Attack Potion":
 			print("Attack Potion")
-			get_node("Player").give_item("Attack Potion")
+			get_node("Player").buy_item("Attack Potion")
 		"Health Potion":
 			print("Health Potion")
-			get_node("Player").give_item("Health Potion")
+			get_node("Player").buy_item("Health Potion")
 
 func back_button_pressed():
 	var active_button = group2.get_pressed_button()

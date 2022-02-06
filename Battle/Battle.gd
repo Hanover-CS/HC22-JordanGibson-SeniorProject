@@ -47,7 +47,7 @@ func spawn_chars(player : Area2D, enemy : Area2D):
 	connect_signals(player, enemy)
 
 func spawn_player(player : Area2D):
-	player.set_process(false)
+	player.set_physics_process(false)
 	char_parent.add_child(player)
 	setup_player(player)
 
