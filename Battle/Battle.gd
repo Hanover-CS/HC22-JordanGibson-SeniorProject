@@ -78,7 +78,27 @@ func spawn_enemy(enemy: Area2D):
 
 func connect_signals(player : Area2D, enemy : Area2D):
 	enemy.connect('enemy_attack', player, '_on_enemy_attack')
+	enemy.connect('enemy_death', self , '_on_player_win')
 	player.connect('player_attack', enemy, '_on_player_attack')
+	player.connect('player_death', self, '_on_player_loss')
+
+func _on_player_win():
+	get_parent().change_map_visibility(true)
+	var temp_player = $Characters/Player
+	get_node("Characters").remove_child(temp_player)
+	respawn_player(temp_player)
+	self.queue_free()
+
+func respawn_player(player):
+	var world_map = get_parent()
+	world_map.add_child(player)
+	player.global_position = world_map.curr_pos
+	player.set_physics_process(true)
+	player.scale = Vector2(.4,.4)
+
+func _on_player_loss():
+	get_tree().root.get_node("WorldSelect").visible = true
+	get_parent().queue_free()
 
 func sort_children(chars : Array):
 	chars.sort_custom(self, 'sort_chars')

@@ -6,6 +6,7 @@ var world_scene = load("res://World.tscn")
 var spawn_points : Array = []
 var enemy_types : Array = []
 var active_floor
+var curr_pos
 export (ButtonGroup) var group
 export (ButtonGroup) var group2
 
@@ -66,8 +67,8 @@ func start_battle(player, enemy):
 	add_child(battle_scene.instance())
 	remove_child(player)
 	get_node("Enemies").remove_child(enemy)
-	$Map.visible = false
-	$Enemies.visible = false
+	curr_pos = player.get_global_position()
+	change_map_visibility(false)
 	$Battle.instance(temp_player, temp_enemy, active_floor)
 
 func get_spawnpoints(Map):
@@ -117,6 +118,10 @@ func spawn_player(Map):
 	add_child(player)
 	player.set_global_position(player_spawn.position)
 	player.scale = Vector2(.4,.4)
+
+func change_map_visibility(isVisible : bool):
+	$Map.visible = isVisible
+	$Enemies.visible = isVisible
 
 func shop_button_pressed():
 	var active_button = group.get_pressed_button()

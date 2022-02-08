@@ -3,14 +3,14 @@ extends Node2D
 var level : int = 7
 var max_health = 10
 export (int) var health = 10
-export (int) var damage = 1
+export (int) var damage = 10
 export (int) var defense = .05
 export (int) var speed = 1
 export (int) var movement_speed = 100
 
 var Inventory : Dictionary = {"Attack Potion" : 0, "Health Potion" : 0, "Gold": 8}
 
-var wait_time = 1.0
+var wait_time = 1.5
 var direction : Vector2
 var screen_size = 1024
 
