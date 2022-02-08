@@ -23,16 +23,18 @@ func get_speed():
 func get_health():
 	return(health)
 
+func get_wait_time():
+	return(wait_time)
+
 func play_turn():
 	attack()
-	print(1)
-	return self
 
 func attack():
 	animation.play("Attack")
 	yield(get_tree().create_timer(wait_time), "timeout")
 	animation.queue("Idle")
 	emit_signal("enemy_attack", damage)
+	emit_signal("turn_completed")
 
 func level_up(NumLevels : int):
 	if (NumLevels == 1):
@@ -57,6 +59,7 @@ func _on_player_attack(player_damage):
 	health -= player_damage
 	if health <= 0:
 		animation.play("Dying")
+		yield(get_tree().create_timer(wait_time), "timeout")
 		emit_signal("enemy_death")
 	else:
 		animation.play("Hurt")

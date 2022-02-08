@@ -8,7 +8,7 @@ export (int) var defense = .05
 export (int) var speed = 1
 export (int) var movement_speed = 100
 
-var Inventory : Dictionary = {"Attack Potion" : 0, "Health Potion" : 0, "Gold": 8}
+var Inventory : Dictionary = {"Attack Potion" : 0, "Health Potion" : 0, "Gold": 0}
 
 var wait_time = 1.5
 var direction : Vector2
@@ -53,6 +53,9 @@ func get_health():
 func get_level():
 	return(level)
 
+func get_wait_time():
+	return(wait_time)
+
 func _on_Knight_area_entered(area):
 	if (get_parent().name == "World" and area.is_in_group("enemy")):
 		player_animation.stop()
@@ -60,13 +63,12 @@ func _on_Knight_area_entered(area):
 
 func play_turn():
 	attack()
-	return self
 
 func attack():
 	player_animation.play("Slash")
 	yield(get_tree().create_timer(wait_time), "timeout")
-	print(2)
 	emit_signal("player_attack", damage)
+	emit_signal('turn_completed')
 
 func use_potion(PotionType):
 	if (PotionType == "Attack Potion" or PotionType == "Health Potion"):
@@ -100,6 +102,7 @@ func buy_item(Item):
 func give_gold(Gold):
 	var curr_amount = Inventory.get("Gold")
 	Inventory["Gold"] = curr_amount + Gold
+	print(Inventory)
 
 func deduct_gold(Gold):
 	var curr_amount = Inventory.get("Gold")

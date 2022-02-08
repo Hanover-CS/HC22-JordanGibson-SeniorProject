@@ -12,10 +12,6 @@ func _ready():
 	player_spawn = $PlayerSpawnPoint.position
 	enemy_spawn = $EnemySpawnPoint.position
 
-func _process(delta):
-	if (Input.is_action_just_pressed("ui_accept")):
-		play_turn()
-
 func instance(player : Area2D, enemy : Area2D, Map : String):
 	match Map:
 		"Forest":
@@ -79,22 +75,32 @@ func spawn_enemy(enemy: Area2D):
 func connect_signals(player : Area2D, enemy : Area2D):
 	enemy.connect('enemy_attack', player, '_on_enemy_attack')
 	enemy.connect('enemy_death', self , '_on_player_win')
+	enemy.connect('turn_completed', self, '_on_turn_completed')
 	player.connect('player_attack', enemy, '_on_player_attack')
 	player.connect('player_death', self, '_on_player_loss')
+	player.connect('turn_completed', self, '_on_turn_completed')
 
 func _on_player_win():
 	get_parent().change_map_visibility(true)
 	var temp_player = $Characters/Player
 	get_node("Characters").remove_child(temp_player)
+	reward_player(temp_player)
 	respawn_player(temp_player)
 	self.queue_free()
 
-func respawn_player(player):
+func reward_player(Player):
+	var Gold = get_gold_amount()
+	Player.give_gold(Gold)
+
+func get_gold_amount():
+	return randi()%3+1
+
+func respawn_player(Player):
 	var world_map = get_parent()
-	world_map.add_child(player)
-	player.global_position = world_map.curr_pos
-	player.set_physics_process(true)
-	player.scale = Vector2(.4,.4)
+	world_map.add_child(Player)
+	Player.global_position = world_map.curr_pos
+	Player.set_physics_process(true)
+	Player.scale = Vector2(.4,.4)
 
 func _on_player_loss():
 	get_tree().root.get_node("WorldSelect").visible = true
@@ -108,7 +114,11 @@ func sort_children(chars : Array):
 func sort_chars(char1, char2) -> bool:
 	return char1.speed > char2.speed
 
-func play_turn():
-	active_char.play_turn()
+func _on_turn_completed():
 	var next_index : int = (active_char.get_index() + 1) % (char_parent.get_child_count())
 	active_char = char_parent.get_child(next_index)
+	yield(get_tree().create_timer(active_char.get_wait_time()), "timeout")
+	active_char.play_turn()
+
+func play_turn():
+	active_char.play_turn()
