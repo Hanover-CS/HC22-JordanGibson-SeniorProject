@@ -1,6 +1,6 @@
 extends Node2D
 
-var level : int = 7
+var level : int = 1
 var max_health = 10
 export (int) var health = 10
 export (int) var damage = 10
@@ -10,9 +10,9 @@ export (int) var movement_speed = 100
 
 var Inventory : Dictionary = {"Attack Potion" : 0, "Health Potion" : 0, "Gold": 0}
 
-var wait_time = 1.5
+var wait_time = .7
 var direction : Vector2
-var screen_size = 1024
+var conn_flag = false
 
 signal player_attack(damage)
 signal player_death()
@@ -20,20 +20,14 @@ signal turn_completed()
 
 onready var player_animation = $Sprite/AnimationPlayer
 
-func _ready():
-	if (get_parent().name == "World"):
-		connect("battle_start", get_parent(), "_on_Player_battle_start")
-		player_animation.play("Idle")
-	else:
-		player_animation.play("Idle")
-
-func _physics_process(delta):
+func _process(delta):
+	check_connection()
 	direction.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
 	direction.y = Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")
 	
-	global_position.x += direction.x * movement_speed * delta
-	global_position.y += direction.y * movement_speed * delta
-	
+	position.x += direction.x * movement_speed * delta
+	position.y += direction.y * movement_speed * delta
+
 	if direction.x != 0 or direction.y != 0:
 		if direction.x < 0:
 			$Sprite.flip_h = true
@@ -43,6 +37,13 @@ func _physics_process(delta):
 	else:
 		player_animation.play("Idle")
 
+func check_connection():
+	if (get_parent().name == "World" and conn_flag == false):
+		connect('area_entered', self, "_on_Knight_area_entered")
+		player_animation.play("Idle")
+		conn_flag = true
+	else:
+		pass
 
 func get_speed():
 	return(speed)

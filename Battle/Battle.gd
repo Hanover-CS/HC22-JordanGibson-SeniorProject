@@ -43,7 +43,7 @@ func spawn_chars(player : Area2D, enemy : Area2D):
 	connect_signals(player, enemy)
 
 func spawn_player(player : Area2D):
-	player.set_physics_process(false)
+	player.set_process(false)
 	char_parent.add_child(player)
 	setup_player(player)
 
@@ -52,7 +52,6 @@ func setup_player(player):
 	player.get_node("Sprite").get_node("AnimationPlayer").play("Idle")
 	face_right(player)
 	player.scale = Vector2(.75,.75)
-	player.movement_speed = 0
 
 func face_right(character : Area2D):
 	if character.get_node("Sprite").flip_h == true:
@@ -98,8 +97,9 @@ func get_gold_amount():
 func respawn_player(Player):
 	var world_map = get_parent()
 	world_map.add_child(Player)
-	Player.global_position = world_map.curr_pos
-	Player.set_physics_process(true)
+	Player.conn_flag = false
+	Player.position = world_map.curr_pos
+	Player.set_process(true)
 	Player.scale = Vector2(.4,.4)
 
 func _on_player_loss():
