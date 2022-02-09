@@ -83,6 +83,7 @@ func _on_player_win():
 	get_parent().change_map_visibility(true)
 	var temp_player = $Characters/Player
 	get_node("Characters").remove_child(temp_player)
+	face_left(temp_player)
 	reward_player(temp_player)
 	respawn_player(temp_player)
 	self.queue_free()
@@ -90,9 +91,23 @@ func _on_player_win():
 func reward_player(Player):
 	var Gold = get_gold_amount()
 	Player.give_gold(Gold)
+	var XP = get_xp_amount()
+	Player.give_XP(XP)
 
 func get_gold_amount():
 	return randi()%3+1
+
+func get_xp_amount():
+	var enemy_ref = get_enemy()
+	var xp_amount = floor(enemy_ref.get_level()/2)
+	if (xp_amount < 1):
+		xp_amount = 1
+	return(xp_amount)
+
+func get_enemy():
+	for child in get_node("Characters").get_children():
+		if child.is_in_group("enemy"):
+			return child
 
 func respawn_player(Player):
 	var world_map = get_parent()

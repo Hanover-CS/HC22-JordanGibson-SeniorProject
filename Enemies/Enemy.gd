@@ -26,6 +26,9 @@ func get_health():
 func get_wait_time():
 	return(wait_time)
 
+func get_level():
+	return(level)
+
 func play_turn():
 	attack()
 

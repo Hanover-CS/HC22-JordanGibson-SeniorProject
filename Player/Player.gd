@@ -2,6 +2,9 @@ extends Node2D
 
 var level : int = 1
 var max_health = 10
+var xp_threshold = 5
+var currXP = 0
+
 export (int) var health = 10
 export (int) var damage = 10
 export (int) var defense = .05
@@ -44,6 +47,24 @@ func check_connection():
 		conn_flag = true
 	else:
 		pass
+
+func give_XP(XP):
+	currXP += XP
+	check_for_level_up()
+	print(currXP)
+
+func check_for_level_up():
+	if (currXP >= xp_threshold):
+		level_up()
+		print("LEVEL UP")
+	else:
+		pass
+
+func level_up():
+	level += 1
+	xp_threshold = floor(xp_threshold * 5)
+	currXP = 0
+	print(level)
 
 func get_speed():
 	return(speed)

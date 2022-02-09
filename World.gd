@@ -10,7 +10,10 @@ var curr_pos
 export (ButtonGroup) var group
 export (ButtonGroup) var group2
 
-func initialize(Map):
+func initialize(Map, Player):
+	if (Player.visible == false):
+		Player.visible = true
+		
 	for button in group.get_buttons():
 		button.connect("pressed", self, "shop_button_pressed")
 	for button in group2.get_buttons():
@@ -25,7 +28,7 @@ func initialize(Map):
 			enemy_types = ["res://Enemies/Small/Forest/Small Mushroom/Small Mushroom.tscn", 
 			"res://Enemies/Small/Forest/Twig Blight/Twig Blight.tscn", "res://Enemies/Small/Ruins/Wisp/Whisp.tscn",
 			"res://Enemies/Medium/Forest/Wolf/Wolf.tscn"]
-			spawn_player("Forest")
+			spawn_player("Forest", Player)
 			spawn_enemies(enemy_scene, enemy_types.size(), 9)
 			active_floor = "Forest"
 		"Ruins":
@@ -37,7 +40,7 @@ func initialize(Map):
 			enemy_types = ["res://Enemies/Small/Ruins/Imp/Imp.tscn", "res://Enemies/Small/Ruins/Skullflame/Skullflame.tscn", 
 			"res://Enemies/Small/Ruins/Wisp/Whisp.tscn","res://Enemies/Small/Ruins/Child Spirit/Child Spirit.tscn",
 			"res://Enemies/Small/Ruins/Hell Critter/Hell Critter.tscn"]
-			spawn_player("Ruins")
+			spawn_player("Ruins", Player)
 			spawn_enemies(enemy_scene, enemy_types.size(), 9)
 			active_floor = "Ruins"
 		"Dungeon":
@@ -49,14 +52,14 @@ func initialize(Map):
 			enemy_types = ["res://Enemies/Small/Ruins/Imp/Imp.tscn", "res://Enemies/Small/Ruins/Skullflame/Skullflame.tscn", 
 			"res://Enemies/Small/Ruins/Wisp/Whisp.tscn","res://Enemies/Small/Ruins/Child Spirit/Child Spirit.tscn",
 			"res://Enemies/Small/Dungeon/Mimic/Mimic.tscn"]
-			spawn_player("Dungeon")
+			spawn_player("Dungeon", Player)
 			spawn_enemies(enemy_scene, enemy_types.size(), 9)
 			active_floor = "Dungeon"
 		"Store":
 			$Map.visible = false
 			$Store.visible = true
 			$Store/StoreKeeper/AnimationPlayer.play("Idle")
-			spawn_player("Store")
+			spawn_player("Store", Player)
 
 func _on_Player_battle_start(player, enemy):
 	start_battle(player, enemy)
@@ -108,16 +111,16 @@ func choose_spawns(NumEnemies):
 		SpawnsPicked.append(spawn_point)
 	return SpawnsPicked
 
-func spawn_player(Map):
-	var player = player_scene.instance()
+func spawn_player(Map, Player):
+	add_child(Player)
 	var player_spawn
 	if (Map != "Store"):
 		player_spawn = get_node("SpawnPoints/" + Map + "/Player/PlayerSpawn")
 	else:
 		player_spawn = get_node("Store/PlayerSpawn")
-	add_child(player)
-	player.set_global_position(player_spawn.position)
-	player.scale = Vector2(.4,.4)
+	add_child(Player)
+	Player.set_global_position(player_spawn.position)
+	Player.scale = Vector2(.4,.4)
 
 func change_map_visibility(isVisible : bool):
 	$Map.visible = isVisible
@@ -135,5 +138,12 @@ func shop_button_pressed():
 
 func back_button_pressed():
 	var active_button = group2.get_pressed_button()
+	pass_player_to_select(get_node("Player"))
 	get_node("Map").get_parent().queue_free()
 	get_parent().get_node("WorldSelect").visible = true
+
+func pass_player_to_select(Player):
+	var select_screen = get_tree().root.get_node("WorldSelect")
+	remove_child(Player)
+	select_screen.add_child(Player)
+	Player.visible = false
