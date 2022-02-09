@@ -6,8 +6,7 @@ var xp_threshold = 5
 var currXP = 0
 
 export (int) var health = 10
-export (int) var damage = 10
-export (int) var defense = .05
+export (int) var damage = 1
 export (int) var speed = 1
 export (int) var movement_speed = 100
 
@@ -66,6 +65,8 @@ func level_up():
 	currXP = 0
 	var level_up_scene = load("res://Player/Level Up Screen/LevelUp.tscn")
 	var level_up = level_up_scene.instance()
+	level_up.rect_scale = Vector2(1.5, 1.5)
+	level_up.rect_global_position = Vector2(-100,-100)
 	add_child(level_up)
 	print(level)
 
@@ -80,7 +81,8 @@ func get_health():
 	return(health)
 	
 func give_health(Health):
-	health += Health
+	max_health += Health
+	health = max_health
 	print("Health = " + str(health))
 
 func give_attack(Attack):
@@ -155,3 +157,7 @@ func _on_enemy_attack(enemy_damage):
 		player_animation.play("Hurt")
 		yield(get_tree().create_timer(wait_time), "timeout")
 		player_animation.play("Idle")
+
+func revive_player():
+	health = max_health
+	set_process(true)

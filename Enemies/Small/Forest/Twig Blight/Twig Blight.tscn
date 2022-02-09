@@ -74,6 +74,7 @@ extents = Vector2( 7.83728, 7.24167 )
 [node name="Twig Blight" instance=ExtResource( 1 )]
 position = Vector2( 539.898, 272.78 )
 script = ExtResource( 3 )
+speed = 2
 
 [node name="Sprite" parent="." index="0"]
 position = Vector2( 0.396851, -14.2866 )

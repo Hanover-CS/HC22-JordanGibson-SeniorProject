@@ -43,6 +43,7 @@ func spawn_chars(player : Area2D, enemy : Area2D):
 	connect_signals(player, enemy)
 
 func spawn_player(player : Area2D):
+	print(player.Inventory)
 	player.set_process(false)
 	char_parent.add_child(player)
 	setup_player(player)
@@ -118,6 +119,11 @@ func respawn_player(Player):
 	Player.scale = Vector2(.4,.4)
 
 func _on_player_loss():
+	var player = get_node("Characters").get_node("Player")
+	get_node("Characters").remove_child(player)
+	player.revive_player()
+	player.visible = false
+	get_tree().root.get_node("WorldSelect").add_child(player)
 	get_tree().root.get_node("WorldSelect").visible = true
 	get_parent().queue_free()
 

@@ -73,6 +73,8 @@ extents = Vector2( 6.44192, 7.15143 )
 [node name="Small Mushroom" instance=ExtResource( 2 )]
 position = Vector2( 426.632, 216.303 )
 script = ExtResource( 3 )
+health = 3
+speed = 3
 
 [node name="Sprite" parent="." index="0"]
 position = Vector2( -0.630693, -15.1362 )

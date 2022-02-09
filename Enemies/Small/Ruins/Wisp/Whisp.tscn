@@ -74,6 +74,8 @@ extents = Vector2( 6.24606, 6.45235 )
 [node name="Wisp" instance=ExtResource( 1 )]
 position = Vector2( 396.428, 185 )
 script = ExtResource( 3 )
+health = 3
+speed = 3
 
 [node name="Sprite" parent="." index="0"]
 position = Vector2( -4.71938, -10.3826 )
