@@ -62,15 +62,30 @@ func check_for_level_up():
 
 func level_up():
 	level += 1
-	xp_threshold = floor(xp_threshold * 5)
+	xp_threshold = xp_threshold + floor(xp_threshold * .5)
 	currXP = 0
+	var level_up_scene = load("res://Player/Level Up Screen/LevelUp.tscn")
+	var level_up = level_up_scene.instance()
+	add_child(level_up)
 	print(level)
 
 func get_speed():
 	return(speed)
 
+func give_speed(Speed):
+	speed += Speed
+	print("Speed = " + str(speed))
+
 func get_health():
 	return(health)
+	
+func give_health(Health):
+	health += Health
+	print("Health = " + str(health))
+
+func give_attack(Attack):
+	damage += Attack
+	print("Attack = " + str(damage))
 
 func get_level():
 	return(level)

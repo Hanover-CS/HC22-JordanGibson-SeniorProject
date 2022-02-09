@@ -1,0 +1,69 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Fonts/WorldSelectFont.tres" type="DynamicFont" id=1]
+[ext_resource path="res://LevelUp.gd" type="Script" id=2]
+[ext_resource path="res://Player/Level Up Screen/LevelUpButtons.tres" type="ButtonGroup" id=3]
+
+[node name="LevelUp" type="Control"]
+anchor_left = 0.319
+anchor_top = 0.169
+anchor_right = 0.72
+anchor_bottom = 0.67
+margin_left = 58.1183
+margin_top = 9.90338
+margin_right = -54.5057
+margin_bottom = -20.7066
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+group = ExtResource( 3 )
+
+[node name="Attack" type="Button" parent="."]
+margin_left = 45.4223
+margin_top = 29.0016
+margin_right = 259.422
+margin_bottom = 87.0016
+custom_fonts/font = ExtResource( 1 )
+group = ExtResource( 3 )
+text = "Attack"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Health" type="Button" parent="."]
+margin_left = 43.2224
+margin_top = 105.204
+margin_right = 264.222
+margin_bottom = 154.204
+custom_fonts/font = ExtResource( 1 )
+group = ExtResource( 3 )
+text = "Health"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Speed" type="Button" parent="."]
+margin_left = 45.6222
+margin_top = 177.197
+margin_right = 266.622
+margin_bottom = 226.197
+custom_fonts/font = ExtResource( 1 )
+group = ExtResource( 3 )
+text = "Speed"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextEdit" type="TextEdit" parent="."]
+margin_left = -252.0
+margin_top = -84.4014
+margin_right = 548.0
+margin_bottom = 4.59857
+custom_fonts/font = ExtResource( 1 )
+text = "				Level up! 
+
+Please choose an attribute to upgrade:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
