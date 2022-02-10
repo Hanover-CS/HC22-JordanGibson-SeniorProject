@@ -6,9 +6,9 @@ var xp_threshold = 5
 var currXP = 0
 
 export (int) var health = 10
-export (int) var damage = 1
+export (int) var damage = 10
 export (int) var speed = 1
-export (int) var movement_speed = 100
+export (int) var movement_speed = 200
 
 var Inventory : Dictionary = {"Attack Potion" : 0, "Health Potion" : 0, "Gold": 0}
 
@@ -101,6 +101,8 @@ func _on_Knight_area_entered(area):
 		get_parent().start_battle(self, area)
 
 func play_turn():
+	if health <= 3:
+		use_potion("Health Potion")
 	attack()
 
 func attack():
@@ -115,9 +117,13 @@ func use_potion(PotionType):
 			if (PotionType == "Attack Potion"):
 				damage += 1
 			elif (PotionType == "Health Potion"):
-				health += randi()%3
+				if (level < 3):
+					health += randi()%3
+				else:
+					health += randi()%3+1
 				if health > max_health:
 					health = max_health
+				print("Health is " + str(health))
 			var curr_amount = Inventory.get(PotionType)
 			Inventory[PotionType] = curr_amount - 1
 			print(Inventory)
@@ -139,19 +145,18 @@ func buy_item(Item):
 			print("Not valid item type")
 
 func give_gold(Gold):
-	var curr_amount = Inventory.get("Gold")
-	Inventory["Gold"] = curr_amount + Gold
+	Inventory["Gold"] += Gold
 	print(Inventory)
 
 func deduct_gold(Gold):
-	var curr_amount = Inventory.get("Gold")
-	Inventory["Gold"] = curr_amount - Gold
+	Inventory["Gold"] -= Gold
 
 func _on_enemy_attack(enemy_damage):
 	print("Player damage took: ", enemy_damage)
 	health -= enemy_damage
 	if health <= 0:
 		player_animation.play("Dying")
+		yield(get_tree().create_timer(wait_time), "timeout")
 		emit_signal("player_death")
 	else:
 		player_animation.play("Hurt")
@@ -160,4 +165,5 @@ func _on_enemy_attack(enemy_damage):
 
 func revive_player():
 	health = max_health
+	conn_flag = false
 	set_process(true)

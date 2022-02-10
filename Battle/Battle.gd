@@ -87,6 +87,7 @@ func _on_player_win():
 	face_left(temp_player)
 	reward_player(temp_player)
 	respawn_player(temp_player)
+	get_parent().check_enemy_count()
 	self.queue_free()
 
 func reward_player(Player):

@@ -10,10 +10,17 @@ var curr_pos
 export (ButtonGroup) var group
 export (ButtonGroup) var group2
 
+func check_enemy_count():
+	if (get_node("Enemies").get_children() == []):
+		pass_player_to_select(get_node("Player"))
+	else:
+		pass
+
 func initialize(Map, Player):
 	if (Player.visible == false):
 		Player.visible = true
-		
+	if ($Map.visible == false):
+		$Map.visible = true
 	for button in group.get_buttons():
 		button.connect("pressed", self, "shop_button_pressed")
 	for button in group2.get_buttons():
@@ -29,7 +36,7 @@ func initialize(Map, Player):
 			"res://Enemies/Small/Forest/Twig Blight/Twig Blight.tscn", "res://Enemies/Small/Ruins/Wisp/Whisp.tscn",
 			"res://Enemies/Medium/Forest/Wolf/Wolf.tscn"]
 			spawn_player("Forest", Player)
-			spawn_enemies(enemy_scene, enemy_types.size(), 9)
+			spawn_enemies(enemy_scene, enemy_types.size(), 1)
 			active_floor = "Forest"
 		"Ruins":
 			$Map/Forest.visible = false
@@ -84,16 +91,19 @@ func spawn_enemies(EnemyScene, NumTypes, NumEnemies):
 	var enemies_spawned : Dictionary = make_enemy_type_dict()
 	for spawn in Spawns:
 		randomize()
-		var type = enemy_types[randi()%NumTypes]
-		while enemies_spawned[type] >= 3:
-			type = enemy_types[randi()%NumTypes]
-		var curr_type_val = enemies_spawned[type]
-		enemies_spawned[type] = curr_type_val + 1
-		var enemy = load(type).instance()
+		var enemy_type = get_valid_type(NumTypes, enemies_spawned)
+		enemies_spawned[enemy_type] += 1
+		var enemy = load(enemy_type).instance()
 		get_node("Enemies").add_child(enemy)
 		enemy.level_up(get_node("Player").get_level())
 		enemy.scale = Vector2(1.5,1.5)
 		enemy.set_global_position(spawn_points[spawn].position)
+
+func get_valid_type(NumTypes, EnemyDict):
+	var type = enemy_types[randi()%NumTypes]
+	while EnemyDict[type] >= 3:
+		type = enemy_types[randi()%NumTypes]
+	return type
 
 func make_enemy_type_dict():
 	var enemies = {}
@@ -118,7 +128,6 @@ func spawn_player(Map, Player):
 		player_spawn = get_node("SpawnPoints/" + Map + "/Player/PlayerSpawn")
 	else:
 		player_spawn = get_node("Store/PlayerSpawn")
-	add_child(Player)
 	Player.set_global_position(player_spawn.position)
 	Player.scale = Vector2(.4,.4)
 
@@ -143,7 +152,14 @@ func back_button_pressed():
 	get_parent().get_node("WorldSelect").visible = true
 
 func pass_player_to_select(Player):
+	ready_player_to_pass(Player)
+	change_map_visibility(false)
+	self.queue_free()
 	var select_screen = get_tree().root.get_node("WorldSelect")
-	remove_child(Player)
 	select_screen.add_child(Player)
+	select_screen.visible = true
+
+func ready_player_to_pass(Player):
 	Player.visible = false
+	Player.conn_flag = false
+	remove_child(Player)
