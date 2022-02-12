@@ -11,7 +11,6 @@ onready var wait_time = 1.0
 
 signal enemy_attack(damage)
 signal enemy_death()
-signal attack_finished()
 signal turn_completed()
 
 func _ready():
@@ -37,6 +36,7 @@ func attack():
 	yield(get_tree().create_timer(wait_time), "timeout")
 	animation.queue("Idle")
 	emit_signal("enemy_attack", damage)
+	yield(get_tree().create_timer(wait_time), "timeout")
 	emit_signal("turn_completed")
 
 func level_up(NumLevels : int):

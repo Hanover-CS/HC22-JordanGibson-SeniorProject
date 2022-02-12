@@ -1,7 +1,9 @@
 extends Control
 export(ButtonGroup) var group
+
 onready var world_scene = load("res://World.tscn")
 var player_scene = preload("res://Player/Player.tscn")
+
 var player
 var world
 

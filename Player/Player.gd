@@ -6,11 +6,11 @@ var xp_threshold = 5
 var currXP = 0
 
 export (int) var health = 10
-export (int) var damage = 10
+export (int) var damage = 1
 export (int) var speed = 1
-export (int) var movement_speed = 200
+export (int) var movement_speed = 100
 
-var Inventory : Dictionary = {"Attack Potion" : 0, "Health Potion" : 0, "Gold": 0}
+var Inventory : Dictionary = {"Attack Potion" : 0, "Health Potion" : 2, "Gold": 0}
 
 var wait_time = .7
 var direction : Vector2
@@ -23,7 +23,7 @@ signal turn_completed()
 onready var player_animation = $Sprite/AnimationPlayer
 
 func _process(delta):
-	check_connection()
+	check_collision_connection()
 	direction.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
 	direction.y = Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")
 	
@@ -39,7 +39,7 @@ func _process(delta):
 	else:
 		player_animation.play("Idle")
 
-func check_connection():
+func check_collision_connection():
 	if (get_parent().name == "World" and conn_flag == false):
 		connect('area_entered', self, "_on_Knight_area_entered")
 		player_animation.play("Idle")
@@ -55,7 +55,6 @@ func give_XP(XP):
 func check_for_level_up():
 	if (currXP >= xp_threshold):
 		level_up()
-		print("LEVEL UP")
 	else:
 		pass
 
@@ -63,13 +62,14 @@ func level_up():
 	level += 1
 	xp_threshold = xp_threshold + floor(xp_threshold * .5)
 	currXP = 0
+	display_attribute_screen()
+
+func display_attribute_screen():
 	var level_up_scene = load("res://Player/Level Up Screen/LevelUp.tscn")
 	var level_up = level_up_scene.instance()
 	level_up.rect_scale = Vector2(1.5, 1.5)
-	level_up.rect_global_position = Vector2(-100,-100)
 	add_child(level_up)
-	print(level)
-
+	
 func get_speed():
 	return(speed)
 
@@ -83,11 +83,12 @@ func get_health():
 func give_health(Health):
 	max_health += Health
 	health = max_health
-	print("Health = " + str(health))
 
 func give_attack(Attack):
 	damage += Attack
-	print("Attack = " + str(damage))
+
+func get_attack():
+	return(damage)
 
 func get_level():
 	return(level)
@@ -99,6 +100,8 @@ func _on_Knight_area_entered(area):
 	if (get_parent().name == "World" and area.is_in_group("enemy")):
 		player_animation.stop()
 		get_parent().start_battle(self, area)
+	else:
+		print(area.name)
 
 func play_turn():
 	if health <= 3:
@@ -109,28 +112,36 @@ func attack():
 	player_animation.play("Slash")
 	yield(get_tree().create_timer(wait_time), "timeout")
 	emit_signal("player_attack", damage)
+	yield(get_tree().create_timer(wait_time), "timeout")
 	emit_signal('turn_completed')
 
 func use_potion(PotionType):
 	if (PotionType == "Attack Potion" or PotionType == "Health Potion"):
+		player_animation.play("UsePotion")
+		player_animation.queue("Idle")
 		if (Inventory.get(PotionType) > 0):
 			if (PotionType == "Attack Potion"):
 				damage += 1
 			elif (PotionType == "Health Potion"):
-				if (level < 3):
-					health += randi()%3
-				else:
-					health += randi()%3+1
-				if health > max_health:
-					health = max_health
-				print("Health is " + str(health))
+				use_health_potion()
 			var curr_amount = Inventory.get(PotionType)
-			Inventory[PotionType] = curr_amount - 1
+			Inventory[PotionType] -= 1
+			yield(get_tree().create_timer(wait_time), "timeout")
+			emit_signal("turn_completed")
 			print(Inventory)
 		else:
 			print("You do not have enough " + str(PotionType) + " potions!")
 	else:
 		print("Not valid potion type")	
+
+func use_health_potion():
+	if (level < 3):
+		health += randi()%3+1
+	else:
+		health += randi()%level+1
+	if health > max_health:
+		health = max_health
+	print("Health is " + str(health))
 
 func buy_item(Item):
 	if (Inventory.get("Gold") < 2):

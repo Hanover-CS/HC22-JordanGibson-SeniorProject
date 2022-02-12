@@ -1,12 +1,14 @@
 extends Node2D
+
 var battle_scene = preload("res://Battle/Battle.tscn")
-var enemy_scene = preload("res://Enemies/Small/Ruins/Imp/Imp.tscn")
-var player_scene = preload("res://Player/Player.tscn")
 var world_scene = load("res://World.tscn")
+
 var spawn_points : Array = []
 var enemy_types : Array = []
+
 var active_floor
 var curr_pos
+
 export (ButtonGroup) var group
 export (ButtonGroup) var group2
 
@@ -24,7 +26,7 @@ func initialize(Map, Player):
 	for button in group.get_buttons():
 		button.connect("pressed", self, "shop_button_pressed")
 	for button in group2.get_buttons():
-				button.connect("pressed", self, "back_button_pressed")
+		button.connect("pressed", self, "back_button_pressed")
 	match Map:
 		"Forest":
 			$Map/Forest.visible = true
@@ -36,7 +38,7 @@ func initialize(Map, Player):
 			"res://Enemies/Small/Forest/Twig Blight/Twig Blight.tscn", "res://Enemies/Small/Ruins/Wisp/Whisp.tscn",
 			"res://Enemies/Medium/Forest/Wolf/Wolf.tscn"]
 			spawn_player("Forest", Player)
-			spawn_enemies(enemy_scene, enemy_types.size(), 1)
+			spawn_enemies(enemy_types.size(), 1)
 			active_floor = "Forest"
 		"Ruins":
 			$Map/Forest.visible = false
@@ -48,7 +50,7 @@ func initialize(Map, Player):
 			"res://Enemies/Small/Ruins/Wisp/Whisp.tscn","res://Enemies/Small/Ruins/Child Spirit/Child Spirit.tscn",
 			"res://Enemies/Small/Ruins/Hell Critter/Hell Critter.tscn"]
 			spawn_player("Ruins", Player)
-			spawn_enemies(enemy_scene, enemy_types.size(), 9)
+			spawn_enemies(enemy_types.size(), 9)
 			active_floor = "Ruins"
 		"Dungeon":
 			$Map/Forest.visible = false
@@ -60,7 +62,7 @@ func initialize(Map, Player):
 			"res://Enemies/Small/Ruins/Wisp/Whisp.tscn","res://Enemies/Small/Ruins/Child Spirit/Child Spirit.tscn",
 			"res://Enemies/Small/Dungeon/Mimic/Mimic.tscn"]
 			spawn_player("Dungeon", Player)
-			spawn_enemies(enemy_scene, enemy_types.size(), 9)
+			spawn_enemies(enemy_types.size(), 9)
 			active_floor = "Dungeon"
 		"Store":
 			$Map.visible = false
@@ -73,31 +75,33 @@ func _on_Player_battle_start(player, enemy):
 
 func start_battle(player, enemy):
 	var temp_player = player
-	var temp_enemy = enemy
-	add_child(battle_scene.instance())
-	remove_child(player)
-	get_node("Enemies").remove_child(enemy)
 	curr_pos = player.get_global_position()
+	remove_child(player)
+	var temp_enemy = enemy
+	get_node("Enemies").remove_child(enemy)
 	change_map_visibility(false)
+	add_child(battle_scene.instance())
 	$Battle.instance(temp_player, temp_enemy, active_floor)
 
 func get_spawnpoints(Map):
-#	spawn_points.clear()
 	for i in range(10):
 		spawn_points.append(get_node("SpawnPoints").get_node(Map).get_node("Normal").get_child(i))
 
-func spawn_enemies(EnemyScene, NumTypes, NumEnemies):
+func spawn_enemies(NumTypes, NumEnemies):
 	var Spawns = choose_spawns(NumEnemies)
 	var enemies_spawned : Dictionary = make_enemy_type_dict()
 	for spawn in Spawns:
 		randomize()
 		var enemy_type = get_valid_type(NumTypes, enemies_spawned)
-		enemies_spawned[enemy_type] += 1
 		var enemy = load(enemy_type).instance()
-		get_node("Enemies").add_child(enemy)
-		enemy.level_up(get_node("Player").get_level())
-		enemy.scale = Vector2(1.5,1.5)
-		enemy.set_global_position(spawn_points[spawn].position)
+		enemies_spawned[enemy_type] += 1
+		spawn_single_enemy(enemy, spawn_points[spawn].position )
+
+func spawn_single_enemy(enemyScene, spawnLocation):
+	get_node("Enemies").add_child(enemyScene)
+	enemyScene.level_up(get_node("Player").get_level())
+	enemyScene.scale = Vector2(1.5,1.5)
+	enemyScene.set_global_position(spawnLocation)
 
 func get_valid_type(NumTypes, EnemyDict):
 	var type = enemy_types[randi()%NumTypes]
@@ -131,6 +135,20 @@ func spawn_player(Map, Player):
 	Player.set_global_position(player_spawn.position)
 	Player.scale = Vector2(.4,.4)
 
+func clear_enemies():
+	var enemies = get_node("Enemies")
+	for enemy in enemies.get_children():
+		enemy.queue_free()
+
+func clear_world():
+	for node in self.get_children():
+		node.queue_free()
+	self.queue_free()
+
+func clear_all():
+	clear_enemies()
+	clear_world()
+
 func change_map_visibility(isVisible : bool):
 	$Map.visible = isVisible
 	$Enemies.visible = isVisible
@@ -146,7 +164,6 @@ func shop_button_pressed():
 			get_node("Player").buy_item("Health Potion")
 
 func back_button_pressed():
-	var active_button = group2.get_pressed_button()
 	pass_player_to_select(get_node("Player"))
 	get_node("Map").get_parent().queue_free()
 	get_parent().get_node("WorldSelect").visible = true
@@ -154,7 +171,7 @@ func back_button_pressed():
 func pass_player_to_select(Player):
 	ready_player_to_pass(Player)
 	change_map_visibility(false)
-	self.queue_free()
+	clear_all()
 	var select_screen = get_tree().root.get_node("WorldSelect")
 	select_screen.add_child(Player)
 	select_screen.visible = true

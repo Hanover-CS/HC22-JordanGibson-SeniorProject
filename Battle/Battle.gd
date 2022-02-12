@@ -8,6 +8,8 @@ onready var enemy_spawn : Vector2
 onready var active_char : Object
 onready var char_parent : Node2D
 
+export(ButtonGroup) var group
+
 func _ready():
 	player_spawn = $PlayerSpawnPoint.position
 	enemy_spawn = $EnemySpawnPoint.position
@@ -79,6 +81,8 @@ func connect_signals(player : Area2D, enemy : Area2D):
 	player.connect('player_attack', enemy, '_on_player_attack')
 	player.connect('player_death', self, '_on_player_loss')
 	player.connect('turn_completed', self, '_on_turn_completed')
+	for button in group.get_buttons():
+		button.connect("pressed", self, "button_pressed")
 
 func _on_player_win():
 	get_parent().change_map_visibility(true)
@@ -137,10 +141,44 @@ func sort_chars(char1, char2) -> bool:
 	return char1.speed > char2.speed
 
 func _on_turn_completed():
+	if active_char.name == "Player":
+		get_node("Control").visible = false
 	var next_index : int = (active_char.get_index() + 1) % (char_parent.get_child_count())
 	active_char = char_parent.get_child(next_index)
 	yield(get_tree().create_timer(active_char.get_wait_time()), "timeout")
-	active_char.play_turn()
+	play_turn()
 
 func play_turn():
-	active_char.play_turn()
+	var battleControls = get_node("Control")
+	if active_char.name == "Player":
+		battleControls.visible = true
+	else:
+		yield(get_tree().create_timer(1.0), "timeout")
+		active_char.play_turn()
+		write_move(str(active_char.name) + " attacked!")
+
+func write_move(MoveString):
+	var textbox = get_node("TextBox")
+	var battleControls = get_node("Control")
+	battleControls.visible = false
+	textbox.visible = true
+	textbox.text = MoveString
+	yield(get_tree().create_timer(2.0), "timeout")
+	textbox.visible = false
+
+func button_pressed():
+	var active_button = group.get_pressed_button()
+	var player = get_node("Characters").get_node("Player")
+	var buttons = get_node("Control")
+	match active_button.name:
+		"Attack":
+			player.attack()
+			write_move("You attacked!")
+		"Health Potion":
+			player.use_potion("Health Potion")
+			write_move("HP UP! HP: " + str(player.get_health()))
+		"Attack Potion":
+			player.use_potion("Attack Potion")
+			write_move("ATT UP! ATT: " + str(player.get_attack()))
+
+

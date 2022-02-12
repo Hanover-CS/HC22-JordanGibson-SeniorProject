@@ -1,18 +1,18 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Fonts/WorldSelectFont.tres" type="DynamicFont" id=1]
-[ext_resource path="res://LevelUp.gd" type="Script" id=2]
-[ext_resource path="res://Player/Level Up Screen/LevelUpButtons.tres" type="ButtonGroup" id=3]
+[ext_resource path="res://Player/Level Up Screen/LevelUp.gd" type="Script" id=2]
+[ext_resource path="res://ButtonGroups/LevelUpButtons.tres" type="ButtonGroup" id=3]
 
 [node name="LevelUp" type="Control"]
-anchor_left = 0.319
-anchor_top = 0.169
-anchor_right = 0.72
-anchor_bottom = 0.67
-margin_left = -326.656
-margin_top = -103.09
-margin_right = -415.28
-margin_bottom = -131.7
+anchor_left = 0.157
+anchor_top = 0.265
+anchor_right = 0.157
+anchor_bottom = 0.265
+margin_left = -160.768
+margin_top = -161.65
+margin_right = 161.232
+margin_bottom = 115.35
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false

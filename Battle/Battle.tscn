@@ -1,17 +1,20 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Tilesets/Forest/Forest 2/Forest.tres" type="TileSet" id=1]
 [ext_resource path="res://Tilesets/Dungeon/Dungeon.tres" type="TileSet" id=2]
 [ext_resource path="res://Battle/Battle.gd" type="Script" id=3]
+[ext_resource path="res://ButtonGroups/PlayerButtons.tres" type="ButtonGroup" id=4]
+[ext_resource path="res://Fonts/WorldSelectFont.tres" type="DynamicFont" id=5]
 
 [node name="Battle" type="Node2D"]
 script = ExtResource( 3 )
+group = ExtResource( 4 )
 
 [node name="BattleScreen" type="Node2D" parent="."]
+z_index = -1
 
 [node name="Forest" type="Node2D" parent="BattleScreen"]
 visible = false
-z_index = 1
 
 [node name="Background" type="TileMap" parent="BattleScreen/Forest"]
 tile_set = ExtResource( 1 )
@@ -23,19 +26,7 @@ tile_data = PoolIntArray( 0, 536870920, 0, 1, 536870920, 0, 2, 536870920, 0, 3, 
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 32, 32 )
 format = 1
-tile_data = PoolIntArray( 262157, 536870934, 0, 524295, 536870938, 0, 524313, 536870936, 0, 720900, 536870938, 0, 720906, 536870938, 0, 720918, 536870936, 0, 720924, 536870936, 0, 851978, 536870946, 0, 851979, 536870945, 0, 851980, 536870945, 0, 851981, 536870945, 0, 851982, 536870945, 0, 851983, 536870945, 0, 851984, 536870945, 0, 851985, 536870945, 0, 851986, 536870945, 0, 851987, 536870945, 0, 851988, 536870945, 0, 851989, 536870945, 0, 851990, 536870944, 0, 917511, 536870938, 0, 917514, -2147483615, 0, 917515, -2147483613, 0, 917516, -2147483613, 0, 917517, -2147483613, 0, 917518, -2147483613, 0, 917519, -2147483613, 0, 917520, -2147483613, 0, 917521, -2147483613, 0, 917522, -2147483613, 0, 917523, -2147483613, 0, 917524, -2147483613, 0, 917525, -2147483613, 0, 917526, -2147483618, 0, 917529, 536870936, 0, 983050, -2147483615, 0, 983051, -2147483613, 0, 983052, -2147483613, 0, 983053, -2147483613, 0, 983054, -2147483613, 0, 983055, -2147483613, 0, 983056, -2147483613, 0, 983057, -2147483613, 0, 983058, -2147483613, 0, 983059, -2147483613, 0, 983060, -2147483613, 0, 983061, -2147483613, 0, 983062, -2147483618, 0, 1048586, -2147483615, 0, 1048587, -2147483613, 0, 1048588, -2147483613, 0, 1048589, -2147483613, 0, 1048590, -2147483613, 0, 1048591, -2147483613, 0, 1048592, -2147483613, 0, 1048593, -2147483613, 0, 1048594, -2147483613, 0, 1048595, -2147483613, 0, 1048596, -2147483613, 0, 1048597, -2147483613, 0, 1048598, -2147483618, 0, 1114122, 536870943, 0, 1114123, 536870942, 0, 1114124, 536870942, 0, 1114125, 536870942, 0, 1114126, 536870942, 0, 1114127, 536870942, 0, 1114128, 536870942, 0, 1114129, 536870942, 0, 1114130, 536870942, 0, 1114131, 536870942, 0, 1114132, 536870942, 0, 1114133, 536870942, 0, 1114134, 536870941, 0 )
-
-[node name="TextEdit" type="TextEdit" parent="BattleScreen/Forest"]
-show_behind_parent = true
-margin_left = 351.0
-margin_top = 442.0
-margin_right = 706.0
-margin_bottom = 555.0
-text = "
-"
-__meta__ = {
-"_edit_use_anchors_": false
-}
+tile_data = PoolIntArray( 262157, 536870934, 0, 524295, 536870938, 0, 524313, 536870936, 0, 720900, 536870938, 0, 720906, 536870938, 0, 720918, 536870936, 0, 720924, 536870936, 0, 851978, 9, 0, 851979, 9, 0, 851980, 9, 0, 851981, 11, 0, 851982, 11, 0, 851983, 11, 0, 851984, 11, 0, 851985, 10, 0, 851986, 10, 0, 851987, 10, 0, 851988, 10, 0, 851989, 10, 0, 851990, 10, 0, 917511, 536870938, 0, 917514, 9, 0, 917515, 9, 0, 917516, 9, 0, 917517, 9, 0, 917518, 11, 0, 917519, 11, 0, 917520, 11, 0, 917521, 11, 0, 917522, 10, 0, 917523, 10, 0, 917524, 10, 0, 917525, 10, 0, 917526, 10, 0, 917529, 536870936, 0, 983050, 9, 0, 983051, 9, 0, 983052, 9, 0, 983053, 9, 0, 983054, 11, 0, 983055, 11, 0, 983056, 11, 0, 983057, 11, 0, 983058, 10, 0, 983059, 10, 0, 983060, 10, 0, 983061, 10, 0, 983062, 10, 0, 1048586, 9, 0, 1048587, 9, 0, 1048588, 9, 0, 1048589, 9, 0, 1048590, 9, 0, 1048591, 11, 0, 1048592, 11, 0, 1048593, 11, 0, 1048594, 11, 0, 1048595, 11, 0, 1048596, 10, 0, 1048597, 10, 0, 1048598, 10, 0, 1114122, 11, 0, 1114123, 11, 0, 1114124, 11, 0, 1114125, 11, 0, 1114126, 11, 0, 1114127, 11, 0, 1114128, 11, 0, 1114129, 11, 0, 1114130, 11, 0, 1114131, 11, 0, 1114132, 10, 0, 1114133, 10, 0, 1114134, 10, 0 )
 
 [node name="Ruins" type="Node2D" parent="BattleScreen"]
 visible = false
@@ -51,15 +42,6 @@ tile_set = ExtResource( 2 )
 cell_size = Vector2( 32, 32 )
 format = 1
 tile_data = PoolIntArray( 65557, 22, 0, 65558, 36, 0, 65562, 35, 0, 131079, 536870949, 0, 196618, 21, 0, 262148, 35, 0, 262152, 22, 0, 262168, 22, 0, 262173, 21, 0, 393228, 36, 0, 458781, 36, 0, 524295, 536870923, 0, 524304, 21, 0, 524313, 11, 0, 655363, 21, 0, 720900, 12, 0, 720906, 536870924, 0, 720918, 12, 0, 720924, 536870924, 0, 851970, 536870949, 0, 917511, 11, 0, 917521, 21, 0, 917529, 536870923, 0, 983051, 536870948, 0, 983060, 37, 0, 983065, 21, 0, 1048579, 21, 0, 1048604, 21, 0, 1048605, 35, 0, 1114117, 35, 0, 1114123, 22, 0 )
-
-[node name="TextEdit" type="TextEdit" parent="BattleScreen/Ruins"]
-margin_left = 321.12
-margin_top = 443.0
-margin_right = 734.12
-margin_bottom = 546.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Dungeon" type="Node2D" parent="BattleScreen"]
 visible = false
@@ -84,3 +66,58 @@ position = Vector2( 816.613, 376.432 )
 
 [node name="Characters" type="Node2D" parent="."]
 z_index = 1
+
+[node name="TextBox" type="Label" parent="."]
+show_behind_parent = true
+margin_left = 348.935
+margin_top = 442.0
+margin_right = 703.935
+margin_bottom = 555.0
+custom_fonts/font = ExtResource( 5 )
+text = "
+"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="Control" parent="."]
+visible = false
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Attack" type="Button" parent="Control"]
+margin_left = 354.984
+margin_top = 469.178
+margin_right = 439.984
+margin_bottom = 500.178
+group = ExtResource( 4 )
+text = "Attack"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Health Potion" type="Button" parent="Control"]
+margin_left = 454.632
+margin_top = 469.178
+margin_right = 581.632
+margin_bottom = 500.178
+group = ExtResource( 4 )
+text = "Health Potion"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Attack Potion" type="Button" parent="Control"]
+margin_left = 595.454
+margin_top = 468.768
+margin_right = 705.454
+margin_bottom = 499.768
+group = ExtResource( 4 )
+text = "Attack Potion"
+__meta__ = {
+"_edit_use_anchors_": false
+}
