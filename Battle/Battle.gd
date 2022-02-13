@@ -14,7 +14,7 @@ func _ready():
 	player_spawn = $PlayerSpawnPoint.position
 	enemy_spawn = $EnemySpawnPoint.position
 
-func instance(player : KinematicBody2D, enemy : Area2D, Map : String):
+func instance(player : Area2D, enemy : Area2D, Map : String):
 	match Map:
 		"Forest":
 			$BattleScreen/Forest.visible = true
@@ -39,13 +39,14 @@ func create_turn_order(player, enemy):
 	sort_children(chars)
 	active_char = char_parent.get_child(0)
 
-func spawn_chars(player : KinematicBody2D, enemy : Area2D):
+func spawn_chars(player : Area2D, enemy : Area2D):
 	spawn_player(player)
 	spawn_enemy(enemy)
 	connect_signals(player, enemy)
 
-func spawn_player(player : KinematicBody2D):
-	player.set_physics_process(false)
+func spawn_player(player : Area2D):
+	print(player.Inventory)
+	player.set_process(false)
 	char_parent.add_child(player)
 	setup_player(player)
 
@@ -55,13 +56,13 @@ func setup_player(player):
 	face_right(player)
 	player.scale = Vector2(.75,.75)
 
-func face_right(character):
+func face_right(character : Area2D):
 	if character.get_node("Sprite").flip_h == true:
 		character.get_node("Sprite").flip_h = false
 	else:
 		pass
 
-func face_left(character):
+func face_left(character : Area2D):
 	if character.get_node("Sprite").flip_h == false:
 		character.get_node("Sprite").flip_h = true
 	else:
@@ -73,7 +74,7 @@ func spawn_enemy(enemy: Area2D):
 	enemy.set_global_position(enemy_spawn)
 	enemy.scale = Vector2(3,3)
 
-func connect_signals(player : KinematicBody2D, enemy : Area2D):
+func connect_signals(player : Area2D, enemy : Area2D):
 	enemy.connect('enemy_attack', player, '_on_enemy_attack')
 	enemy.connect('enemy_death', self , '_on_player_win')
 	enemy.connect('turn_completed', self, '_on_turn_completed')
@@ -119,7 +120,7 @@ func respawn_player(Player):
 	world_map.add_child(Player)
 	Player.conn_flag = false
 	Player.position = world_map.curr_pos
-	Player.set_physics_process(true)
+	Player.set_process(true)
 	Player.scale = Vector2(.4,.4)
 
 func _on_player_loss():
@@ -152,13 +153,9 @@ func play_turn():
 	if active_char.name == "Player":
 		battleControls.visible = true
 	else:
-		name = active_char.name
-		if name[0] == "@":
-			var max_index = name.length() - 1
-			name = name.substr(1, -1)
 		yield(get_tree().create_timer(1.0), "timeout")
 		active_char.play_turn()
-		write_move(name + " attacked!")
+		write_move(str(active_char.name) + " attacked!")
 
 func write_move(MoveString):
 	var textbox = get_node("TextBox")
@@ -178,20 +175,10 @@ func button_pressed():
 			player.attack()
 			write_move("You attacked!")
 		"Health Potion":
-			var potionCount = player.get_potion_count("Health Potion")
-			if (potionCount == 0):
-				write_move("No HP Potions!")
-				buttons.visible = true
-			else:
-				player.use_potion("Health Potion")
-				write_move("HP UP! HP: " + str(player.get_health()))
+			player.use_potion("Health Potion")
+			write_move("HP UP! HP: " + str(player.get_health()))
 		"Attack Potion":
-			var potionCount = player.get_potion_count("Attack Potion")
-			if (potionCount == 0):
-				write_move("No ATT Potions!")
-				buttons.visible = true
-			else:
-				write_move("ATT UP! ATT: " + str(player.get_attack()))
-				player.use_potion("Attack Potion")
+			player.use_potion("Attack Potion")
+			write_move("ATT UP! ATT: " + str(player.get_attack()))
 
 

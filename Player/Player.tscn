@@ -82,6 +82,22 @@ tracks/0/keys = {
 "values": [ 16, 17, 18, 19, 20, 0 ]
 }
 
+[sub_resource type="Animation" id=8]
+resource_name = "UsePotion"
+length = 0.7
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.4, 0.5, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 16, 17, 18, 17, 18, 17 ]
+}
+
 [sub_resource type="Animation" id=6]
 resource_name = "Walk"
 length = 0.77
@@ -98,31 +114,12 @@ tracks/0/keys = {
 "values": [ 8, 9, 10, 11, 12, 13, 14, 15 ]
 }
 
-[sub_resource type="Animation" id=8]
-resource_name = "Walk"
-length = 0.8
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 8, 9, 10, 11, 12, 13, 14, 15 ]
-}
-
 [sub_resource type="CapsuleShape2D" id=7]
-radius = 24.7776
-height = 44.7476
+radius = 33.1297
+height = 39.5899
 
-[node name="Player" type="KinematicBody2D"]
+[node name="Player" type="Area2D"]
 position = Vector2( 304.394, 217.87 )
-collision_layer = 0
-collision_mask = 0
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
@@ -132,7 +129,7 @@ texture = ExtResource( 1 )
 flip_h = true
 hframes = 8
 vframes = 9
-frame = 9
+frame = 17
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite"]
 anims/Block = SubResource( 1 )
@@ -140,21 +137,12 @@ anims/Dying = SubResource( 2 )
 anims/Hurt = SubResource( 3 )
 anims/Idle = SubResource( 4 )
 anims/Slash = SubResource( 5 )
-anims/UsePotion = SubResource( 6 )
-anims/Walk = SubResource( 8 )
-
-[node name="Area2D" type="Area2D" parent="."]
-collision_layer = 0
-collision_mask = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-visible = false
-position = Vector2( -0.383728, -33.6484 )
-shape = SubResource( 7 )
+anims/UsePotion = SubResource( 8 )
+anims/Walk = SubResource( 6 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
-position = Vector2( -0.383728, -33.6484 )
+position = Vector2( -2.37872, 20.2164 )
 shape = SubResource( 7 )
 
-[connection signal="area_entered" from="Area2D" to="." method="_on_Knight_area_entered"]
+[connection signal="area_entered" from="." to="." method="_on_Knight_area_entered" flags=6]
