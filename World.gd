@@ -38,7 +38,7 @@ func initialize(Map, Player):
 			"res://Enemies/Small/Forest/Twig Blight/Twig Blight.tscn", "res://Enemies/Small/Ruins/Wisp/Whisp.tscn",
 			"res://Enemies/Medium/Forest/Wolf/Wolf.tscn"]
 			spawn_player("Forest", Player)
-			spawn_enemies(enemy_types.size(), 1)
+			spawn_enemies(enemy_types.size(), Player.get_level() + 2)
 			active_floor = "Forest"
 		"Ruins":
 			$Map/Forest.visible = false
@@ -50,7 +50,7 @@ func initialize(Map, Player):
 			"res://Enemies/Small/Ruins/Wisp/Whisp.tscn","res://Enemies/Small/Ruins/Child Spirit/Child Spirit.tscn",
 			"res://Enemies/Small/Ruins/Hell Critter/Hell Critter.tscn"]
 			spawn_player("Ruins", Player)
-			spawn_enemies(enemy_types.size(), 9)
+			spawn_enemies(enemy_types.size(), Player.get_level() + 2)
 			active_floor = "Ruins"
 		"Dungeon":
 			$Map/Forest.visible = false
@@ -62,7 +62,7 @@ func initialize(Map, Player):
 			"res://Enemies/Small/Ruins/Wisp/Whisp.tscn","res://Enemies/Small/Ruins/Child Spirit/Child Spirit.tscn",
 			"res://Enemies/Small/Dungeon/Mimic/Mimic.tscn"]
 			spawn_player("Dungeon", Player)
-			spawn_enemies(enemy_types.size(), 9)
+			spawn_enemies(enemy_types.size(), Player.get_level() + 2)
 			active_floor = "Dungeon"
 		"Store":
 			$Map.visible = false
@@ -88,6 +88,8 @@ func get_spawnpoints(Map):
 		spawn_points.append(get_node("SpawnPoints").get_node(Map).get_node("Normal").get_child(i))
 
 func spawn_enemies(NumTypes, NumEnemies):
+	if get_node("Player").get_level() >= 7:
+		NumEnemies = 9
 	var Spawns = choose_spawns(NumEnemies)
 	var enemies_spawned : Dictionary = make_enemy_type_dict()
 	for spawn in Spawns:
@@ -117,7 +119,7 @@ func make_enemy_type_dict():
 
 func choose_spawns(NumEnemies):
 	var SpawnsPicked = []
-	for i in range(NumEnemies):
+	for _i in range(NumEnemies):
 		randomize()
 		var spawn_point = randi()%9+1
 		while SpawnsPicked.count(spawn_point) == 1:
@@ -125,8 +127,14 @@ func choose_spawns(NumEnemies):
 		SpawnsPicked.append(spawn_point)
 	return SpawnsPicked
 
-func spawn_player(Map, Player):
+func spawn_player(Map, Player : KinematicBody2D):
 	add_child(Player)
+	if (Map == "Forest"):
+		Player.layers = 2
+	if (Map == "Ruins"):
+		Player.layers = 3
+	if (Map == "Dungeon"):
+		Player.layers = 4
 	var player_spawn
 	if (Map != "Store"):
 		player_spawn = get_node("SpawnPoints/" + Map + "/Player/PlayerSpawn")

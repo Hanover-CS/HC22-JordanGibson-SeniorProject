@@ -1,4 +1,4 @@
-extends Node2D
+extends KinematicBody2D
 
 var level : int = 1
 var max_health = 10
@@ -10,7 +10,7 @@ export (int) var damage = 1
 export (int) var speed = 1
 export (int) var movement_speed = 100
 
-var Inventory : Dictionary = {"Attack Potion" : 0, "Health Potion" : 2, "Gold": 0}
+var Inventory : Dictionary = {"Attack Potion" : 1, "Health Potion" : 3, "Gold": 0}
 
 var wait_time = .7
 var direction : Vector2
@@ -22,14 +22,22 @@ signal turn_completed()
 
 onready var player_animation = $Sprite/AnimationPlayer
 
-func _process(delta):
-	check_collision_connection()
-	direction.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
-	direction.y = Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")
-	
-	position.x += direction.x * movement_speed * delta
-	position.y += direction.y * movement_speed * delta
 
+func get_input():
+	# Detect up/down/left/right keystate and only move when pressed.
+	direction = Vector2(0, 0)
+	if Input.is_action_pressed('ui_right'):
+		direction.x += 1
+	if Input.is_action_pressed('ui_left'):
+		direction.x -= 1
+	if Input.is_action_pressed('ui_down'):
+		direction.y += 1
+	if Input.is_action_pressed('ui_up'):
+		direction.y -= 1
+	direction = direction.normalized() * movement_speed
+
+func _physics_process(delta):
+	get_input()
 	if direction.x != 0 or direction.y != 0:
 		if direction.x < 0:
 			$Sprite.flip_h = true
@@ -38,6 +46,26 @@ func _process(delta):
 		player_animation.play("Walk")
 	else:
 		player_animation.play("Idle")
+	var collision = move_and_collide(direction * delta)
+		
+
+
+#func _process(delta):
+#	check_collision_connection()
+#	direction.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
+#	direction.y = Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")
+#
+#	position.x += direction.x * movement_speed * delta
+#	position.y += direction.y * movement_speed * delta
+#
+#	if direction.x != 0 or direction.y != 0:
+#		if direction.x < 0:
+#			$Sprite.flip_h = true
+#		else:
+#			$Sprite.flip_h = false
+#		player_animation.play("Walk")
+#	else:
+#		player_animation.play("Idle")
 
 func check_collision_connection():
 	if (get_parent().name == "World" and conn_flag == false):
@@ -93,6 +121,9 @@ func get_attack():
 func get_level():
 	return(level)
 
+func get_potion_count(PotionType):
+	return(Inventory[PotionType])
+
 func get_wait_time():
 	return(wait_time)
 
@@ -117,15 +148,14 @@ func attack():
 
 func use_potion(PotionType):
 	if (PotionType == "Attack Potion" or PotionType == "Health Potion"):
-		player_animation.play("UsePotion")
-		player_animation.queue("Idle")
 		if (Inventory.get(PotionType) > 0):
 			if (PotionType == "Attack Potion"):
 				damage += 1
 			elif (PotionType == "Health Potion"):
 				use_health_potion()
-			var curr_amount = Inventory.get(PotionType)
 			Inventory[PotionType] -= 1
+			player_animation.play("UsePotion")
+			player_animation.queue("Idle")
 			yield(get_tree().create_timer(wait_time), "timeout")
 			emit_signal("turn_completed")
 			print(Inventory)
