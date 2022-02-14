@@ -69,6 +69,8 @@ func initialize(Map, Player):
 			$Store.visible = true
 			$Store/StoreKeeper/AnimationPlayer.play("Idle")
 			spawn_player("Store", Player)
+			active_floor = "Store"
+	make_world_interactable()
 
 func _on_Player_battle_start(player, enemy):
 	start_battle(player, enemy)
@@ -99,6 +101,13 @@ func spawn_enemies(NumTypes, NumEnemies):
 
 func spawn_single_enemy(enemyScene, spawnLocation):
 	get_node("Enemies").add_child(enemyScene)
+	match active_floor:
+		"Forest":
+			enemyScene.layers = 2
+		"Dungeon":
+			enemyScene.layers = 4
+		"Ruins":
+			enemyScene.layers = 3
 	enemyScene.level_up(get_node("Player").get_level())
 	enemyScene.scale = Vector2(1.5,1.5)
 	enemyScene.set_global_position(spawnLocation)
@@ -139,6 +148,17 @@ func clear_enemies():
 	var enemies = get_node("Enemies")
 	for enemy in enemies.get_children():
 		enemy.queue_free()
+
+func make_world_interactable():
+	if active_floor == "Store":
+		pass
+	else:
+		var background = get_node("Map/" + str(active_floor)).get_node("Background")
+		var foreground = get_node("Map/" + str(active_floor)).get_node("Foreground")
+		background.collision_layer = 1
+		background.collision_mask = 1
+		foreground.collision_layer = 1
+		foreground.collision_mask = 1
 
 func clear_world():
 	for node in self.get_children():

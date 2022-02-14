@@ -1,4 +1,4 @@
-extends Node2D
+extends KinematicBody2D
 
 var level : int = 1
 var max_health = 10
@@ -22,13 +22,12 @@ signal turn_completed()
 
 onready var player_animation = $Sprite/AnimationPlayer
 
-func _process(delta):
+func _physics_process(delta):
 	check_collision_connection()
 	direction.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
 	direction.y = Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")
 	
-	position.x += direction.x * movement_speed * delta
-	position.y += direction.y * movement_speed * delta
+	move_and_collide(Vector2(direction.x * movement_speed * delta, direction.y * movement_speed * delta))
 
 	if direction.x != 0 or direction.y != 0:
 		if direction.x < 0:
@@ -167,7 +166,7 @@ func _on_enemy_attack(enemy_damage):
 	health -= enemy_damage
 	if health <= 0:
 		player_animation.play("Dying")
-		yield(get_tree().create_timer(wait_time), "timeout")
+		yield(get_tree().create_timer(2.0), "timeout")
 		emit_signal("player_death")
 	else:
 		player_animation.play("Hurt")
@@ -177,4 +176,4 @@ func _on_enemy_attack(enemy_damage):
 func revive_player():
 	health = max_health
 	conn_flag = false
-	set_process(true)
+	set_physics_process(true)

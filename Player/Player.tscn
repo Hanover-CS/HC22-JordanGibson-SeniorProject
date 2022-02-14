@@ -82,7 +82,7 @@ tracks/0/keys = {
 "values": [ 16, 17, 18, 19, 20, 0 ]
 }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=6]
 resource_name = "UsePotion"
 length = 0.7
 tracks/0/type = "value"
@@ -98,8 +98,7 @@ tracks/0/keys = {
 "values": [ 16, 17, 18, 17, 18, 17 ]
 }
 
-[sub_resource type="Animation" id=6]
-resource_name = "Walk"
+[sub_resource type="Animation" id=7]
 length = 0.77
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:frame")
@@ -114,11 +113,11 @@ tracks/0/keys = {
 "values": [ 8, 9, 10, 11, 12, 13, 14, 15 ]
 }
 
-[sub_resource type="CapsuleShape2D" id=7]
+[sub_resource type="CapsuleShape2D" id=8]
 radius = 33.1297
-height = 39.5899
+height = 29.3671
 
-[node name="Player" type="Area2D"]
+[node name="Player" type="KinematicBody2D"]
 position = Vector2( 304.394, 217.87 )
 script = ExtResource( 2 )
 
@@ -137,12 +136,19 @@ anims/Dying = SubResource( 2 )
 anims/Hurt = SubResource( 3 )
 anims/Idle = SubResource( 4 )
 anims/Slash = SubResource( 5 )
-anims/UsePotion = SubResource( 8 )
-anims/Walk = SubResource( 6 )
+anims/UsePotion = SubResource( 6 )
+anims/Walk = SubResource( 7 )
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+visible = false
+position = Vector2( -1.7113, -34.5119 )
+shape = SubResource( 8 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
-position = Vector2( -2.37872, 20.2164 )
-shape = SubResource( 7 )
+position = Vector2( -1.04388, -35.8468 )
+shape = SubResource( 8 )
 
-[connection signal="area_entered" from="." to="." method="_on_Knight_area_entered" flags=6]
+[connection signal="area_entered" from="Area2D" to="." method="_on_Knight_area_entered"]

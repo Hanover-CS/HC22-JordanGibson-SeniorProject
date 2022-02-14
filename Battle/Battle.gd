@@ -14,7 +14,7 @@ func _ready():
 	player_spawn = $PlayerSpawnPoint.position
 	enemy_spawn = $EnemySpawnPoint.position
 
-func instance(player : Area2D, enemy : Area2D, Map : String):
+func instance(player : KinematicBody2D, enemy : Area2D, Map : String):
 	match Map:
 		"Forest":
 			$BattleScreen/Forest.visible = true
@@ -39,14 +39,14 @@ func create_turn_order(player, enemy):
 	sort_children(chars)
 	active_char = char_parent.get_child(0)
 
-func spawn_chars(player : Area2D, enemy : Area2D):
+func spawn_chars(player : KinematicBody2D, enemy : Area2D):
 	spawn_player(player)
 	spawn_enemy(enemy)
 	connect_signals(player, enemy)
 
-func spawn_player(player : Area2D):
+func spawn_player(player : KinematicBody2D):
 	print(player.Inventory)
-	player.set_process(false)
+	player.set_physics_process(false)
 	char_parent.add_child(player)
 	setup_player(player)
 
@@ -56,13 +56,13 @@ func setup_player(player):
 	face_right(player)
 	player.scale = Vector2(.75,.75)
 
-func face_right(character : Area2D):
+func face_right(character):
 	if character.get_node("Sprite").flip_h == true:
 		character.get_node("Sprite").flip_h = false
 	else:
 		pass
 
-func face_left(character : Area2D):
+func face_left(character):
 	if character.get_node("Sprite").flip_h == false:
 		character.get_node("Sprite").flip_h = true
 	else:
@@ -74,7 +74,7 @@ func spawn_enemy(enemy: Area2D):
 	enemy.set_global_position(enemy_spawn)
 	enemy.scale = Vector2(3,3)
 
-func connect_signals(player : Area2D, enemy : Area2D):
+func connect_signals(player : KinematicBody2D, enemy : Area2D):
 	enemy.connect('enemy_attack', player, '_on_enemy_attack')
 	enemy.connect('enemy_death', self , '_on_player_win')
 	enemy.connect('turn_completed', self, '_on_turn_completed')
@@ -120,15 +120,19 @@ func respawn_player(Player):
 	world_map.add_child(Player)
 	Player.conn_flag = false
 	Player.position = world_map.curr_pos
-	Player.set_process(true)
+	Player.set_physics_process(true)
 	Player.scale = Vector2(.4,.4)
 
 func _on_player_loss():
 	var player = get_node("Characters").get_node("Player")
 	get_node("Characters").remove_child(player)
-	player.revive_player()
-	player.visible = false
-	get_tree().root.get_node("WorldSelect").add_child(player)
+	yield(get_tree().create_timer(2.0), "timeout")
+	pass_to_select(player)
+
+func pass_to_select(Player):
+	Player.revive_player()
+	Player.visible = false
+	get_tree().root.get_node("WorldSelect").add_child(Player)
 	get_tree().root.get_node("WorldSelect").visible = true
 	get_parent().queue_free()
 
@@ -150,21 +154,33 @@ func _on_turn_completed():
 
 func play_turn():
 	var battleControls = get_node("Control")
-	if active_char.name == "Player":
+	if active_char.name == "Player" and active_char.get_health() <= 0:
+		write_move("Player fainted! Return to World Select.", true)
+	elif active_char.name == "Player":
 		battleControls.visible = true
 	else:
 		yield(get_tree().create_timer(1.0), "timeout")
 		active_char.play_turn()
-		write_move(str(active_char.name) + " attacked!")
+		write_move(format_name(active_char.name) + " attacked!", false)
 
-func write_move(MoveString):
+func format_name(Name : String):
+	var nums = ['1','2','3','4','5','6','7','8','9','10', '@']
+	var nameAcc : String = ""
+	for ch in Name:
+		if nums.count(ch) == 1:
+			pass
+		else:
+			nameAcc += ch
+	return(nameAcc)
+
+func write_move(MoveString, KeepDisplayed):
 	var textbox = get_node("TextBox")
 	var battleControls = get_node("Control")
 	battleControls.visible = false
 	textbox.visible = true
 	textbox.text = MoveString
 	yield(get_tree().create_timer(2.0), "timeout")
-	textbox.visible = false
+	textbox.visible = KeepDisplayed
 
 func button_pressed():
 	var active_button = group.get_pressed_button()
@@ -173,12 +189,12 @@ func button_pressed():
 	match active_button.name:
 		"Attack":
 			player.attack()
-			write_move("You attacked!")
+			write_move("You attacked!", false)
 		"Health Potion":
 			player.use_potion("Health Potion")
-			write_move("HP UP! HP: " + str(player.get_health()))
+			write_move("HP UP! HP: " + str(player.get_health()), false)
 		"Attack Potion":
 			player.use_potion("Attack Potion")
-			write_move("ATT UP! ATT: " + str(player.get_attack()))
+			write_move("ATT UP! ATT: " + str(player.get_attack()), false)
 
 
