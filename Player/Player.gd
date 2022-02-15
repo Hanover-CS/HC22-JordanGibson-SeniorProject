@@ -1,10 +1,5 @@
 extends KinematicBody2D
 
-var level : int = 1
-var max_health = 10
-var xp_threshold = 5
-var currXP = 0
-
 export (int) var health = 10
 export (int) var damage = 1
 export (int) var speed = 1
@@ -12,7 +7,12 @@ export (int) var movement_speed = 100
 
 var Inventory : Dictionary = {"Attack Potion" : 1, "Health Potion" : 4, "Gold": 0}
 
-var wait_time = .7
+var level : int = 2
+var max_health : int= 10
+var xp_threshold : int= 5
+var currXP : int = 0
+
+var wait_time : float = .7
 var direction : Vector2
 
 signal player_attack(damage)
@@ -40,37 +40,6 @@ func _physics_process(delta):
 	else:
 		player_animation.play("Idle")
 
-func update_heart():
-	var heart_label = get_node("Heart/Label")
-	heart_label.text = ": " + str(health)
-
-func update_gold():
-	var gold_label = get_node("Gold/Label")
-	gold_label.text = ": " + str(Inventory["Gold"])
-
-func give_XP(XP):
-	currXP += XP
-	check_for_level_up()
-	print(currXP)
-
-func check_for_level_up():
-	if (currXP >= xp_threshold):
-		level_up()
-	else:
-		pass
-
-func level_up():
-	level += 1
-	xp_threshold = xp_threshold + floor(xp_threshold * .5)
-	currXP = 0
-	display_attribute_screen()
-
-func display_attribute_screen():
-	var level_up_scene = load("res://Player/Level Up Screen/LevelUp.tscn")
-	var level_up = level_up_scene.instance()
-	level_up.rect_scale = Vector2(1.5, 1.5)
-	add_child(level_up)
-	
 func get_speed():
 	return(speed)
 
@@ -111,6 +80,48 @@ func get_potion_count(PotionType):
 func get_wait_time():
 	return(wait_time)
 
+func update_heart():
+	var heart_label = get_node("Heart/Label")
+	heart_label.text = ": " + str(health)
+
+func update_gold():
+	var gold_label = get_node("Gold/Label")
+	gold_label.text = ": " + str(Inventory["Gold"])
+
+func get_gold():
+	return(Inventory["Gold"])
+
+func give_gold(Gold):
+	Inventory["Gold"] += Gold
+	update_gold()
+
+func deduct_gold(Gold):
+	Inventory["Gold"] -= Gold
+	update_gold()
+
+func give_XP(XP):
+	currXP += XP
+	check_for_level_up()
+	print(currXP)
+
+func check_for_level_up():
+	if (currXP >= xp_threshold):
+		level_up()
+	else:
+		pass
+
+func level_up():
+	level += 1
+	xp_threshold = xp_threshold + floor(xp_threshold * .5)
+	currXP = 0
+	display_stat_select_screen()
+
+func display_stat_select_screen():
+	var level_up_scene = load("res://Player/Level Up Screen/LevelUp.tscn")
+	var level_up = level_up_scene.instance()
+	level_up.rect_scale = Vector2(1.5, 1.5)
+	add_child(level_up)
+
 func _on_Knight_area_entered(area):
 	if (get_parent().name == "World" and area.is_in_group("enemy")):
 		player_animation.stop()
@@ -145,7 +156,7 @@ func use_health_potion():
 	if (health == max_health):
 		return false
 	else:
-		if level == 1:
+		if level >= 2:
 			health += randi()%3+1
 		else:
 			health += randi()%level+1
@@ -167,23 +178,10 @@ func buy_item(Item):
 		print("Not enough Gold!")
 	else:
 		if (Item == "Attack Potion" or Item == "Health Potion"):
-			var curr_amount = Inventory.get(Item)
 			deduct_gold(2)
-			Inventory[Item] = curr_amount + 1
-			print(Inventory)
+			Inventory[Item] += 1
 		else:
 			print("Not valid item type")
-
-func get_gold():
-	return(Inventory["Gold"])
-
-func give_gold(Gold):
-	Inventory["Gold"] += Gold
-	update_gold()
-
-func deduct_gold(Gold):
-	Inventory["Gold"] -= Gold
-	update_gold()
 
 func _on_enemy_attack(enemy_damage):
 	print("Player damage took: ", enemy_damage)

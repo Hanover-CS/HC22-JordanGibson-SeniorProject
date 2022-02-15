@@ -20,14 +20,23 @@ func _ready():
 func get_speed():
 	return(speed)
 
+func speed_up(SpeedAmount):
+	speed += SpeedAmount
+
 func get_health():
 	return(health)
+
+func health_up(HealthAmount):
+	health += HealthAmount
 
 func get_wait_time():
 	return(wait_time)
 
 func get_level():
 	return(level)
+
+func damage_up(DamageAmount):
+	damage += DamageAmount
 
 func play_turn():
 	attack()
@@ -40,29 +49,20 @@ func attack():
 	yield(get_tree().create_timer(1.0), "timeout")
 	emit_signal("turn_completed")
 
-func update_heart():
-	var heart_label = get_node("Heart/Label")
-	heart_label.text = ": " + str(health)
-
-func level_up(NumLevels : int):
+func level_up(NumLevels : int, printEnemyStats : bool):
 	if (NumLevels == 1):
 		pass
 	else:
-		level += NumLevels
+		level += NumLevels - 1
 		$Level.text = "Lvl: " + str(level)
-		damage_up(NumLevels / 2)
-		speed_up(NumLevels / 3)
-		health_up(NumLevels)
-		print("New stat values for level: " + str(level) + " '" + self.name + "' HP: " + str(health) + " Attack: " + str(damage) + " Speed: " + str(speed))
+		raise_stats(NumLevels - 1)
+		if printEnemyStats:
+			print("New stat values for level: " + str(level) + " '" + self.name + "' HP: " + str(health) + " Attack: " + str(damage) + " Speed: " + str(speed))
 
-func damage_up(DamageAmount):
-	damage += DamageAmount
-
-func speed_up(SpeedAmount):
-	speed += SpeedAmount
-
-func health_up(HealthAmount):
-	health += HealthAmount
+func raise_stats(NumLevels : int):
+	damage_up(NumLevels / 2)
+	speed_up(NumLevels / 3)
+	health_up(NumLevels)
 
 func _on_player_attack(player_damage):
 	health -= player_damage
@@ -76,3 +76,7 @@ func _on_player_attack(player_damage):
 		yield(get_tree().create_timer(wait_time), "timeout")
 		update_heart()
 		animation.queue("Idle")
+
+func update_heart():
+	var heart_label = get_node("Heart/Label")
+	heart_label.text = ": " + str(health)

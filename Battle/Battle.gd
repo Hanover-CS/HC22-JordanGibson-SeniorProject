@@ -6,7 +6,7 @@ onready var player_spawn : Vector2
 onready var enemy_spawn : Vector2
 
 onready var active_char : Object
-onready var char_parent : Node2D
+onready var char_parent : Node2D = get_node("Characters")
 
 var attack_potions_used = 0
 
@@ -25,26 +25,22 @@ func _process(delta):
 	health_potion_label.text = ": " + str(player.get_potion_count("Health Potion"))
 
 func initialize(player : KinematicBody2D, enemy : Area2D, Map : String):
-	match Map:
-		"Forest":
-			$BattleScreen/Forest.visible = true
-			$BattleScreen/Ruins.visible = false
-			$BattleScreen/Dungeon.visible = false
-		"Ruins":
-			$BattleScreen/Forest.visible = false
-			$BattleScreen/Ruins.visible = true
-			$BattleScreen/Dungeon.visible = false
-		"Dungeon":
-			$BattleScreen/Forest.visible = false
-			$BattleScreen/Ruins.visible = false
-			$BattleScreen/Dungeon.visible = true
+	show_map(Map)
 	create_turn_order(player, enemy)
 	set_process(true)
 	yield(get_tree().create_timer(.5), "timeout")
 	play_turn()
 
+func show_map(Map : String):
+	match Map:
+		"Forest":
+			$BattleScreen/Forest.visible = true
+		"Ruins":
+			$BattleScreen/Ruins.visible = true
+		"Dungeon":
+			$BattleScreen/Dungeon.visible = true
+
 func create_turn_order(player, enemy):
-	char_parent = $Characters
 	spawn_chars(player, enemy)
 	var chars = char_parent.get_children()
 	sort_children(chars)
@@ -62,9 +58,47 @@ func spawn_player(player : KinematicBody2D):
 func setup_player(player):
 	player.set_physics_process(false)
 	player.set_global_position(player_spawn)
-	player.get_node("Sprite").get_node("AnimationPlayer").play("Idle")
 	face_right(player)
 	player.scale = Vector2(.75,.75)
+	player.get_node("Sprite").get_node("AnimationPlayer").play("Idle")
+
+func spawn_enemy(enemy: Area2D):
+	char_parent.add_child(enemy)
+	setup_enemy(enemy)
+
+func setup_enemy(enemy : Area2D):
+	enemy.get_node("Heart").visible = true
+	enemy.update_heart()
+	face_left(enemy)
+	enemy.set_global_position(enemy_spawn)
+	enemy.scale = Vector2(3,3)
+
+func sort_children(chars : Array):
+	chars.sort_custom(self, 'sort_chars')
+	for character in chars:
+		character.raise()
+
+func sort_chars(char1, char2) -> bool:
+	return char1.speed > char2.speed
+
+func connect_signals(player : KinematicBody2D, enemy : Area2D):
+	connect_enemy_signals(player, enemy)
+	connect_player_signals(player, enemy)
+	setup_buttons()
+
+func connect_enemy_signals(player : KinematicBody2D, enemy : Area2D):
+	enemy.connect('enemy_attack', player, '_on_enemy_attack')
+	enemy.connect('enemy_death', self , '_on_player_win')
+	enemy.connect('turn_completed', self, '_on_turn_completed')
+
+func connect_player_signals(player : KinematicBody2D, enemy : Area2D):
+	player.connect('player_attack', enemy, '_on_player_attack')
+	player.connect('player_death', self, '_on_player_loss')
+	player.connect('turn_completed', self, '_on_turn_completed')
+
+func setup_buttons():
+	for button in group.get_buttons():
+		button.connect("pressed", self, "button_pressed")
 
 func face_right(character):
 	if character.get_node("Sprite").flip_h == true:
@@ -78,31 +112,13 @@ func face_left(character):
 	else:
 		pass
 
-func spawn_enemy(enemy: Area2D):
-	char_parent.add_child(enemy)
-	enemy.get_node("Heart").visible = true
-	enemy.update_heart()
-	face_left(enemy)
-	enemy.set_global_position(enemy_spawn)
-	enemy.scale = Vector2(3,3)
-
-func connect_signals(player : KinematicBody2D, enemy : Area2D):
-	enemy.connect('enemy_attack', player, '_on_enemy_attack')
-	enemy.connect('enemy_death', self , '_on_player_win')
-	enemy.connect('turn_completed', self, '_on_turn_completed')
-	player.connect('player_attack', enemy, '_on_player_attack')
-	player.connect('player_death', self, '_on_player_loss')
-	player.connect('turn_completed', self, '_on_turn_completed')
-	for button in group.get_buttons():
-		button.connect("pressed", self, "button_pressed")
-
 func _on_player_win():
-	set_process( false)
+	set_process(false)
 	get_parent().change_map_visibility(true)
-	var temp_player = $Characters/Player
-	get_node("Characters").remove_child(temp_player)
-	reward_player(temp_player)
-	respawn_player(temp_player)
+	var player = char_parent.get_node("Player")
+	char_parent.remove_child(player)
+	reward_player(player)
+	respawn_player(player)
 	get_parent().check_enemy_count()
 	self.queue_free()
 
@@ -132,34 +148,33 @@ func respawn_player(Player):
 	Player.deduct_attack(attack_potions_used)
 	var world_map = get_parent()
 	world_map.add_child(Player)
-	Player.position = world_map.curr_pos
+	ready_for_world(Player, world_map)
+	
+
+func ready_for_world(Player : KinematicBody2D, Map : Node2D):
+	Player.position = Map.curr_pos
 	Player.set_physics_process(true)
 	Player.scale = Vector2(.4,.4)
 
 func _on_player_loss():
 	set_process(false)
-	get_node("Control").visible = false
-	write_move("Player fainted! Return to World Select.", true)
-	var player = get_node("Characters").get_node("Player")
-	player.deduct_attack(attack_potions_used)
-	get_node("Characters").remove_child(player)
-	yield(get_tree().create_timer(2.0), "timeout")
-	pass_to_select(player)
+	player_faint()
 
-func pass_to_select(Player):
+func player_faint():
+	var player = get_node("Characters").get_node("Player")
+	write_move("Player fainted! Return to World Select.", true)
+	get_node("Control").visible = false
+	player.deduct_attack(attack_potions_used)
+	yield(get_tree().create_timer(3.0), "timeout")
+	pass_to_select_screen(player)
+
+func pass_to_select_screen(Player):
+	char_parent.remove_child(Player)
 	Player.revive_player()
 	Player.visible = false
 	get_tree().root.get_node("WorldSelect").add_child(Player)
 	get_tree().root.get_node("WorldSelect").visible = true
 	get_parent().queue_free()
-
-func sort_children(chars : Array):
-	chars.sort_custom(self, 'sort_chars')
-	for character in chars:
-		character.raise()
-
-func sort_chars(char1, char2) -> bool:
-	return char1.speed > char2.speed
 
 func _on_turn_completed():
 	if active_char.name == "Player":
@@ -193,16 +208,13 @@ func format_name(Name : String):
 	return(nameAcc)
 
 func write_move(MoveString, KeepDisplayed):
-	if get_enemy().get_health() <= 0:
-		pass
-	else:
-		var textbox = get_node("TextBox")
-		var battleControls = get_node("Control")
-		battleControls.visible = false
-		textbox.visible = true
-		textbox.text = MoveString
-		yield(get_tree().create_timer(active_char.get_wait_time()), "timeout")
-		textbox.visible = KeepDisplayed
+	var textbox = get_node("TextBox")
+	var battleControls = get_node("Control")
+	battleControls.visible = false
+	textbox.visible = true
+	textbox.text = MoveString
+	yield(get_tree().create_timer(active_char.get_wait_time()), "timeout")
+	textbox.visible = KeepDisplayed
 
 func button_pressed():
 	var active_button = group.get_pressed_button()
