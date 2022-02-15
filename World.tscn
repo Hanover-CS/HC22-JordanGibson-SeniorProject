@@ -8,9 +8,9 @@
 [ext_resource path="res://Fonts/WorldSelectFont.tres" type="DynamicFont" id=6]
 [ext_resource path="res://ButtonGroups/ShopButtons.tres" type="ButtonGroup" id=7]
 [ext_resource path="res://ButtonGroups/BackButtons.tres" type="ButtonGroup" id=8]
-[ext_resource path="res://Battle/Health Potion.png" type="Texture" id=9]
-[ext_resource path="res://Battle/Attack Potion.png" type="Texture" id=10]
-[ext_resource path="res://Player/coin.png" type="Texture" id=11]
+[ext_resource path="res://Asset Images/Health Potion.png" type="Texture" id=9]
+[ext_resource path="res://Asset Images/Attack Potion.png" type="Texture" id=10]
+[ext_resource path="res://Asset Images/coin.png" type="Texture" id=11]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Idle"
@@ -364,6 +364,7 @@ margin_top = -5.99794
 margin_right = 92.2726
 margin_bottom = 37.0021
 custom_fonts/font = ExtResource( 6 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -378,12 +379,14 @@ margin_top = -5.13422
 margin_right = 95.7275
 margin_bottom = 37.8658
 custom_fonts/font = ExtResource( 6 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Labels" type="Node2D" parent="Map"]
 visible = false
+position = Vector2( -11.3461, 48.0542 )
 
 [node name="Gold" type="Sprite" parent="Map/Labels"]
 position = Vector2( 48.0542, 30.0338 )

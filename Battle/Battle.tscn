@@ -5,8 +5,8 @@
 [ext_resource path="res://Battle/Battle.gd" type="Script" id=3]
 [ext_resource path="res://ButtonGroups/PlayerButtons.tres" type="ButtonGroup" id=4]
 [ext_resource path="res://Fonts/WorldSelectFont.tres" type="DynamicFont" id=5]
-[ext_resource path="res://Battle/Health Potion.png" type="Texture" id=6]
-[ext_resource path="res://Battle/Attack Potion.png" type="Texture" id=7]
+[ext_resource path="res://Asset Images/Health Potion.png" type="Texture" id=6]
+[ext_resource path="res://Asset Images/Attack Potion.png" type="Texture" id=7]
 
 [node name="Battle" type="Node2D"]
 script = ExtResource( 3 )

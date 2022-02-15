@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Attack Potion.png-1273ed7dfd5ebdb083a49f55f5e1e7e6.stex"
+path="res://.import/coin.png-060aa442a2bf99e1112c47c53077928b.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Battle/Attack Potion.png"
-dest_files=[ "res://.import/Attack Potion.png-1273ed7dfd5ebdb083a49f55f5e1e7e6.stex" ]
+source_file="res://Asset Images/coin.png"
+dest_files=[ "res://.import/coin.png-060aa442a2bf99e1112c47c53077928b.stex" ]
 
 [params]
 

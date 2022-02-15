@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Enemies/Enemy.gd" type="Script" id=1]
-[ext_resource path="res://Player/corazon.png" type="Texture" id=2]
+[ext_resource path="res://Asset Images/corazon.png" type="Texture" id=2]
 [ext_resource path="res://Fonts/WorldSelectFont.tres" type="DynamicFont" id=3]
 
 [node name="Enemy" type="Area2D" groups=[

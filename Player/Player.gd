@@ -8,8 +8,8 @@ export (int) var movement_speed = 100
 var Inventory : Dictionary = {"Attack Potion" : 1, "Health Potion" : 4, "Gold": 0}
 
 var level : int = 2
-var max_health : int= 10
-var xp_threshold : int= 5
+var max_health : int = 10
+var xp_threshold : int = 3
 var currXP : int = 0
 
 var wait_time : float = .7
@@ -24,6 +24,7 @@ onready var player_animation = $Sprite/AnimationPlayer
 func _ready():
 	update_heart()
 	update_gold()
+	update_level()
 
 func _physics_process(delta):
 	direction.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
@@ -70,6 +71,9 @@ func deduct_attack(attack):
 func get_level():
 	return(level)
 
+func update_level():
+	$Level.text = "Lvl: " + str(level)
+
 func get_potion_count(PotionType):
 	match PotionType:
 		"Attack Potion":
@@ -114,6 +118,7 @@ func level_up():
 	level += 1
 	xp_threshold = xp_threshold + floor(xp_threshold * .5)
 	currXP = 0
+	update_level()
 	display_stat_select_screen()
 
 func display_stat_select_screen():
@@ -149,24 +154,21 @@ func use_attack_potion():
 	give_attack(1)
 	Inventory["Attack Potion"] -= 1
 	play_potion_animation()
-	yield(get_tree().create_timer(wait_time), "timeout")
+	yield(get_tree().create_timer(.7), "timeout")
 	emit_signal("turn_completed")
 
 func use_health_potion():
 	if (health == max_health):
 		return false
 	else:
-		if level >= 2:
-			health += randi()%3+1
-		else:
-			health += randi()%level+1
+		health += randi()%(level + 1) + 1
 		if health > max_health:
 			health = max_health
 		Inventory["Health Potion"] -= 1
-		play_potion_animation()
-		yield(get_tree().create_timer(wait_time), "timeout")
-		emit_signal("turn_completed")
 		update_heart()
+		play_potion_animation()
+		yield(get_tree().create_timer(.7), "timeout")
+		emit_signal("turn_completed")
 		return true
 
 func play_potion_animation():

@@ -182,6 +182,7 @@ func _on_turn_completed():
 	if get_node("Characters").get_child_count() == 1:
 		pass
 	else:
+		yield(get_tree().create_timer(.5), "timeout")
 		var next_index : int = (active_char.get_index() + 1) % (char_parent.get_child_count())
 		active_char = char_parent.get_child(next_index)
 		play_turn()
@@ -194,8 +195,8 @@ func play_turn():
 		else:
 			pass
 	else:
-		active_char.play_turn()
 		write_move(format_name(active_char.name) + " attacked!", false)
+		active_char.play_turn()
 
 func format_name(Name : String):
 	var nums = ['1','2','3','4','5','6','7','8','9','10', '@']
