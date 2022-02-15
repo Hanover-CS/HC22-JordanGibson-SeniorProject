@@ -76,14 +76,17 @@ func _on_Player_battle_start(player, enemy):
 	start_battle(player, enemy)
 
 func start_battle(player, enemy):
+	player.set_physics_process(false)
 	var temp_player = player
 	curr_pos = player.get_global_position()
+	yield(get_tree().create_timer(.1), 'timeout')
 	remove_child(player)
 	var temp_enemy = enemy
 	get_node("Enemies").remove_child(enemy)
 	change_map_visibility(false)
+	yield(get_tree().create_timer(.01), 'timeout')
 	add_child(battle_scene.instance())
-	$Battle.instance(temp_player, temp_enemy, active_floor)
+	$Battle.initialize(temp_player, temp_enemy, active_floor)
 
 func get_spawnpoints(Map):
 	for i in range(10):
@@ -198,5 +201,4 @@ func pass_player_to_select(Player):
 
 func ready_player_to_pass(Player):
 	Player.visible = false
-	Player.conn_flag = false
 	remove_child(Player)

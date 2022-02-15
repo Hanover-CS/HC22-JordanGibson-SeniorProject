@@ -141,3 +141,7 @@ frame = 40
 [node name="CollisionShape2D" parent="." index="1"]
 position = Vector2( 0.351765, -4.78689 )
 shape = SubResource( 6 )
+
+[node name="Heart" parent="." index="2"]
+position = Vector2( -5.82546, 6.67309 )
+scale = Vector2( 0.456962, 0.46823 )

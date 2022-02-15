@@ -4,7 +4,7 @@
 [ext_resource path="res://Enemies/Enemy.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Enemies/Small/Ruins/Hell Critter/Hell Critter.gd" type="Script" id=3]
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id=1]
 resource_name = "Attack"
 length = 0.7
 tracks/0/type = "value"
@@ -20,7 +20,7 @@ tracks/0/keys = {
 "values": [ 16, 17, 18, 19, 20 ]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=2]
 resource_name = "Dying"
 length = 0.5
 tracks/0/type = "value"
@@ -52,7 +52,7 @@ tracks/0/keys = {
 "values": [ 32, 33, 34, 35, 36 ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=4]
 resource_name = "Idle"
 length = 0.7
 loop = true
@@ -69,26 +69,37 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3, 4 ]
 }
 
-[sub_resource type="RectangleShape2D" id=1]
+[sub_resource type="RectangleShape2D" id=5]
 extents = Vector2( 8.46292, 7.82712 )
 
 [node name="Hell Critter" instance=ExtResource( 2 )]
 position = Vector2( 488.927, 294.489 )
 script = ExtResource( 3 )
+speed = 3
 
 [node name="Sprite" parent="." index="0"]
 position = Vector2( 2.35968, -14.6301 )
 texture = ExtResource( 1 )
 hframes = 8
 vframes = 12
-frame = 32
+frame = 16
 
 [node name="AnimationPlayer" parent="Sprite" index="0"]
-anims/Attack = SubResource( 2 )
-anims/Dying = SubResource( 4 )
+anims/Attack = SubResource( 1 )
+anims/Dying = SubResource( 2 )
 anims/Hurt = SubResource( 3 )
-anims/Idle = SubResource( 5 )
+anims/Idle = SubResource( 4 )
 
 [node name="CollisionShape2D" parent="." index="1"]
 position = Vector2( -1.12247, -7.01538 )
-shape = SubResource( 1 )
+shape = SubResource( 5 )
+
+[node name="Heart" parent="." index="2"]
+position = Vector2( -11.2397, 5.5052 )
+scale = Vector2( 0.568536, 0.49988 )
+
+[node name="Label" parent="Heart" index="0"]
+margin_left = 8.9476
+margin_top = -7.47177
+margin_right = 48.9476
+margin_bottom = 6.52823

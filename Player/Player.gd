@@ -14,7 +14,6 @@ var Inventory : Dictionary = {"Attack Potion" : 0, "Health Potion" : 2, "Gold": 
 
 var wait_time = .7
 var direction : Vector2
-var conn_flag = false
 
 signal player_attack(damage)
 signal player_death()
@@ -22,8 +21,10 @@ signal turn_completed()
 
 onready var player_animation = $Sprite/AnimationPlayer
 
+func _ready():
+	update_heart()
+
 func _physics_process(delta):
-	check_collision_connection()
 	direction.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
 	direction.y = Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")
 	
@@ -38,13 +39,9 @@ func _physics_process(delta):
 	else:
 		player_animation.play("Idle")
 
-func check_collision_connection():
-	if (get_parent().name == "World" and conn_flag == false):
-		connect('area_entered', self, "_on_Knight_area_entered")
-		player_animation.play("Idle")
-		conn_flag = true
-	else:
-		pass
+func update_heart():
+	var heart_label = get_node("Heart/Label")
+	heart_label.text = ": " + str(health)
 
 func give_XP(XP):
 	currXP += XP
@@ -99,19 +96,12 @@ func _on_Knight_area_entered(area):
 	if (get_parent().name == "World" and area.is_in_group("enemy")):
 		player_animation.stop()
 		get_parent().start_battle(self, area)
-	else:
-		print(area.name)
-
-func play_turn():
-	if health <= 3:
-		use_potion("Health Potion")
-	attack()
 
 func attack():
 	player_animation.play("Slash")
 	yield(get_tree().create_timer(wait_time), "timeout")
 	emit_signal("player_attack", damage)
-	yield(get_tree().create_timer(wait_time), "timeout")
+	yield(get_tree().create_timer(1.0), "timeout")
 	emit_signal('turn_completed')
 
 func use_potion(PotionType):
@@ -140,6 +130,7 @@ func use_health_potion():
 		health += randi()%level+1
 	if health > max_health:
 		health = max_health
+	update_heart()
 	print("Health is " + str(health))
 
 func buy_item(Item):
@@ -166,14 +157,15 @@ func _on_enemy_attack(enemy_damage):
 	health -= enemy_damage
 	if health <= 0:
 		player_animation.play("Dying")
-		yield(get_tree().create_timer(2.0), "timeout")
+		yield(get_tree().create_timer(1.0), "timeout")
+		update_heart()
 		emit_signal("player_death")
 	else:
 		player_animation.play("Hurt")
+		player_animation.queue("Idle")
 		yield(get_tree().create_timer(wait_time), "timeout")
-		player_animation.play("Idle")
+		update_heart()
 
 func revive_player():
 	health = max_health
-	conn_flag = false
 	set_physics_process(true)

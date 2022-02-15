@@ -92,3 +92,7 @@ anims/Idle = SubResource( 4 )
 [node name="CollisionShape2D" parent="." index="1"]
 position = Vector2( 0.396851, -5.80294 )
 shape = SubResource( 5 )
+
+[node name="Heart" parent="." index="2"]
+position = Vector2( -4.9873, 5.50136 )
+scale = Vector2( 0.375956, 0.366378 )

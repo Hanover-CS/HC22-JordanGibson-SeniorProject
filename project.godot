@@ -14,6 +14,10 @@ config/name="SeniorProjectRPG"
 run/main_scene="res://WorldSelect.tscn"
 config/icon="res://icon.png"
 
+[debug]
+
+gdscript/warnings/enable=false
+
 [display]
 
 window/size/height=610

@@ -14,7 +14,7 @@ func _ready():
 	player_spawn = $PlayerSpawnPoint.position
 	enemy_spawn = $EnemySpawnPoint.position
 
-func instance(player : KinematicBody2D, enemy : Area2D, Map : String):
+func initialize(player : KinematicBody2D, enemy : Area2D, Map : String):
 	match Map:
 		"Forest":
 			$BattleScreen/Forest.visible = true
@@ -29,7 +29,7 @@ func instance(player : KinematicBody2D, enemy : Area2D, Map : String):
 			$BattleScreen/Ruins.visible = false
 			$BattleScreen/Dungeon.visible = true
 	create_turn_order(player, enemy)
-	yield(get_tree().create_timer(1.0), "timeout")
+	yield(get_tree().create_timer(.5), "timeout")
 	play_turn()
 
 func create_turn_order(player, enemy):
@@ -45,12 +45,11 @@ func spawn_chars(player : KinematicBody2D, enemy : Area2D):
 	connect_signals(player, enemy)
 
 func spawn_player(player : KinematicBody2D):
-	print(player.Inventory)
-	player.set_physics_process(false)
 	char_parent.add_child(player)
 	setup_player(player)
 
 func setup_player(player):
+	player.set_physics_process(false)
 	player.set_global_position(player_spawn)
 	player.get_node("Sprite").get_node("AnimationPlayer").play("Idle")
 	face_right(player)
@@ -70,6 +69,8 @@ func face_left(character):
 
 func spawn_enemy(enemy: Area2D):
 	char_parent.add_child(enemy)
+	enemy.get_node("Heart").visible = true
+	enemy.update_heart()
 	face_left(enemy)
 	enemy.set_global_position(enemy_spawn)
 	enemy.scale = Vector2(3,3)
@@ -88,7 +89,6 @@ func _on_player_win():
 	get_parent().change_map_visibility(true)
 	var temp_player = $Characters/Player
 	get_node("Characters").remove_child(temp_player)
-	face_left(temp_player)
 	reward_player(temp_player)
 	respawn_player(temp_player)
 	get_parent().check_enemy_count()
@@ -116,14 +116,16 @@ func get_enemy():
 			return child
 
 func respawn_player(Player):
+	face_left(Player)
 	var world_map = get_parent()
 	world_map.add_child(Player)
-	Player.conn_flag = false
 	Player.position = world_map.curr_pos
 	Player.set_physics_process(true)
 	Player.scale = Vector2(.4,.4)
 
 func _on_player_loss():
+	get_node("Control").visible = false
+	write_move("Player fainted! Return to World Select.", true)
 	var player = get_node("Characters").get_node("Player")
 	get_node("Characters").remove_child(player)
 	yield(get_tree().create_timer(2.0), "timeout")
@@ -147,19 +149,21 @@ func sort_chars(char1, char2) -> bool:
 func _on_turn_completed():
 	if active_char.name == "Player":
 		get_node("Control").visible = false
-	var next_index : int = (active_char.get_index() + 1) % (char_parent.get_child_count())
-	active_char = char_parent.get_child(next_index)
-	yield(get_tree().create_timer(active_char.get_wait_time()), "timeout")
-	play_turn()
+	if get_enemy().get_health() <= 0:
+		pass
+	else:
+		var next_index : int = (active_char.get_index() + 1) % (char_parent.get_child_count())
+		active_char = char_parent.get_child(next_index)
+		play_turn()
 
 func play_turn():
 	var battleControls = get_node("Control")
-	if active_char.name == "Player" and active_char.get_health() <= 0:
-		write_move("Player fainted! Return to World Select.", true)
-	elif active_char.name == "Player":
-		battleControls.visible = true
+	if active_char.name == "Player":
+		if active_char.get_health() > 0:
+			battleControls.visible = true
+		else:
+			pass
 	else:
-		yield(get_tree().create_timer(1.0), "timeout")
 		active_char.play_turn()
 		write_move(format_name(active_char.name) + " attacked!", false)
 
@@ -174,13 +178,16 @@ func format_name(Name : String):
 	return(nameAcc)
 
 func write_move(MoveString, KeepDisplayed):
-	var textbox = get_node("TextBox")
-	var battleControls = get_node("Control")
-	battleControls.visible = false
-	textbox.visible = true
-	textbox.text = MoveString
-	yield(get_tree().create_timer(2.0), "timeout")
-	textbox.visible = KeepDisplayed
+	if get_enemy().get_health() <= 0:
+		pass
+	else:
+		var textbox = get_node("TextBox")
+		var battleControls = get_node("Control")
+		battleControls.visible = false
+		textbox.visible = true
+		textbox.text = MoveString
+		yield(get_tree().create_timer(active_char.get_wait_time()), "timeout")
+		textbox.visible = KeepDisplayed
 
 func button_pressed():
 	var active_button = group.get_pressed_button()
