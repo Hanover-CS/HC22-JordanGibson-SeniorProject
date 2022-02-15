@@ -117,7 +117,13 @@ extents = Vector2( 6.67167, 6.79415 )
 position = Vector2( 424.264, 185.572 )
 script = ExtResource( 3 )
 
-[node name="Sprite" parent="." index="0"]
+[node name="Level" parent="." index="0"]
+margin_left = -11.6541
+margin_top = -17.746
+margin_right = 28.3459
+margin_bottom = -3.74602
+
+[node name="Sprite" parent="." index="1"]
 position = Vector2( 0.25, -14.0379 )
 texture = ExtResource( 2 )
 hframes = 8
@@ -138,10 +144,10 @@ hframes = 8
 vframes = 12
 frame = 40
 
-[node name="CollisionShape2D" parent="." index="1"]
+[node name="CollisionShape2D" parent="." index="2"]
 position = Vector2( 0.351765, -4.78689 )
 shape = SubResource( 6 )
 
-[node name="Heart" parent="." index="2"]
+[node name="Heart" parent="." index="3"]
 position = Vector2( -5.82546, 6.67309 )
 scale = Vector2( 0.456962, 0.46823 )

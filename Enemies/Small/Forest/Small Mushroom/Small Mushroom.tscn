@@ -76,7 +76,13 @@ script = ExtResource( 3 )
 health = 3
 speed = 3
 
-[node name="Sprite" parent="." index="0"]
+[node name="Level" parent="." index="0"]
+margin_left = -16.1872
+margin_top = -19.761
+margin_right = 23.8128
+margin_bottom = -5.76101
+
+[node name="Sprite" parent="." index="1"]
 position = Vector2( -0.630693, -15.1362 )
 texture = ExtResource( 1 )
 hframes = 6
@@ -89,10 +95,10 @@ anims/Dying = SubResource( 2 )
 anims/Hurt = SubResource( 3 )
 anims/Idle = SubResource( 4 )
 
-[node name="CollisionShape2D" parent="." index="1"]
+[node name="CollisionShape2D" parent="." index="2"]
 position = Vector2( -4.06561, -6.26466 )
 shape = SubResource( 5 )
 
-[node name="Heart" parent="." index="2"]
+[node name="Heart" parent="." index="3"]
 position = Vector2( -11.1535, 4.96508 )
 scale = Vector2( 0.401296, 0.393259 )

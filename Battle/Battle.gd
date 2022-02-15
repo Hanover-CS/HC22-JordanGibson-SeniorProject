@@ -8,6 +8,8 @@ onready var enemy_spawn : Vector2
 onready var active_char : Object
 onready var char_parent : Node2D
 
+var attack_potions_used = 0
+
 export(ButtonGroup) var group
 
 func _ready():
@@ -127,6 +129,7 @@ func get_enemy():
 
 func respawn_player(Player):
 	face_left(Player)
+	Player.deduct_attack(attack_potions_used)
 	var world_map = get_parent()
 	world_map.add_child(Player)
 	Player.position = world_map.curr_pos
@@ -138,6 +141,7 @@ func _on_player_loss():
 	get_node("Control").visible = false
 	write_move("Player fainted! Return to World Select.", true)
 	var player = get_node("Characters").get_node("Player")
+	player.deduct_attack(attack_potions_used)
 	get_node("Characters").remove_child(player)
 	yield(get_tree().create_timer(2.0), "timeout")
 	pass_to_select(player)
@@ -224,6 +228,7 @@ func button_pressed():
 			var potion_used = player.use_potion("Attack Potion")
 			if potion_used:
 				write_move("ATT UP! ATT: " + str(player.get_attack()), false)
+				attack_potions_used += 1
 			else:
 				write_move("No ATT Potions!", false)
 				yield(get_tree().create_timer(1.0), "timeout")

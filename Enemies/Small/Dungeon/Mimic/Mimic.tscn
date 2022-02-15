@@ -73,7 +73,13 @@ extents = Vector2( 8.58639, 6.28609 )
 [node name="Mimic" instance=ExtResource( 2 )]
 position = Vector2( 480.433, 336.02 )
 
-[node name="Sprite" parent="." index="0"]
+[node name="Level" parent="." index="0"]
+margin_left = -11.8196
+margin_top = -20.4447
+margin_right = 28.1804
+margin_bottom = -6.44473
+
+[node name="Sprite" parent="." index="1"]
 position = Vector2( 0.625793, -15.958 )
 texture = ExtResource( 1 )
 hframes = 8
@@ -86,10 +92,10 @@ anims/Dying = SubResource( 2 )
 anims/Hurt = SubResource( 3 )
 anims/Idle = SubResource( 4 )
 
-[node name="CollisionShape2D" parent="." index="1"]
+[node name="CollisionShape2D" parent="." index="2"]
 position = Vector2( 0.312897, -7.50964 )
 shape = SubResource( 5 )
 
-[node name="Heart" parent="." index="2"]
+[node name="Heart" parent="." index="3"]
 position = Vector2( -7.29883, 7.06775 )
 scale = Vector2( 0.570916, 0.634558 )

@@ -6,11 +6,11 @@ var xp_threshold = 5
 var currXP = 0
 
 export (int) var health = 10
-export (int) var damage = 10
+export (int) var damage = 1
 export (int) var speed = 1
 export (int) var movement_speed = 100
 
-var Inventory : Dictionary = {"Attack Potion" : 1, "Health Potion" : 3, "Gold": 0}
+var Inventory : Dictionary = {"Attack Potion" : 1, "Health Potion" : 4, "Gold": 0}
 
 var wait_time = .7
 var direction : Vector2
@@ -87,12 +87,16 @@ func check_if_health_max():
 func give_health(Health):
 	max_health += Health
 	health = max_health
+	update_heart()
 
 func give_attack(Attack):
 	damage += Attack
 
 func get_attack():
 	return(damage)
+
+func deduct_attack(attack):
+	damage -= attack
 
 func get_level():
 	return(level)
@@ -169,6 +173,9 @@ func buy_item(Item):
 			print(Inventory)
 		else:
 			print("Not valid item type")
+
+func get_gold():
+	return(Inventory["Gold"])
 
 func give_gold(Gold):
 	Inventory["Gold"] += Gold

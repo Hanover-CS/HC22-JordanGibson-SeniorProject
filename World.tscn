@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Tilesets/Forest/Forest 2/Forest.tres" type="TileSet" id=1]
 [ext_resource path="res://Tilesets/Dungeon/Dungeon.tres" type="TileSet" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://ButtonGroups/BackButtons.tres" type="ButtonGroup" id=8]
 [ext_resource path="res://Battle/Health Potion.png" type="Texture" id=9]
 [ext_resource path="res://Battle/Attack Potion.png" type="Texture" id=10]
+[ext_resource path="res://Player/coin.png" type="Texture" id=11]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Idle"
@@ -273,6 +274,55 @@ margin_bottom = 541.222
 custom_fonts/font = ExtResource( 6 )
 group = ExtResource( 8 )
 text = "Back"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Labels" type="Node2D" parent="Map"]
+
+[node name="Gold" type="Sprite" parent="Map/Labels"]
+position = Vector2( 48.0542, 30.0338 )
+texture = ExtResource( 11 )
+
+[node name="Label" type="Label" parent="Map/Labels/Gold"]
+margin_left = 11.3461
+margin_top = -0.667419
+margin_right = 51.3461
+margin_bottom = 13.3326
+rect_scale = Vector2( 0.8, 0.8 )
+custom_fonts/font = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Attack Potion" type="Sprite" parent="Map/Labels"]
+position = Vector2( 47.3867, 58.0654 )
+scale = Vector2( 0.374295, 0.416009 )
+texture = ExtResource( 10 )
+
+[node name="Label" type="Label" parent="Map/Labels/Attack Potion"]
+margin_left = 25.5663
+margin_top = -9.18698
+margin_right = 160.566
+margin_bottom = 31.813
+rect_scale = Vector2( 2, 2 )
+custom_fonts/font = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Health Potion" type="Sprite" parent="Map/Labels"]
+position = Vector2( 47.053, 90.7689 )
+scale = Vector2( 0.363866, 0.416009 )
+texture = ExtResource( 9 )
+
+[node name="Label" type="Label" parent="Map/Labels/Health Potion"]
+margin_left = 23.8397
+margin_top = -14.0217
+margin_right = 184.84
+margin_bottom = 36.9783
+rect_scale = Vector2( 2, 2 )
+custom_fonts/font = ExtResource( 6 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

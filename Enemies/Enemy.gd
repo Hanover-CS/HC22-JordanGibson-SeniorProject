@@ -15,6 +15,7 @@ signal turn_completed()
 
 func _ready():
 	animation.play("Idle")
+	$Level.text = "Lvl: " + str(level)
 
 func get_speed():
 	return(speed)
@@ -48,6 +49,7 @@ func level_up(NumLevels : int):
 		pass
 	else:
 		level += NumLevels
+		$Level.text = "Lvl: " + str(level)
 		damage_up(NumLevels / 2)
 		speed_up(NumLevels / 3)
 		health_up(NumLevels)

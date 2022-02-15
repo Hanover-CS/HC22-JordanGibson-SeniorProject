@@ -76,7 +76,13 @@ health = 5
 damage = 10
 speed = 2
 
-[node name="Sprite" parent="." index="0"]
+[node name="Level" parent="." index="0"]
+margin_left = -10.6066
+margin_top = -24.7487
+margin_right = 29.3934
+margin_bottom = -10.7487
+
+[node name="Sprite" parent="." index="1"]
 position = Vector2( 1.06067, -28.9914 )
 texture = ExtResource( 1 )
 hframes = 10
@@ -89,10 +95,10 @@ anims/Dying = SubResource( 2 )
 anims/Hurt = SubResource( 3 )
 anims/Idle = SubResource( 4 )
 
-[node name="CollisionShape2D" parent="." index="1"]
+[node name="CollisionShape2D" parent="." index="2"]
 position = Vector2( 2.12134, -7.07106 )
 shape = SubResource( 5 )
 
-[node name="Heart" parent="." index="2"]
+[node name="Heart" parent="." index="3"]
 position = Vector2( -9.11833, 10.2782 )
 scale = Vector2( 0.568538, 0.621414 )

@@ -71,7 +71,16 @@ func initialize(Map, Player):
 			spawn_player("Store", Player)
 			update_potion_labels()
 			active_floor = "Store"
+	setup_labels(Player)
 	make_world_interactable()
+
+func setup_labels(player):
+	var gold_label = get_node("Map/Labels/Gold/Label")
+	var attack_potion_label = get_node("Map/Labels/Attack Potion/Label")
+	var health_potion_label = get_node("Map/Labels/Health Potion/Label")
+	gold_label.text = ": " + str(player.get_gold())
+	attack_potion_label.text = ": " + str(player.get_potion_count("Attack Potion"))
+	health_potion_label.text = ": " + str(player.get_potion_count("Health Potion"))
 
 func update_potion_labels():
 	var health_potion_label = get_node("Store/Potions/Health Potion/Label")
