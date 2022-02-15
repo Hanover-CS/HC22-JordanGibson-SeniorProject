@@ -1,9 +1,10 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Player/Hero Animations/Knight Sprite Sheet.png" type="Texture" id=1]
 [ext_resource path="res://Player/Player.gd" type="Script" id=2]
 [ext_resource path="res://Player/corazon.png" type="Texture" id=3]
 [ext_resource path="res://Fonts/WorldSelectFont.tres" type="DynamicFont" id=4]
+[ext_resource path="res://Player/coin.png" type="Texture" id=5]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Block"
@@ -154,11 +155,28 @@ position = Vector2( -1.04388, -35.8468 )
 shape = SubResource( 8 )
 
 [node name="Heart" type="Sprite" parent="."]
+visible = false
 position = Vector2( -25.0282, 23.3596 )
 scale = Vector2( 1.93856, 1.79256 )
 texture = ExtResource( 3 )
 
 [node name="Label" type="Label" parent="Heart"]
+margin_left = 10.6786
+margin_top = -8.09624
+margin_right = 50.6786
+margin_bottom = 5.90376
+custom_fonts/font = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Gold" type="Sprite" parent="."]
+visible = false
+position = Vector2( -25.0282, 23.3596 )
+scale = Vector2( 1.93856, 1.79256 )
+texture = ExtResource( 5 )
+
+[node name="Label" type="Label" parent="Gold"]
 margin_left = 10.6786
 margin_top = -8.09624
 margin_right = 50.6786

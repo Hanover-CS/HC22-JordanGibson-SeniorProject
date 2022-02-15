@@ -198,10 +198,24 @@ func button_pressed():
 			player.attack()
 			write_move("You attacked!", false)
 		"Health Potion":
-			player.use_potion("Health Potion")
-			write_move("HP UP! HP: " + str(player.get_health()), false)
+			var potion_used = player.use_potion("Health Potion")
+			if potion_used:
+				write_move("HP UP! HP: " + str(player.get_health()), false)
+			elif (player.check_if_health_max()):
+				write_move("At Max Health!", false)
+				yield(get_tree().create_timer(1.0), "timeout")
+				buttons.visible = true
+			else:
+				write_move("No HP Potions!", false)
+				yield(get_tree().create_timer(1.0), "timeout")
+				buttons.visible = true
 		"Attack Potion":
-			player.use_potion("Attack Potion")
-			write_move("ATT UP! ATT: " + str(player.get_attack()), false)
+			var potion_used = player.use_potion("Attack Potion")
+			if potion_used:
+				write_move("ATT UP! ATT: " + str(player.get_attack()), false)
+			else:
+				write_move("No ATT Potions!", false)
+				yield(get_tree().create_timer(1.0), "timeout")
+				buttons.visible = true
 
 

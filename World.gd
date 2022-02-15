@@ -142,8 +142,12 @@ func spawn_player(Map, Player):
 	var player_spawn
 	if (Map != "Store"):
 		player_spawn = get_node("SpawnPoints/" + Map + "/Player/PlayerSpawn")
+		Player.get_node("Gold").visible = false
+		Player.get_node("Heart").visible = true
 	else:
 		player_spawn = get_node("Store/PlayerSpawn")
+		Player.get_node("Gold").visible = true
+		Player.get_node("Heart").visible = false
 	Player.set_global_position(player_spawn.position)
 	Player.scale = Vector2(.4,.4)
 

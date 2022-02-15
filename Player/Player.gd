@@ -23,6 +23,7 @@ onready var player_animation = $Sprite/AnimationPlayer
 
 func _ready():
 	update_heart()
+	update_gold()
 
 func _physics_process(delta):
 	direction.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
@@ -42,6 +43,10 @@ func _physics_process(delta):
 func update_heart():
 	var heart_label = get_node("Heart/Label")
 	heart_label.text = ": " + str(health)
+
+func update_gold():
+	var gold_label = get_node("Gold/Label")
+	gold_label.text = ": " + str(Inventory["Gold"])
 
 func give_XP(XP):
 	currXP += XP
@@ -75,7 +80,10 @@ func give_speed(Speed):
 
 func get_health():
 	return(health)
-	
+
+func check_if_health_max():
+	return(health == max_health)
+
 func give_health(Health):
 	max_health += Health
 	health = max_health
@@ -106,32 +114,39 @@ func attack():
 
 func use_potion(PotionType):
 	if (PotionType == "Attack Potion" or PotionType == "Health Potion"):
-		player_animation.play("UsePotion")
-		player_animation.queue("Idle")
 		if (Inventory.get(PotionType) > 0):
 			if (PotionType == "Attack Potion"):
-				damage += 1
+				use_attack_potion()
+				return(true)
 			elif (PotionType == "Health Potion"):
-				use_health_potion()
-			var curr_amount = Inventory.get(PotionType)
-			Inventory[PotionType] -= 1
-			yield(get_tree().create_timer(wait_time), "timeout")
-			emit_signal("turn_completed")
-			print(Inventory)
-		else:
-			print("You do not have enough " + str(PotionType) + " potions!")
-	else:
-		print("Not valid potion type")	
+				var potion_used = use_health_potion()
+				return(potion_used)
+		
+
+func use_attack_potion():
+	give_attack(1)
+	Inventory["Attack Potion"] -= 1
+	play_potion_animation()
+	yield(get_tree().create_timer(wait_time), "timeout")
+	emit_signal("turn_completed")
 
 func use_health_potion():
-	if (level < 3):
-		health += randi()%3+1
+	if (health == max_health):
+		return false
 	else:
 		health += randi()%level+1
-	if health > max_health:
-		health = max_health
-	update_heart()
-	print("Health is " + str(health))
+		if health > max_health:
+			health = max_health
+		Inventory["Health Potion"] -= 1
+		play_potion_animation()
+		yield(get_tree().create_timer(wait_time), "timeout")
+		emit_signal("turn_completed")
+		update_heart()
+		return true
+
+func play_potion_animation():
+	player_animation.play("UsePotion")
+	player_animation.queue("Idle")
 
 func buy_item(Item):
 	if (Inventory.get("Gold") < 2):
@@ -147,10 +162,11 @@ func buy_item(Item):
 
 func give_gold(Gold):
 	Inventory["Gold"] += Gold
-	print(Inventory)
+	update_gold()
 
 func deduct_gold(Gold):
 	Inventory["Gold"] -= Gold
+	update_gold()
 
 func _on_enemy_attack(enemy_damage):
 	print("Player damage took: ", enemy_damage)
