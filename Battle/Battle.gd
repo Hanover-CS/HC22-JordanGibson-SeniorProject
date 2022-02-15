@@ -13,6 +13,14 @@ export(ButtonGroup) var group
 func _ready():
 	player_spawn = $PlayerSpawnPoint.position
 	enemy_spawn = $EnemySpawnPoint.position
+	set_process(false)
+
+func _process(delta):
+	var attack_potion_label = get_node("Potions/Attack Potion/Label")
+	var health_potion_label = get_node("Potions/Health Potion/Label")
+	var player = get_node("Characters").get_node("Player")
+	attack_potion_label.text = ": " + str(player.get_potion_count("Attack Potion"))
+	health_potion_label.text = ": " + str(player.get_potion_count("Health Potion"))
 
 func initialize(player : KinematicBody2D, enemy : Area2D, Map : String):
 	match Map:
@@ -29,6 +37,7 @@ func initialize(player : KinematicBody2D, enemy : Area2D, Map : String):
 			$BattleScreen/Ruins.visible = false
 			$BattleScreen/Dungeon.visible = true
 	create_turn_order(player, enemy)
+	set_process(true)
 	yield(get_tree().create_timer(.5), "timeout")
 	play_turn()
 
@@ -86,6 +95,7 @@ func connect_signals(player : KinematicBody2D, enemy : Area2D):
 		button.connect("pressed", self, "button_pressed")
 
 func _on_player_win():
+	set_process( false)
 	get_parent().change_map_visibility(true)
 	var temp_player = $Characters/Player
 	get_node("Characters").remove_child(temp_player)
@@ -124,6 +134,7 @@ func respawn_player(Player):
 	Player.scale = Vector2(.4,.4)
 
 func _on_player_loss():
+	set_process(false)
 	get_node("Control").visible = false
 	write_move("Player fainted! Return to World Select.", true)
 	var player = get_node("Characters").get_node("Player")
@@ -149,7 +160,7 @@ func sort_chars(char1, char2) -> bool:
 func _on_turn_completed():
 	if active_char.name == "Player":
 		get_node("Control").visible = false
-	if get_enemy().get_health() <= 0:
+	if get_node("Characters").get_child_count() == 1:
 		pass
 	else:
 		var next_index : int = (active_char.get_index() + 1) % (char_parent.get_child_count())

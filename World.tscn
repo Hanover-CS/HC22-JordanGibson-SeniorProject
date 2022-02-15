@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Tilesets/Forest/Forest 2/Forest.tres" type="TileSet" id=1]
 [ext_resource path="res://Tilesets/Dungeon/Dungeon.tres" type="TileSet" id=2]
@@ -8,6 +8,8 @@
 [ext_resource path="res://Fonts/WorldSelectFont.tres" type="DynamicFont" id=6]
 [ext_resource path="res://ButtonGroups/ShopButtons.tres" type="ButtonGroup" id=7]
 [ext_resource path="res://ButtonGroups/BackButtons.tres" type="ButtonGroup" id=8]
+[ext_resource path="res://Battle/Health Potion.png" type="Texture" id=9]
+[ext_resource path="res://Battle/Attack Potion.png" type="Texture" id=10]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Idle"
@@ -347,6 +349,36 @@ margin_bottom = 546.445
 custom_fonts/font = ExtResource( 6 )
 group = ExtResource( 8 )
 text = "Back"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Potions" type="Node2D" parent="Store"]
+
+[node name="Attack Potion" type="Sprite" parent="Store/Potions"]
+position = Vector2( 91.5379, 94.1526 )
+texture = ExtResource( 10 )
+
+[node name="Label" type="Label" parent="Store/Potions/Attack Potion"]
+margin_left = 32.2726
+margin_top = -5.99794
+margin_right = 92.2726
+margin_bottom = 37.0021
+custom_fonts/font = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Health Potion" type="Sprite" parent="Store/Potions"]
+position = Vector2( 90.6742, 172.752 )
+texture = ExtResource( 9 )
+
+[node name="Label" type="Label" parent="Store/Potions/Health Potion"]
+margin_left = 35.7275
+margin_top = -5.13422
+margin_right = 95.7275
+margin_bottom = 37.8658
+custom_fonts/font = ExtResource( 6 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

@@ -6,11 +6,11 @@ var xp_threshold = 5
 var currXP = 0
 
 export (int) var health = 10
-export (int) var damage = 1
+export (int) var damage = 10
 export (int) var speed = 1
 export (int) var movement_speed = 100
 
-var Inventory : Dictionary = {"Attack Potion" : 0, "Health Potion" : 2, "Gold": 0}
+var Inventory : Dictionary = {"Attack Potion" : 1, "Health Potion" : 3, "Gold": 0}
 
 var wait_time = .7
 var direction : Vector2
@@ -97,6 +97,13 @@ func get_attack():
 func get_level():
 	return(level)
 
+func get_potion_count(PotionType):
+	match PotionType:
+		"Attack Potion":
+			return(Inventory["Attack Potion"])
+		"Health Potion":
+			return(Inventory["Health Potion"])
+
 func get_wait_time():
 	return(wait_time)
 
@@ -134,7 +141,10 @@ func use_health_potion():
 	if (health == max_health):
 		return false
 	else:
-		health += randi()%level+1
+		if level == 1:
+			health += randi()%3+1
+		else:
+			health += randi()%level+1
 		if health > max_health:
 			health = max_health
 		Inventory["Health Potion"] -= 1
@@ -173,8 +183,8 @@ func _on_enemy_attack(enemy_damage):
 	health -= enemy_damage
 	if health <= 0:
 		player_animation.play("Dying")
-		yield(get_tree().create_timer(1.0), "timeout")
 		update_heart()
+		yield(get_tree().create_timer(wait_time), "timeout")
 		emit_signal("player_death")
 	else:
 		player_animation.play("Hurt")
@@ -184,4 +194,5 @@ func _on_enemy_attack(enemy_damage):
 
 func revive_player():
 	health = max_health
+	update_heart()
 	set_physics_process(true)

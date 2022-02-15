@@ -66,8 +66,8 @@ func _on_player_attack(player_damage):
 	health -= player_damage
 	if health <= 0:
 		animation.play("Dying")
-		yield(get_tree().create_timer(wait_time), "timeout")
 		update_heart()
+		yield(get_tree().create_timer(.5), "timeout")
 		emit_signal("enemy_death")
 	else:
 		animation.play("Hurt")

@@ -69,8 +69,16 @@ func initialize(Map, Player):
 			$Store.visible = true
 			$Store/StoreKeeper/AnimationPlayer.play("Idle")
 			spawn_player("Store", Player)
+			update_potion_labels()
 			active_floor = "Store"
 	make_world_interactable()
+
+func update_potion_labels():
+	var health_potion_label = get_node("Store/Potions/Health Potion/Label")
+	var attack_potion_label = get_node("Store/Potions/Attack Potion/Label")
+	var player = get_node("Player")
+	health_potion_label.text = ": " + str(player.get_potion_count("Health Potion"))
+	attack_potion_label.text = ": " + str(player.get_potion_count("Attack Potion"))
 
 func _on_Player_battle_start(player, enemy):
 	start_battle(player, enemy)
@@ -189,6 +197,7 @@ func shop_button_pressed():
 		"Health Potion":
 			print("Health Potion")
 			get_node("Player").buy_item("Health Potion")
+	update_potion_labels()
 
 func back_button_pressed():
 	pass_player_to_select(get_node("Player"))
