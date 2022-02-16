@@ -21,6 +21,12 @@ var curr_pos : Vector2
 export (ButtonGroup) var group
 export (ButtonGroup) var group2
 
+func _ready():
+	set_process(false)
+
+func _process(delta):
+	update_labels()
+
 # Sets up initial map based on which button was pressed in WorldSelect screen
 # Parameters : Map - String denoting which map should be active, received from
 #					WorldSelect screen
@@ -41,7 +47,7 @@ func initialize(Map : String, Player : KinematicBody2D):
 			active_floor = "Store"
 	# Prepares map
 	setup_map(Player)
-	
+
 # Ensures that respective map and player are visible
 # Parameters : Map - String denoting Map that should be visible
 # Parameters : Map - String denoting which map should be active, received from
@@ -75,7 +81,7 @@ func setup_map(Player : KinematicBody2D):
 		$Map/Store/StoreKeeper/AnimationPlayer.play("Idle")
 		spawn_player(Player)
 		# Updates potion counts in store to match current player inventory
-		update_potion_labels()
+		update_labels()
 	else:
 		# Readies and spawns player and enemies
 		get_spawnpoints()
@@ -106,6 +112,8 @@ func get_spawnpoints():
 func spawn_player(Player : KinematicBody2D):
 	# Adds Player node to scene
 	add_child(Player)
+	# Turns on label updating
+	set_process(true)
 	var player_spawn
 	if (active_floor != "Store"):
 		player_spawn = get_node("SpawnPoints/" + active_floor + "/Player/PlayerSpawn")
@@ -153,12 +161,20 @@ func setup_labels(Player : KinematicBody2D):
 	attack_potion_label.text = ": " + str(Player.get_potion_count("Attack Potion"))
 	health_potion_label.text = ": " + str(Player.get_potion_count("Health Potion"))
 
-# Initializes label values on left side of store screen to match player inventory
-# Paramters : Player - Reference to player node
-func update_potion_labels():
-	var health_potion_label = get_node("Map/Store/Potions/Health Potion/Label")
-	var attack_potion_label = get_node("Map/Store/Potions/Attack Potion/Label")
+# Updates Potion Labels in shop scene and Potion + Gold labels in world scene
+func update_labels():
+	var health_potion_label
+	var attack_potion_label
+	var gold_label
 	var player = get_node("Player")
+	if active_floor == "Store":
+		health_potion_label = get_node("Map/Store/Potions/Health Potion/Label")
+		attack_potion_label = get_node("Map/Store/Potions/Attack Potion/Label")
+	else:
+		health_potion_label = get_node("Map/Labels/Health Potion/Label")
+		attack_potion_label = get_node("Map/Labels/Attack Potion/Label")
+		gold_label = get_node("Map/Labels/Gold/Label")
+		gold_label.text = ": " + str(player.get_gold())
 	# Updates label text according to Player inventory
 	health_potion_label.text = ": " + str(player.get_potion_count("Health Potion"))
 	attack_potion_label.text = ": " + str(player.get_potion_count("Attack Potion"))
@@ -273,6 +289,7 @@ func _on_Player_battle_start(Player : KinematicBody2D, Enemy : Area2D):
 #			   Enemy  - Reference to enemy collided with
 func start_battle(Player : KinematicBody2D, Enemy : Area2D):
 	# Makes sure that map is not visible
+	set_process(false)
 	change_map_visibility(false)
 	# Disables player movement
 	Player.set_physics_process(false)
@@ -310,10 +327,12 @@ func shop_button_pressed():
 			print("Health Potion")
 			get_node("Player").buy_item("Health Potion")
 	# Changes potion labels to reflect new player inventory
-	update_potion_labels()
+	update_labels()
 
 # Allows for traversal back to select screen
 func back_button_pressed():
+	# Turns off label updating
+	set_process(false)
 	pass_player_to_select(get_node("Player"))
 	get_node("Map").get_parent().queue_free()
 	get_parent().get_node("WorldSelect").visible = true

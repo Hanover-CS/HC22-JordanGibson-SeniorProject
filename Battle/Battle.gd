@@ -196,6 +196,8 @@ func respawn_player(Player : KinematicBody2D):
 	Player.deduct_attack(attack_potions_used)
 	var world_map = get_parent()
 	world_map.add_child(Player)
+	# Turns on label updating in world
+	world_map.set_process(true)
 	ready_for_world(Player, world_map)
 	
 # Configures player for world
