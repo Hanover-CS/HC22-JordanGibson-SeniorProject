@@ -95,6 +95,10 @@ func _on_player_attack(player_attack):
 	health -= player_attack
 	# Checks to see if enemy was defeated
 	if health <= 0:
+		# Ensures that health is displayed as 0 if attack deals more damage than
+		#  remaining health
+		if health < 0:
+			health = 0
 		animation.play("Dying")
 		# Update heart label show current health, 0 in this case
 		update_heart()
