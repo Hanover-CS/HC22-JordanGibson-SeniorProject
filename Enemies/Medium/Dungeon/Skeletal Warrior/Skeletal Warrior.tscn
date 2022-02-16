@@ -77,10 +77,10 @@ health = 5
 speed = 2
 
 [node name="Level" parent="." index="0"]
-margin_left = -14.4596
-margin_top = -15.0269
-margin_right = 38.5404
-margin_bottom = 1.97306
+margin_left = -13.5253
+margin_top = -34.274
+margin_right = 39.4747
+margin_bottom = -17.2741
 
 [node name="Sprite" parent="." index="1"]
 position = Vector2( -0.0389862, -22.2057 )
@@ -101,5 +101,5 @@ position = Vector2( 0.716957, -12.4594 )
 shape = SubResource( 5 )
 
 [node name="Heart" parent="." index="3"]
-position = Vector2( -10.5805, 31.6472 )
+position = Vector2( -7.40378, 5.11231 )
 scale = Vector2( 0.463047, 0.427825 )

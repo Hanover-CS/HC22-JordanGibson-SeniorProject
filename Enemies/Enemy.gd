@@ -81,8 +81,8 @@ func level_up(NumLevels : int, printEnemyStats : bool):
 # Raises enemy stats according to player level
 # Parameters: NumLevels - indicates player's current level
 func raise_stats(NumLevels : int):
-	# Enemy gains 1 damage every two player levels
-	damage_up(NumLevels / 2)
+	# Enemy gains 1 damage every four player levels
+	damage_up(NumLevels / 4)
 	# Enemy gains 1 speed every three player levels
 	speed_up(NumLevels / 3)
 	# Enemy gains 1 health for every player level
