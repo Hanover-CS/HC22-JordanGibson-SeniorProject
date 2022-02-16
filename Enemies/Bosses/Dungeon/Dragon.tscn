@@ -89,7 +89,7 @@ position = Vector2( 1, -65 )
 texture = ExtResource( 1 )
 hframes = 10
 vframes = 13
-frame = 14
+frame = 59
 
 [node name="AnimationPlayer" parent="Sprite" index="0"]
 anims/Attack = SubResource( 1 )
