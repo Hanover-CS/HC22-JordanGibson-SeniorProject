@@ -32,6 +32,10 @@ func _process(delta):
 	attack_potion_label.text = ": " + str(player.get_potion_count("Attack Potion"))
 	health_potion_label.text = ": " + str(player.get_potion_count("Health Potion"))
 
+###############################################################
+					## SETUP METHODS ##
+##############################################################
+
 # Displays appropriate BattleScreen and spawns player and enemy
 func initialize(Player : KinematicBody2D, Enemy : Area2D, Map : String):
 	show_battle_screen(Map)
@@ -93,6 +97,12 @@ func setup_enemy(enemy : Area2D):
 	enemy.set_global_position(enemy_spawn)
 	enemy.scale = Vector2(3,3)
 
+# Returns reference to enemy in 'Characters' node
+func get_enemy():
+	for child in get_node("Characters").get_children():
+		if child.is_in_group("enemy"):
+			return child
+
 # Sorts character array in descending order according to speed
 # Parameters : chars - Array to be sorted
 func sort_children(chars : Array):
@@ -144,6 +154,13 @@ func face_left(character):
 	else:
 		pass
 
+
+##################################################################
+						# BATTLE METHODS #
+##################################################################
+
+#### BATTLE WIN METHODS ####
+
 # Method triggered upon emission of 'enemy_death' signal from enemy
 func _on_player_win():
 	# Turns off label updating for battle
@@ -182,12 +199,6 @@ func get_xp_amount():
 		xp_amount = 1
 	return(xp_amount)
 
-# Returns reference to enemy in 'Characters' node
-func get_enemy():
-	for child in get_node("Characters").get_children():
-		if child.is_in_group("enemy"):
-			return child
-
 # Respawns player in world, sets them back to position they were in before battle
 #  and configures as necessary
 # Parameters : Player - Reference to player node
@@ -208,6 +219,8 @@ func ready_for_world(Player : KinematicBody2D, Map : Node2D):
 	# Enables movement
 	Player.set_physics_process(true)
 	Player.scale = Vector2(.4,.4)
+
+#### BATTLE LOSS METHODS ####
 
 # Triggered upon emission of 'player_death' signal from Player
 func _on_player_loss():
@@ -243,21 +256,7 @@ func pass_to_select_screen(Player):
 	# Deletes battle scene
 	get_parent().queue_free()
 
-# Triggered on emission of 'turn_completed' signal from Player or Enemy
-func _on_turn_completed():
-	if active_char.name == "Player":
-		# Makes player buttons visible if player's turn
-		get_node("Control").visible = false
-	# Checks to see if battle is over, must have 2 chars to continue battling
-	if get_node("Characters").get_child_count() == 1:
-		pass
-	else:
-		# Allows last turn to complete - >animations to play through
-		yield(get_tree().create_timer(.5), "timeout")
-		# Passes turn back and forth
-		var next_index : int = (active_char.get_index() + 1) % (char_parent.get_child_count())
-		active_char = char_parent.get_child(next_index)
-		play_turn()
+#### TURN FUNCTIONALITY ####
 
 func play_turn():
 	var battleControls = get_node("Control")
@@ -335,5 +334,22 @@ func button_pressed():
 				write_move("No ATT Potions!", false)
 				yield(get_tree().create_timer(1.0), "timeout")
 				buttons.visible = true
+
+# Triggered on emission of 'turn_completed' signal from Player or Enemy, 
+#    passes turn to next character in battle turn order
+func _on_turn_completed():
+	if active_char.name == "Player":
+		# Makes player buttons visible if player's turn
+		get_node("Control").visible = false
+	# Checks to see if battle is over, must have 2 chars to continue battling
+	if get_node("Characters").get_child_count() == 1:
+		pass
+	else:
+		# Allows last turn to complete - >animations to play through
+		yield(get_tree().create_timer(.5), "timeout")
+		# Passes turn back and forth
+		var next_index : int = (active_char.get_index() + 1) % (char_parent.get_child_count())
+		active_char = char_parent.get_child(next_index)
+		play_turn()
 
 

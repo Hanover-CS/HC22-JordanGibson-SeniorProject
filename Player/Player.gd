@@ -54,7 +54,9 @@ func _physics_process(delta):
 	else:
 		player_animation.play("Idle")
 
-# Getters and Manipulators
+#############################################################
+				## Getters and Manipulators ##
+#############################################################
 func get_speed():
 	return(speed)
 
@@ -166,11 +168,10 @@ func buy_item(Item : String):
 			print("Not valid item type")
 
 ############################################################
-# Battle Methods
+				## Battle Methods ##
 ############################################################
-
+# Starts battle if player collides with enemy
 func _on_Knight_area_entered(area):
-	# Starts battle if player collides with enemy
 	if (area.is_in_group("enemy")):
 		player_animation.stop()
 		get_parent().start_battle(self, area)

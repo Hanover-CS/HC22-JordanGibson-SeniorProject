@@ -18,11 +18,14 @@ onready var wait_time = 1.0
 signal enemy_attack(damage)
 signal enemy_death()
 signal turn_completed()
+
 # Plays enemy idle animation on instancing, sets 'Level' label
 func _ready():
 	animation.play("Idle")
 	$Level.text = "Lvl: " + str(level)
-# Getters and Manipulators
+##########################################################
+			## Getters and Manipulators ##
+##########################################################
 func get_speed():
 	return(speed)
 
@@ -47,6 +50,10 @@ func get_level():
 func get_sprite():
 	return(get_node("Sprite"))
 
+
+###################################################################
+					## Battling Methods ##
+###################################################################
 func play_turn():
 	attack()
 
@@ -60,33 +67,6 @@ func attack():
 	yield(get_tree().create_timer(1.0), "timeout")
 	# Signal used to signal when to switch turns in Battle.gd
 	emit_signal("turn_completed")
-	
-# Used to scale enemies to allow for increasing difficulty
-# Parameters: NumLevels - how many levels said enemy needs to level up by
-#			  printEnemyStats - Indicates whether enemy's new stats after
-#				levelling should be printed to output panel <- DEBUGGING
-func level_up(NumLevels : int, printEnemyStats : bool):
-	if (NumLevels == 1):
-		pass
-	else:
-		# One level deducted to account for initial starting level
-		# Ensures player and enemy are the same level
-		level += NumLevels - 1
-		# Updates level label
-		$Level.text = "Lvl: " + str(level)
-		raise_stats(NumLevels - 1)
-		if printEnemyStats:
-			print("New stat values for level: " + str(level) + " '" + self.name + "' HP: " + str(health) + " Attack: " + str(damage) + " Speed: " + str(speed))
-
-# Raises enemy stats according to player level
-# Parameters: NumLevels - indicates player's current level
-func raise_stats(NumLevels : int):
-	# Enemy gains 1 damage every four player levels
-	damage_up(NumLevels / 4)
-	# Enemy gains 1 speed every three player levels
-	speed_up(NumLevels / 3)
-	# Enemy gains 1 health for every player level
-	health_up(NumLevels)
 
 # Handles damage calculation and animation playing upon player attack 
 #   during battle
@@ -120,3 +100,33 @@ func _on_player_attack(player_attack):
 func update_heart():
 	var heart_label = get_node("Heart/Label")
 	heart_label.text = ": " + str(health)
+
+##########################################################################
+						## Scaling Methods ##
+##########################################################################
+# Used to scale enemies to allow for increasing difficulty
+# Parameters: NumLevels - how many levels said enemy needs to level up by
+#			  printEnemyStats - Indicates whether enemy's new stats after
+#				levelling should be printed to output panel <- DEBUGGING
+func level_up(NumLevels : int, printEnemyStats : bool):
+	if (NumLevels == 1):
+		pass
+	else:
+		# One level deducted to account for initial starting level
+		# Ensures player and enemy are the same level
+		level += NumLevels - 1
+		# Updates level label
+		$Level.text = "Lvl: " + str(level)
+		raise_stats(NumLevels - 1)
+		if printEnemyStats:
+			print("New stat values for level: " + str(level) + " '" + self.name + "' HP: " + str(health) + " Attack: " + str(damage) + " Speed: " + str(speed))
+
+# Raises enemy stats according to player level
+# Parameters: NumLevels - indicates player's current level
+func raise_stats(NumLevels : int):
+	# Enemy gains 1 damage every four player levels
+	damage_up(NumLevels / 4)
+	# Enemy gains 1 speed every three player levels
+	speed_up(NumLevels / 3)
+	# Enemy gains 1 health for every player level
+	health_up(NumLevels)
