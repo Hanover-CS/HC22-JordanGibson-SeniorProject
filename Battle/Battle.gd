@@ -276,7 +276,7 @@ func play_turn():
 #  multiple instances of same scene type
 # Parameters : Name - Name to be formatted
 func format_name(Name : String):
-	var nums = ['1','2','3','4','5','6','7','8','9','10', '@']
+	var nums = ['0','1','2','3','4','5','6','7','8','9','10', '@']
 	var nameAcc : String = ""
 	for ch in Name:
 		if nums.count(ch) == 1:
