@@ -69,6 +69,7 @@ func check_if_health_max():
 
 func give_health(Health):
 	max_health += Health
+	health = max_health
 	# Ensures that player heart counter is displaying correct amount
 	update_heart()
 
@@ -137,7 +138,6 @@ func check_for_level_up():
 # Increases player level and spawns attribute screen for player to select attribute to upgrade
 func level_up():
 	# Refills player's health to full upon level up
-	health = max_health
 	level += 1
 	# Increased XP threshold
 	xp_threshold = xp_threshold + floor(xp_threshold * .5)

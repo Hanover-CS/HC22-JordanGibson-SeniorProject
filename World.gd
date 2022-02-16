@@ -96,7 +96,7 @@ func setup_chars(Player : KinematicBody2D):
 	# Sets enemy_types array to active_floor enemy types
 	set_enemy_types()
 	# Spawns enemies, amount based on player level
-	spawn_enemies(enemy_types.size(), Player.get_level() + 2)
+	spawn_enemies(enemy_types.size(), Player.get_level() + 1)
 	#  Allows for tileMap collision
 	make_world_interactable()
 
@@ -347,6 +347,8 @@ func check_enemy_count():
 # Passes player to WorldSelect screen to allow for another map to be selected
 # Parameters : Player - Reference to player node
 func pass_player_to_select(Player : KinematicBody2D):
+	# Disables label updating
+	set_process(false)
 	ready_player_to_pass(Player)
 	change_map_visibility(false)
 	# Ensures that no nodes are orphaned (Taking up memory with no pointer to them)

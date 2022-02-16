@@ -71,7 +71,7 @@ height = 4.7867
 
 [node name="Skeletal Warrior" instance=ExtResource( 2 )]
 position = Vector2( 585.735, 290.011 )
-scale = Vector2( 5, 5 )
+scale = Vector2( 4.5, 4.5 )
 script = ExtResource( 3 )
 health = 5
 speed = 2
@@ -83,7 +83,7 @@ margin_right = 38.5404
 margin_bottom = 1.97306
 
 [node name="Sprite" parent="." index="1"]
-position = Vector2( -0.543526, -1.18337 )
+position = Vector2( -0.0389862, -22.2057 )
 scale = Vector2( 1.5, 1.5 )
 texture = ExtResource( 1 )
 hframes = 10
@@ -97,7 +97,7 @@ anims/Hurt = SubResource( 3 )
 anims/Idle = SubResource( 4 )
 
 [node name="CollisionShape2D" parent="." index="2"]
-position = Vector2( 0.212402, 8.56297 )
+position = Vector2( 0.716957, -12.4594 )
 shape = SubResource( 5 )
 
 [node name="Heart" parent="." index="3"]

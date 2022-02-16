@@ -228,6 +228,8 @@ func player_faint():
 	pass_to_select_screen(player)
 
 func pass_to_select_screen(Player):
+	var world_map = get_parent()
+	world_map.set_process(false)
 	char_parent.remove_child(Player)
 	# Resets payer health and turns on movement, in 'Player.gd'
 	Player.revive_player()
