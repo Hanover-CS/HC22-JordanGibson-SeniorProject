@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Enemies/Enemy.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Enemy Animations/Small Enemies/Beasts/Twig Blight/Twig Blight Sprite Sheet.png" type="Texture" id=2]
+[ext_resource path="res://Enemies/Small/Forest/Twig Blight/Twig Blight Sprite Sheet.png" type="Texture" id=2]
 [ext_resource path="res://Enemies/Small/Forest/Twig Blight/Twig Blight.gd" type="Script" id=3]
 
 [sub_resource type="Animation" id=1]

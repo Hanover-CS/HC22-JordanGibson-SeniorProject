@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Ghoul Sprite Sheet.png-5d51857b1461b35888b204e249e910fa.stex"
+path="res://.import/Demon Sprite Sheet.png-53f21b023ff783e4b8037754ee7f924c.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Enemy Animations/Medium Enemies/Infernal/Ghoul/Ghoul Sprite Sheet.png"
-dest_files=[ "res://.import/Ghoul Sprite Sheet.png-5d51857b1461b35888b204e249e910fa.stex" ]
+source_file="res://Enemies/Medium/Ruins/Demon/Demon Sprite Sheet.png"
+dest_files=[ "res://.import/Demon Sprite Sheet.png-53f21b023ff783e4b8037754ee7f924c.stex" ]
 
 [params]
 

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Ghoul Sprite Sheet.png-5d51857b1461b35888b204e249e910fa.stex"
+path="res://.import/SkeletalWarrior_Sprites.png-b84b1b48ff256158cce68579737446b5.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Enemy Animations/Medium Enemies/Infernal/Ghoul/Ghoul Sprite Sheet.png"
-dest_files=[ "res://.import/Ghoul Sprite Sheet.png-5d51857b1461b35888b204e249e910fa.stex" ]
+source_file="res://Enemies/Medium/Dungeon/Skeletal Warrior/SkeletalWarrior_Sprites.png"
+dest_files=[ "res://.import/SkeletalWarrior_Sprites.png-b84b1b48ff256158cce68579737446b5.stex" ]
 
 [params]
 

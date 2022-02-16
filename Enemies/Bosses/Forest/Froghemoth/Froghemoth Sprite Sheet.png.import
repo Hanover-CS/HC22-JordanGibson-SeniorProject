@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Ghoul Sprite Sheet.png-5d51857b1461b35888b204e249e910fa.stex"
+path="res://.import/Froghemoth Sprite Sheet.png-be871cf7a03d7ac3cc61a406fbe58aa5.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Enemy Animations/Medium Enemies/Infernal/Ghoul/Ghoul Sprite Sheet.png"
-dest_files=[ "res://.import/Ghoul Sprite Sheet.png-5d51857b1461b35888b204e249e910fa.stex" ]
+source_file="res://Enemies/Bosses/Forest/Froghemoth/Froghemoth Sprite Sheet.png"
+dest_files=[ "res://.import/Froghemoth Sprite Sheet.png-be871cf7a03d7ac3cc61a406fbe58aa5.stex" ]
 
 [params]
 

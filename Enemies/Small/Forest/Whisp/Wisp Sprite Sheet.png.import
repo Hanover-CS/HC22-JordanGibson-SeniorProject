@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Ghoul Sprite Sheet.png-5d51857b1461b35888b204e249e910fa.stex"
+path="res://.import/Wisp Sprite Sheet.png-f4ef999635f581e4b8f2bae022bfdae6.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Enemy Animations/Medium Enemies/Infernal/Ghoul/Ghoul Sprite Sheet.png"
-dest_files=[ "res://.import/Ghoul Sprite Sheet.png-5d51857b1461b35888b204e249e910fa.stex" ]
+source_file="res://Enemies/Small/Forest/Whisp/Wisp Sprite Sheet.png"
+dest_files=[ "res://.import/Wisp Sprite Sheet.png-f4ef999635f581e4b8f2bae022bfdae6.stex" ]
 
 [params]
 

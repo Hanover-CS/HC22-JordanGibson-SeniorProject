@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://Enemy Animations/Small Enemies/Beasts/Wolf/Wolf Sprite Sheet.png" type="Texture" id=1]
+[ext_resource path="res://Enemies/Medium/Forest/Wolf/Wolf Sprite Sheet.png" type="Texture" id=1]
 [ext_resource path="res://Enemies/Enemy.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Enemies/Medium/Forest/Wolf/Wolf.gd" type="Script" id=3]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Attack"
@@ -72,9 +73,8 @@ extents = Vector2( 16.9768, 10 )
 
 [node name="Wolf" instance=ExtResource( 2 )]
 position = Vector2( 490.816, 299.209 )
-health = 5
-damage = 10
-speed = 2
+script = ExtResource( 3 )
+speed = 3
 
 [node name="Level" parent="." index="0"]
 margin_left = -10.6066
@@ -87,7 +87,7 @@ position = Vector2( 1.06067, -28.9914 )
 texture = ExtResource( 1 )
 hframes = 10
 vframes = 6
-frame = 50
+frame = 3
 
 [node name="AnimationPlayer" parent="Sprite" index="0"]
 anims/Attack = SubResource( 1 )

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Ghoul Sprite Sheet.png-5d51857b1461b35888b204e249e910fa.stex"
+path="res://.import/Attic Whisperer Sprite Sheet.png-bf11a56962b66ccac87ebfac0436d8fa.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Enemy Animations/Medium Enemies/Infernal/Ghoul/Ghoul Sprite Sheet.png"
-dest_files=[ "res://.import/Ghoul Sprite Sheet.png-5d51857b1461b35888b204e249e910fa.stex" ]
+source_file="res://Enemies/Small/Ruins/Child Spirit/Attic Whisperer Sprite Sheet.png"
+dest_files=[ "res://.import/Attic Whisperer Sprite Sheet.png-bf11a56962b66ccac87ebfac0436d8fa.stex" ]
 
 [params]
 

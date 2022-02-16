@@ -1,12 +1,11 @@
 [gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://Enemies/Small/Dungeon/Mimic/Mimic Sprite Sheet.png" type="Texture" id=1]
+[ext_resource path="res://Enemies/Medium/Dungeon/Skeletal Warrior/SkeletalWarrior_Sprites.png" type="Texture" id=1]
 [ext_resource path="res://Enemies/Enemy.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Enemies/Small/Dungeon/Mimic/Mimic.gd" type="Script" id=3]
+[ext_resource path="res://Enemies/Medium/Dungeon/Skeletal Warrior/Skeletal Warrior.gd" type="Script" id=3]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Attack"
-length = 0.7
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
@@ -14,15 +13,14 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.4, 0.5, 0.6 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ 16, 17, 18, 19, 18, 17 ]
+"values": [ 20, 21, 22, 23, 24, 25, 26, 27, 28, 29 ]
 }
 
 [sub_resource type="Animation" id=2]
 resource_name = "Dying"
-length = 0.7
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
@@ -30,15 +28,15 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.5, 0.6 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ 24, 25, 26, 27, 28, 29 ]
+"values": [ 40, 41, 42, 43, 44, 45, 46, 47, 48, 49 ]
 }
 
 [sub_resource type="Animation" id=3]
 resource_name = "Hurt"
-length = 0.7
+length = 0.8
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
@@ -46,14 +44,13 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.3, 0.4, 0.6 ),
+"times": PoolRealArray( 0, 0.2, 0.3, 0.5, 0.7 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ 10, 11, 19, 28, 11 ]
+"values": [ 30, 31, 32, 33, 34 ]
 }
 
 [sub_resource type="Animation" id=4]
-length = 1.2
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:frame")
@@ -62,32 +59,36 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.4, 0.6, 0.8, 1, 1.1 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ 0, 1, 2, 3, 8, 9, 2, 1 ]
+"values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
 }
 
-[sub_resource type="RectangleShape2D" id=5]
-extents = Vector2( 8.58639, 6.28609 )
+[sub_resource type="CapsuleShape2D" id=5]
+radius = 12.3965
+height = 4.7867
 
-[node name="Mimic" instance=ExtResource( 2 )]
-position = Vector2( 480.433, 336.02 )
+[node name="Skeletal Warrior" instance=ExtResource( 2 )]
+position = Vector2( 585.735, 290.011 )
+scale = Vector2( 5, 5 )
 script = ExtResource( 3 )
-health = 6
+health = 5
+speed = 2
 
 [node name="Level" parent="." index="0"]
-margin_left = -11.8196
-margin_top = -20.4447
-margin_right = 28.1804
-margin_bottom = -6.44473
+margin_left = -14.4596
+margin_top = -15.0269
+margin_right = 38.5404
+margin_bottom = 1.97306
 
 [node name="Sprite" parent="." index="1"]
-position = Vector2( 0.625793, -15.958 )
+position = Vector2( -0.543526, -1.18337 )
+scale = Vector2( 1.5, 1.5 )
 texture = ExtResource( 1 )
-hframes = 8
-vframes = 11
-frame = 11
+hframes = 10
+vframes = 10
+frame = 34
 
 [node name="AnimationPlayer" parent="Sprite" index="0"]
 anims/Attack = SubResource( 1 )
@@ -96,9 +97,9 @@ anims/Hurt = SubResource( 3 )
 anims/Idle = SubResource( 4 )
 
 [node name="CollisionShape2D" parent="." index="2"]
-position = Vector2( 0.312897, -7.50964 )
+position = Vector2( 0.212402, 8.56297 )
 shape = SubResource( 5 )
 
 [node name="Heart" parent="." index="3"]
-position = Vector2( -7.29883, 7.06775 )
-scale = Vector2( 0.570916, 0.634558 )
+position = Vector2( -10.5805, 31.6472 )
+scale = Vector2( 0.463047, 0.427825 )

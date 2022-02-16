@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Ghoul Sprite Sheet.png-5d51857b1461b35888b204e249e910fa.stex"
+path="res://.import/Wendigo Sprite Sheet.png-ee1d8213579baf0c89ec0ffc67e998b0.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Enemy Animations/Medium Enemies/Infernal/Ghoul/Ghoul Sprite Sheet.png"
-dest_files=[ "res://.import/Ghoul Sprite Sheet.png-5d51857b1461b35888b204e249e910fa.stex" ]
+source_file="res://Enemies/Medium/Forest/Wendigo/Wendigo Sprite Sheet.png"
+dest_files=[ "res://.import/Wendigo Sprite Sheet.png-ee1d8213579baf0c89ec0ffc67e998b0.stex" ]
 
 [params]
 

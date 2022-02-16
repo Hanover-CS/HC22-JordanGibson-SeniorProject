@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Ghoul Sprite Sheet.png-5d51857b1461b35888b204e249e910fa.stex"
+path="res://.import/Wolf Sprite Sheet.png-325c795e622e50b5a90a6ef4e0470ac6.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Enemy Animations/Medium Enemies/Infernal/Ghoul/Ghoul Sprite Sheet.png"
-dest_files=[ "res://.import/Ghoul Sprite Sheet.png-5d51857b1461b35888b204e249e910fa.stex" ]
+source_file="res://Enemies/Medium/Forest/Wolf/Wolf Sprite Sheet.png"
+dest_files=[ "res://.import/Wolf Sprite Sheet.png-325c795e622e50b5a90a6ef4e0470ac6.stex" ]
 
 [params]
 

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Ghoul Sprite Sheet.png-5d51857b1461b35888b204e249e910fa.stex"
+path="res://.import/Twig Blight Sprite Sheet.png-ff658d843d585d41a7c5cc7c1a705dab.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Enemy Animations/Medium Enemies/Infernal/Ghoul/Ghoul Sprite Sheet.png"
-dest_files=[ "res://.import/Ghoul Sprite Sheet.png-5d51857b1461b35888b204e249e910fa.stex" ]
+source_file="res://Enemies/Small/Forest/Twig Blight/Twig Blight Sprite Sheet.png"
+dest_files=[ "res://.import/Twig Blight Sprite Sheet.png-ff658d843d585d41a7c5cc7c1a705dab.stex" ]
 
 [params]
 

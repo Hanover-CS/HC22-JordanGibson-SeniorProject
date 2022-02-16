@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://Enemy Animations/Small Enemies/Beasts/Small Mushroom Monster/Mushroom Monster Sprite Sheet.png" type="Texture" id=1]
+[ext_resource path="res://Enemies/Small/Forest/Small Mushroom/Mushroom Monster Sprite Sheet.png" type="Texture" id=1]
 [ext_resource path="res://Enemies/Enemy.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Enemies/Small/Forest/Small Mushroom/Small Mushroom.gd" type="Script" id=3]
 
@@ -74,7 +74,7 @@ extents = Vector2( 6.44192, 7.15143 )
 position = Vector2( 426.632, 216.303 )
 script = ExtResource( 3 )
 health = 3
-speed = 3
+speed = 2
 
 [node name="Level" parent="." index="0"]
 margin_left = -16.1872

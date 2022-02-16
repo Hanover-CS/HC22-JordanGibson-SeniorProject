@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Ghoul Sprite Sheet.png-5d51857b1461b35888b204e249e910fa.stex"
+path="res://.import/Mushroom Monster Sprite Sheet.png-36f1c35ed744413ac7c0a4448f1c8b28.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Enemy Animations/Medium Enemies/Infernal/Ghoul/Ghoul Sprite Sheet.png"
-dest_files=[ "res://.import/Ghoul Sprite Sheet.png-5d51857b1461b35888b204e249e910fa.stex" ]
+source_file="res://Enemies/Small/Forest/Small Mushroom/Mushroom Monster Sprite Sheet.png"
+dest_files=[ "res://.import/Mushroom Monster Sprite Sheet.png-36f1c35ed744413ac7c0a4448f1c8b28.stex" ]
 
 [params]
 

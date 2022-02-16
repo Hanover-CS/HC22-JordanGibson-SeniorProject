@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://Enemy Animations/Small Enemies/Infernal/Hell Critter/Hell Critter - Sprite Sheet.png" type="Texture" id=1]
+[ext_resource path="res://Enemies/Small/Ruins/Hell Critter/Hell Critter - Sprite Sheet.png" type="Texture" id=1]
 [ext_resource path="res://Enemies/Enemy.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Enemies/Small/Ruins/Hell Critter/Hell Critter.gd" type="Script" id=3]
 

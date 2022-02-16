@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Ghoul Sprite Sheet.png-5d51857b1461b35888b204e249e910fa.stex"
+path="res://.import/Imp Sprite Sheet.png-23539e6f9b49addd41ff1c14e8aaafa1.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Enemy Animations/Medium Enemies/Infernal/Ghoul/Ghoul Sprite Sheet.png"
-dest_files=[ "res://.import/Ghoul Sprite Sheet.png-5d51857b1461b35888b204e249e910fa.stex" ]
+source_file="res://Enemies/Small/Ruins/Imp/Imp Sprite Sheet.png"
+dest_files=[ "res://.import/Imp Sprite Sheet.png-23539e6f9b49addd41ff1c14e8aaafa1.stex" ]
 
 [params]
 

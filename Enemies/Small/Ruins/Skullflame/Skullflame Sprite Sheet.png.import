@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Ghoul Sprite Sheet.png-5d51857b1461b35888b204e249e910fa.stex"
+path="res://.import/Skullflame Sprite Sheet.png-bfb45d1ae772cc69c800c34929bf6b97.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Enemy Animations/Medium Enemies/Infernal/Ghoul/Ghoul Sprite Sheet.png"
-dest_files=[ "res://.import/Ghoul Sprite Sheet.png-5d51857b1461b35888b204e249e910fa.stex" ]
+source_file="res://Enemies/Small/Ruins/Skullflame/Skullflame Sprite Sheet.png"
+dest_files=[ "res://.import/Skullflame Sprite Sheet.png-bfb45d1ae772cc69c800c34929bf6b97.stex" ]
 
 [params]
 
