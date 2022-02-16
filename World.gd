@@ -22,6 +22,7 @@ export (ButtonGroup) var group
 export (ButtonGroup) var group2
 
 func _ready():
+	# Turns off label updating until Player is spawned
 	set_process(false)
 
 func _process(delta):
@@ -288,8 +289,9 @@ func _on_Player_battle_start(Player : KinematicBody2D, Enemy : Area2D):
 # Parameters : Player - Reference to player node, 
 #			   Enemy  - Reference to enemy collided with
 func start_battle(Player : KinematicBody2D, Enemy : Area2D):
-	# Makes sure that map is not visible
+	# Turns off label updating
 	set_process(false)
+	# Makes sure that map is not visible
 	change_map_visibility(false)
 	# Disables player movement
 	Player.set_physics_process(false)

@@ -36,6 +36,7 @@ func _process(delta):
 func initialize(Player : KinematicBody2D, Enemy : Area2D, Map : String):
 	show_battle_screen(Map)
 	create_turn_order(Player, Enemy)
+	# Turns on label updating after enemy and player spawned
 	set_process(true)
 	yield(get_tree().create_timer(.5), "timeout")
 	play_turn()
@@ -229,6 +230,7 @@ func player_faint():
 
 func pass_to_select_screen(Player):
 	var world_map = get_parent()
+	# Turns off label updating in world map
 	world_map.set_process(false)
 	char_parent.remove_child(Player)
 	# Resets payer health and turns on movement, in 'Player.gd'
